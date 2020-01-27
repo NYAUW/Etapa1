@@ -4,20 +4,24 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class EmpresaTest {
-    private Empresa empresa = new Empresa("95128290000160", "Sim Tv Assistencia", "44012901", "Av Eduardo Prado 385", "Trabalhar pelo bem comum", "Luis Carlos Ribeiro");
-    private Empresa empresa2 = new Empresa("95128290000160", "Sim Tv Assistencia", "44012901", "Av Eduardo Prado 385", "Trabalhar pelo bem comum", "Luis Carlos Ribeiro");
+    private static Empresa empresa = new Empresa("95128290000160", "Sim Tv Assistencia", "44012901", "Av Eduardo Prado 385", "Trabalhar pelo bem comum", "Luis Carlos Ribeiro");
+    private static Empresa empresa2 = new Empresa("95128290000160", "Sim Tv Assistencia", "44012901", "Av Eduardo Prado 385", "Trabalhar pelo bem comum", "Luis Carlos Ribeiro");
 
-    @Test
-    public void devera_verificar_cnpj() throws Exception {
+    @BeforeClass
+    public static void devera_verificar_cnpj() throws Exception {
         String cnpj = "95128290000160";
         empresa.setCnpj(cnpj);
         assertTrue(empresa.getCnpj().equals(cnpj));
     }
 
-    @Test
+    @Before
     public void devera_verificar_nome_empresa() {
         assertTrue(empresa.getNome().equals("Sim Tv Assistencia"));
     }
@@ -66,15 +70,15 @@ public class EmpresaTest {
         assertNotEquals(empresa2.getEndereco(), empresa.getEndereco());
     }
 
-    @Test
+    @After
     public void nao_deve_verificar_razao_social() throws Exception {
         empresa2.setRazaoSocial("Deixar nossos clientes satisfeitos com nossos serviços");
         ;
         assertNotEquals(empresa2.getRazaoSocial(), empresa.getRazaoSocial());
     }
     
-    @Test
-    public void nao_deve_verificar_proprietario() throws Exception {
+    @AfterClass
+    public static void nao_deve_verificar_proprietario() throws Exception {
         empresa2.setProprietarios("Luis Carlos");
         assertNotEquals(empresa2.getProprietarios(), empresa.getProprietarios());
     }
