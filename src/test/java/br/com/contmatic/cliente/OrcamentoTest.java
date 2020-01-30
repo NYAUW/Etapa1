@@ -1,4 +1,4 @@
-package br.com.contmatic.features;
+package br.com.contmatic.cliente;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -6,6 +6,8 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import br.com.contmatic.cliente.Orcamento;
 
 public class OrcamentoTest {
 

@@ -1,37 +1,30 @@
 package br.com.contmatic.empresa;
 
-import javax.management.InvalidAttributeValueException;
-import javax.naming.InsufficientResourcesException;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 
 public class Empresa {
 
-    private static final String NUMEROS = "Numeros Encontrados";
+    private static final String ENTRADA_INVALIDA = "Entrada inválida";
 
-    private static final String ENTRADAINVALIDA = "Entrada inválida";
+    private static final String ENTRADA_NULA = "A entrada não pode ficar nula";
 
-    private static final String ENTRADANULA = "A entrada não pode ficar nula";
-
-    private static final String CARACTEREINVALIDO = "Caracteres Inválidos";
+    private static final String CARACTERE_INVALIDO = "Caracteres Inválidos";
 
     private String cnpj;
 
     private String nome;
 
-    private String telefone;
-
-    private String endereco;
-
     private String razaoSocial;
 
-    private String proprietarios;
+    List<String> proprietarios;
 
-    public Empresa(String cnpj, String nome, String telefone, String endereco, String razaoSocial, String proprietarios) {
+    public Empresa(String cnpj, String nome, String razaoSocial, List<String> proprietarios) {
 
         super();
         this.cnpj = cnpj;
         this.nome = nome;
-        this.telefone = telefone;
-        this.endereco = endereco;
         this.razaoSocial = razaoSocial;
         this.proprietarios = proprietarios;
     }
@@ -44,131 +37,44 @@ public class Empresa {
         return nome;
     }
 
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
     public String getRazaoSocial() {
         return razaoSocial;
     }
 
-    public String getProprietarios() {
+    public List<String> getProprietarios() {
         return proprietarios;
     }
 
     public void setCnpj(String cnpj) {
-        try {
-            verificaNulleTamanhoCnpj(cnpj);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            verificaCnpjCaracteres(cnpj);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            verificaCnpjEspecial(cnpj);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        verificaNullCnpj(cnpj);
+        verificaTamanhoCnpjValido(cnpj);
+        verificaCnpjEspecial(cnpj);
         this.cnpj = cnpj;
     }
 
     public void setNome(String nome) {
-        verificaNomeNumerico(nome);
-        try {
-            verificaSeTemSobrenome();
-        } catch (InsufficientResourcesException e) {
-
-            e.printStackTrace();
-        }
-        try {
-            verificaTamanhoNome(nome);
-        } catch (InsufficientResourcesException e) {
-
-            e.printStackTrace();
-        }
         this.nome = nome;
     }
 
-    public void setTelefone(String telefone) {
-        try {
-            verificaNullEoTamanhoTelefone(telefone);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            verificaTelefoneCaracteres(telefone);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        this.telefone = telefone;
-    }
-
-    public void setEndereco(String endereco) {
-        try {
-            verificaEntradaDadosEndereco(endereco);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        this.endereco = endereco;
-    }
-
     public void setRazaoSocial(String razaoSocial) {
-        try {
-            verificaDadosRazaoSocial(razaoSocial);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        verificaRazaoSocialCompleta(razaoSocial);
         this.razaoSocial = razaoSocial;
     }
 
-    public void setProprietarios(String proprietarios) {
+    public void setProprietarios(List<String> proprietarios) {
+        verificaProprietarioNull(proprietarios);
         this.proprietarios = proprietarios;
     }
 
-    private void verificaTamanhoNome(String proprietarios) throws InsufficientResourcesException {
-        if (proprietarios.length() < 8) {
-            throw new InsufficientResourcesException(ENTRADAINVALIDA);
+    private void verificaNullCnpj(String cnpj) {
+        if (StringUtils.isEmpty(cnpj)) {
+            throw new NullPointerException(ENTRADA_NULA);
         }
     }
 
-    private void verificaSeTemSobrenome() throws InsufficientResourcesException {
-        if (!proprietarios.contains(" "))
-            throw new InsufficientResourcesException(ENTRADAINVALIDA);
-    }
-
-    private void verificaNomeNumerico(String nome) {
-        for(int i = 0 ; nome.length() > i ; i++) {
-            if (Character.isDigit(nome.charAt(i))) {
-                throw new IllegalArgumentException(NUMEROS);
-            }
-        }
-    }
-
-    private void verificaNulleTamanhoCnpj(String cnpj) {
-        if (cnpj == null) {
-            throw new IllegalArgumentException(ENTRADANULA);
-        }
+    private void verificaTamanhoCnpjValido(String cnpj) {
         if (cnpj.length() != 14) {
-            throw new IllegalArgumentException(ENTRADANULA);
-        }
-    }
-
-    private void verificaCnpjCaracteres(String cnpj) {
-        if (cnpj.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*")) {
-            throw new IllegalArgumentException(CARACTEREINVALIDO);
+            throw new IllegalArgumentException(ENTRADA_INVALIDA);
         }
     }
 
@@ -176,34 +82,68 @@ public class Empresa {
         if (cnpj.contains("!") || cnpj.contains("@") || cnpj.contains("#") || cnpj.contains("$") || cnpj.contains("%") || cnpj.contains("¨") || cnpj.contains("&") || cnpj.contains("*") ||
             cnpj.contains("(") || cnpj.contains(")") || cnpj.contains("-") || cnpj.contains("+") || cnpj.contains("/") || cnpj.contains(".") || cnpj.contains(",") || cnpj.contains("?") ||
             cnpj.contains(";") || cnpj.contains(":") || cnpj.contains(">") || cnpj.contains("<") || cnpj.contains("\\") || cnpj.contains("'")) {
-            throw new IllegalArgumentException(CARACTEREINVALIDO);
+            throw new IllegalArgumentException(CARACTERE_INVALIDO);
         }
     }
 
-    private void verificaNullEoTamanhoTelefone(String telefone) throws InsufficientResourcesException, InvalidAttributeValueException {
-        if (telefone == null) {
-            throw new InsufficientResourcesException(ENTRADANULA);
-        }
-        if (telefone.length() != 8) {
-            throw new InvalidAttributeValueException(ENTRADAINVALIDA);
+    private void verificaRazaoSocialCompleta(String razaoSocial) {
+        if (!StringUtils.containsWhitespace(razaoSocial)) {
+            throw new IllegalArgumentException(ENTRADA_INVALIDA);
         }
     }
 
-    private void verificaTelefoneCaracteres(String telefone) {
-        if (telefone.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*")) {
-            throw new IllegalArgumentException(ENTRADAINVALIDA);
+    private void verificaProprietarioNull(List<String> proprietarios) {
+        if (proprietarios == null) {
+            throw new NullPointerException(ENTRADA_NULA);
         }
     }
 
-    private void verificaEntradaDadosEndereco(String endereco) {
-        if (endereco.length() < 5 && !endereco.contains(" ")) {
-            throw new IllegalArgumentException(ENTRADAINVALIDA);
-        }
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((cnpj == null) ? 0 : cnpj.hashCode());
+        result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+        result = prime * result + ((proprietarios == null) ? 0 : proprietarios.hashCode());
+        result = prime * result + ((razaoSocial == null) ? 0 : razaoSocial.hashCode());
+        return result;
     }
 
-    private void verificaDadosRazaoSocial(String razaoSocial) throws InsufficientResourcesException {
-        if (razaoSocial.length() < 10 && !razaoSocial.contains(" ")) {
-            throw new InsufficientResourcesException(ENTRADAINVALIDA);
-        }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Empresa other = (Empresa) obj;
+        if (cnpj == null) {
+            if (other.cnpj != null)
+                return false;
+        } else if (!cnpj.equals(other.cnpj))
+            return false;
+        if (nome == null) {
+            if (other.nome != null)
+                return false;
+        } else if (!nome.equals(other.nome))
+            return false;
+        if (proprietarios == null) {
+            if (other.proprietarios != null)
+                return false;
+        } else if (!proprietarios.equals(other.proprietarios))
+            return false;
+        if (razaoSocial == null) {
+            if (other.razaoSocial != null)
+                return false;
+        } else if (!razaoSocial.equals(other.razaoSocial))
+            return false;
+        return true;
     }
+
+    @Override
+    public String toString() {
+        return "Empresa [cnpj=" + cnpj + ", nome=" + nome + ", razaoSocial=" + razaoSocial + ", proprietarios=" + proprietarios + "]";
+    }
+
 }

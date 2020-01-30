@@ -1,85 +1,100 @@
 package br.com.contmatic.empresa;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.After;
-import org.junit.AfterClass;
+import java.util.Arrays;
+
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class EmpresaTest {
-    private static Empresa empresa = new Empresa("95128290000160", "Sim Tv Assistencia", "44012901", "Av Eduardo Prado 385", "Trabalhar pelo bem comum", "Luis Carlos Ribeiro");
-    private static Empresa empresa2 = new Empresa("95128290000160", "Sim Tv Assistencia", "44012901", "Av Eduardo Prado 385", "Trabalhar pelo bem comum", "Luis Carlos Ribeiro");
+    private static Empresa empresa = new Empresa("95128290000160", "Sim Tv Assistencia", "Trabalhar pelo bem comum", Arrays.asList("Luis Carlos Ribeiro"));
+    
+    @Test
+    public void deve_comparar_as_classes_com_hashcode() {
+        Empresa empresa1 = new Empresa("95128290000160", "Sim Tv Assistencia", "Trabalhar pelo bem comum", Arrays.asList("Luis Carlos Ribeiro"));
+        Empresa empresa2 = new Empresa("95128290000160", "Sim Tv Assistencia", "Trabalhar pelo bem comum", Arrays.asList("Luis Carlos Ribeiro"));
+        assertEquals(empresa1.hashCode(), empresa2.hashCode());
+    }
+    
+    @Test
+    public void deve_comparar_as_classes_com_equals() {
+        Empresa empresa1 = new Empresa("95128290000160", "Sim Tv Assistencia", "Trabalhar pelo bem comum", Arrays.asList("Luis Carlos Ribeiro"));
+        Empresa empresa2 = new Empresa("95128290000160", "Sim Tv Assistencia", "Trabalhar pelo bem comum", Arrays.asList("Luis Carlos Ribeiro"));
+        assertEquals(empresa1, empresa2);
+    }
+    
+    @Test
+    public void deve_verificar_caracteres_cnpj() {
+        assertEquals("00000000000000".length(), empresa.getCnpj().length());
+    }
+    
+    @Test
+    public void deve_verificar_cnpj_valido() {
+        empresa.setCnpj("95128290000160");
+    }
 
-    @BeforeClass
-    public static void devera_verificar_cnpj() throws Exception {
-        String cnpj = "95128290000160";
-        empresa.setCnpj(cnpj);
-        assertTrue(empresa.getCnpj().equals(cnpj));
+    @Test
+    public void deve_verificar_cnpj_nulo() {
+        assertNotNull(empresa.getCnpj());
     }
 
     @Before
-    public void devera_verificar_nome_empresa() {
-        assertTrue(empresa.getNome().equals("Sim Tv Assistencia"));
+    public void deve_verificar_nome_empresa() {
+        assertTrue(StringUtils.equals("Sim Tv Assistencia", empresa.getNome()));
     }
 
     @Test
-    public void devera_verificar_tel() {
-        assertEquals("44012901", empresa.getTelefone());
-    }
-
-    @Test
-    public void devera_verificar_endereco() {
-        assertTrue(empresa.getEndereco().equals("Av Eduardo Prado 385"));
-    }
-
-    @Test
-    public void devera_verificar_razao_social() {
-        assertTrue(empresa.getRazaoSocial().equals("Trabalhar pelo bem comum"));
-    }
-
-    @Test
-    public void devera_verificar_proprietario() {
-        assertTrue(empresa.getProprietarios().equals("Luis Carlos Ribeiro"));
-    }
-
-    @Test
-    public void nao_deve_verificar_cnpj() throws Exception {
-        empresa2.setCnpj("95128290000170");
-        assertNotEquals(empresa2.getCnpj(), empresa.getCnpj());
-    }
-
-    @Test
-    public void nao_deve_verificar_nome_empresa() {
-        empresa2.setNome("Pastel Do Marcelão");
-        assertNotEquals(empresa2.getNome(), empresa.getNome());
-    }
-
-    @Test
-    public void nao_deve_verificar_tel() throws Exception {
-        empresa2.setTelefone("20117414");
-        assertNotEquals(empresa2.getTelefone(), empresa.getTelefone());
-    }
-
-    @Test
-    public void nao_deve_verificar_endereco() throws Exception {
-        empresa2.setEndereco("Av Itamarati 345");
-        assertNotEquals(empresa2.getEndereco(), empresa.getEndereco());
-    }
-
-    @After
-    public void nao_deve_verificar_razao_social() throws Exception {
-        empresa2.setRazaoSocial("Deixar nossos clientes satisfeitos com nossos serviços");
-        ;
-        assertNotEquals(empresa2.getRazaoSocial(), empresa.getRazaoSocial());
+    public void deve_verificar_razao_social() {
+        assertTrue(StringUtils.equals("Trabalhar Pelo Bem Comum", empresa.getRazaoSocial()));
     }
     
-    @AfterClass
-    public static void nao_deve_verificar_proprietario() throws Exception {
-        empresa2.setProprietarios("Luis Carlos");
-        assertNotEquals(empresa2.getProprietarios(), empresa.getProprietarios());
+    @Test
+    public void deve_armazenar_nome_empresa() {
+        empresa.setNome("Sim Tv Assistencia");
+    }
+    
+    @Test
+    public void deve_aceitar_razao_social_com_espacos() {
+        empresa.setRazaoSocial("Trabalhar Pelo Bem Comum");
+    }
+
+    @Test
+    public void deve_aceitar_nulo_proprietario() {
+        assertNotNull(empresa.getProprietarios());
+    }
+    
+    @Test
+    public void deve_armazenar_nome_completo_proprietario() {
+        empresa.setProprietarios(Arrays.asList("Luis Carlos Ribeiro"));
+    }
+   
+
+    @Test(expected = NullPointerException.class)
+    public void neo_deve_retornar_cnpj_null() {
+        empresa.setCnpj(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void nao_deve_retornar_cnpj_valido() {
+        empresa.setCnpj("38098467729");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void nao_deve_validar_cnpj_com_especiais() {
+        empresa.setCnpj("9512@290000160");
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void nao_deve_aceitar_proprietario_null() {
+        empresa.setProprietarios(null);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void neo_deve_aceitar_razao_social_sem_espaco() {
+        empresa.setRazaoSocial("Nenhuma");
     }
 }

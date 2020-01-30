@@ -1,6 +1,6 @@
-package br.com.contmatic.features;
+package br.com.contmatic.cliente;
 
-import javax.naming.InsufficientResourcesException;
+import org.apache.commons.lang3.StringUtils;
 
 public class Orcamento {
 
@@ -30,6 +30,7 @@ public class Orcamento {
     }
 
     public void setMarca(String marca) {
+        verificaMarcaNula(marca);
         verificaNumeroMarca(marca);
         this.marca = marca;
     }
@@ -39,28 +40,32 @@ public class Orcamento {
     }
 
     public void setDefeito(String defeito) {
-        try {
-            verificaDefeitoValido(defeito);
-        } catch (InsufficientResourcesException e) {
-            e.printStackTrace();
-        }
+        verificaDefeitoNull(defeito);
+        verificaDefeitoCompleto(defeito);
         this.defeito = defeito;
     }
 
-    private void verificaNumeroMarca(String marca) {
-        for(int i = 0 ; marca.length() > i ; i++) {
-            if (Character.isDigit(marca.charAt(i))) {
-                throw new IllegalArgumentException();
-            }
+    private void verificaMarcaNula(String marca) {
+        if (StringUtils.isEmpty(marca)) {
+            throw new NullPointerException("A marca não pode ficar nula!");
         }
     }
 
-    private void verificaDefeitoValido(String defeito) throws InsufficientResourcesException {
-        if (defeito == null) {
-            throw new InsufficientResourcesException("O campo de defeito não pode estar vazio");
+    private void verificaNumeroMarca(String marca) {
+        if (StringUtils.isNumeric(marca)) {
+            throw new IllegalArgumentException("A marca nao pode conter numeros");
         }
+    }
+
+    private void verificaDefeitoCompleto(String defeito) {
         if (defeito.contains(" ")) {
             throw new IllegalArgumentException("O defeito precisa ser especificado de maneira legivel e detalhado");
+        }
+    }
+
+    private void verificaDefeitoNull(String defeito) {
+        if (StringUtils.isEmpty(defeito)) {
+            throw new NullPointerException("O campo de defeito não pode estar vazio");
         }
     }
 }

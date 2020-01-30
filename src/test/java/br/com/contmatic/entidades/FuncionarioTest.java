@@ -1,13 +1,36 @@
 package br.com.contmatic.entidades;
 
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import br.com.contmatic.empresa.Funcionario;
+
 public class FuncionarioTest {
     Funcionario funcionario = new Funcionario("Marcela Oliveira", "Atendente", 0, 1500);
-    Funcionario funcionario2 = new Funcionario("Marcela Oliveira", "Atendente", 0, 1500);
+    
+    @Test
+    public void verifica_classes_iguais_hashcode() {
+        Funcionario funcionario1= new Funcionario("Marcela Oliveira", "Atendente", 0, 1500);
+        Funcionario funcionario2 = new Funcionario("Marcela Oliveira", "Atendente", 0, 1500);
+        
+        assertEquals(funcionario1.hashCode(), funcionario2.hashCode());
+    }
+    
+    @Test
+    public void verifica_classes_iguais_equals() {
+        Funcionario funcionario1= new Funcionario("Marcela Oliveira", "Atendente", 0, 1500);
+        Funcionario funcionario2 = new Funcionario("Marcela Oliveira", "Atendente", 0, 1500);
+        
+        assertEquals(funcionario1, funcionario2);
+    }
+    
+    @Test
+    public void deve_armazenar_nome_funcionario() {
+        funcionario.setNome("Marcelo Luis Pereira");
+    }
 
     @Test
     public void deve_verificar_nome() {
@@ -18,46 +41,71 @@ public class FuncionarioTest {
     @Test
     public void deve_verificar_cargo() {
 
-        assertTrue(funcionario.getCargoNome().equals("Atendente"));
+        assertTrue(funcionario.getCargo().equals("Atendente"));
     }
 
     @Test
-    public void deve_gerar_e_verificar_codigo() {
-        funcionario.setCodigo(funcionario2.getNome().hashCode());
-        funcionario2.setCodigo(funcionario.getNome().hashCode());
-        assertTrue(funcionario2.getCodigo() == funcionario.getCodigo());
-        assertTrue(funcionario.equals(funcionario2));
+    public void deve_armazenar_codigo() {
+        funcionario.setCodigo(150);
+    }
+    
+    @Test
+    public void deve_armazenar_cargo() {
+        funcionario.setCargo("Atendente");
+    }
+    
+    @Test
+    public void deve_verificar_codigo_not_null() {
+        assertNotNull(funcionario.getCodigo());
     }
 
     @Test
-    public void deve_verificar_salario() {
-        assertTrue(funcionario.getSalario() == funcionario2.getSalario());
+    public void deve_verificar_salario_nao_nulo() {
+        assertNotNull(funcionario.getSalario());
+    }
+    
+    @Test
+    public void deve_armazenar_salario() {
+        funcionario.setSalario(1500);
     }
 
     @Test
-    public void nao_deve_verificar_nome() throws Exception {
-        funcionario.setNome("Jose Paulo");
-        String nome = funcionario2.getNome();
-        assertNotEquals(funcionario.getNome(), nome);
+    public void deve_verificar_nome_nao_nulo() throws Exception {
+        assertNotNull(funcionario.getNome());
+    }
+    
+    @Test
+    public void deve_verificar_cargo_nao_nulo() throws Exception {
+        assertNotNull(funcionario.getCargo());
     }
 
-    @Test
+    @Test(expected = NullPointerException.class)
     public void nao_deve_verificar_cargo() {
-        funcionario.setCargoNome("Atenden");
-        String cargo = funcionario2.getCargoNome();
-        assertNotEquals(funcionario.getCargoNome(), cargo);
+        funcionario.setCargo(null);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void nao_deve_armazenar_cargo_exixtente() {
+        funcionario.setCargo("Faxineira");
     }
 
-    @Test
-    public void nao_deve_verificar_salario() {
-        funcionario.setSalario(2000);
-        double cargo = funcionario2.getSalario();
-        assertNotEquals(funcionario.getSalario(), cargo);
+    @Test(expected = NullPointerException.class)
+    public void nao_deve_armazenar_salario_nao_nulo() {
+        funcionario.setSalario(0);
     }
-
-    @Test
-    public void nao_deve_verificar_codigo() {
-        funcionario.setCodigo(funcionario.getNome().hashCode());
-        assertNotEquals(funcionario.getCodigo(), funcionario2.getCodigo());
+    
+    @Test(expected = NullPointerException.class)
+    public void nao_deve_armazenar_nome_nulo() {
+        funcionario.setNome(null);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void nao_deve_armazenar_nome_incompleto() {
+        funcionario.setNome("MarcelaOliveira");
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void nao_deve_armazenar_nome_numerico() {
+        funcionario.setNome("M3rcela Olive1ra");
     }
 }
