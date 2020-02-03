@@ -12,6 +12,8 @@ public class Endereco {
 
     private static final String CARACTERE_INVALIDO = "Caracteres Inválidos";
 
+    String rua;
+
     String bairro;
 
     int numero;
@@ -19,6 +21,9 @@ public class Endereco {
     String regiao;
 
     String cep;
+
+    public Endereco() {
+    }
 
     public Endereco(String rua, int numero, String bairro, String regiao, String cep) {
         super();
@@ -30,7 +35,7 @@ public class Endereco {
     }
 
     public String getRua() {
-        return bairro;
+        return rua;
     }
 
     public int getNumero() {
@@ -52,7 +57,7 @@ public class Endereco {
     public void setRua(String rua) {
         verificaSeRuaENull(rua);
         verificaSeRuaContemNumero(rua);
-        verificaSeRuaContemEmpeciais(rua);
+        verificaSeRuaContemEspeciais(rua);
         this.bairro = rua;
     }
 
@@ -77,7 +82,7 @@ public class Endereco {
     public void setCep(String cep) {
         verificaSeCepENull(cep);
         verificaSeCepContemOitoDigitos(cep);
-        verificaSeCepContemEmpeciais(cep);
+        verificaSeCepContemEspeciais(cep);
         this.cep = cep;
     }
 
@@ -93,71 +98,118 @@ public class Endereco {
         }
     }
 
-    private void verificaSeRuaContemEmpeciais(String rua) {
+    private void verificaSeRuaContemEspeciais(String rua) {
         if (rua.contains("!") || rua.contains("@") || rua.contains("#") || rua.contains("$") || rua.contains("%") || rua.contains("¨") || rua.contains("&") || rua.contains("*") || rua.contains("(") ||
             rua.contains(")") || rua.contains("-") || rua.contains("+") || rua.contains("/") || rua.contains(",") || rua.contains("?") || rua.contains(";") || rua.contains(":") ||
             rua.contains("\\") || rua.contains("'")) {
             throw new IllegalArgumentException(CARACTERE_INVALIDO);
         }
     }
-    
+
     private void verificaSeNumeroEZero(int numero) {
         if (numero == 0) {
             throw new NullPointerException(ENTRADA_NULA);
         }
     }
-    
+
     private void verificaSeBairroEnulo(String bairro) {
         if (StringUtils.isEmpty(bairro)) {
             throw new NullPointerException(ENTRADA_NULA);
         }
     }
-    
+
     private void verificaSeBairroContemNumero(String bairro) {
         if (StringUtils.isNumeric(bairro)) {
-            throw new NullPointerException(ENTRADA_NULA);
+            throw new IllegalArgumentException(ENTRADA_NULA);
         }
     }
-    
+
     private void verificaSeBairroContemEmpeciais(String bairro) {
-        if (bairro.contains("!") || bairro.contains("@") || bairro.contains("#") || bairro.contains("$") || bairro.contains("%") || bairro.contains("¨") || bairro.contains("&") || bairro.contains("*") || bairro.contains("(") ||
-            bairro.contains(")") || bairro.contains("-") || bairro.contains("+") || bairro.contains("/") || bairro.contains(",") || bairro.contains("?") || bairro.contains(";") || bairro.contains(":") ||
-            bairro.contains("\\") || bairro.contains("'")) {
+        if (bairro.contains("!") || bairro.contains("@") || bairro.contains("#") || bairro.contains("$") || bairro.contains("%") || bairro.contains("¨") || bairro.contains("&") ||
+            bairro.contains("*") || bairro.contains("(") || bairro.contains(")") || bairro.contains("-") || bairro.contains("+") || bairro.contains("/") || bairro.contains(",") ||
+            bairro.contains("?") || bairro.contains(";") || bairro.contains(":") || bairro.contains("\\") || bairro.contains("'")) {
             throw new IllegalArgumentException(CARACTERE_INVALIDO);
         }
     }
-    
+
     private void verificaSeRegiaoEnulo(String regiao) {
         if (StringUtils.isEmpty(regiao)) {
             throw new NullPointerException(ENTRADA_NULA);
         }
     }
-    
+
     private void verificaSeRegiaoContemNumero(String regiao) {
         if (StringUtils.isNumeric(regiao)) {
-            throw new NullPointerException(ENTRADA_NULA);
+            throw new IllegalArgumentException(ENTRADA_NULA);
         }
     }
-    
+
     private void verificaSeCepContemOitoDigitos(String cep) {
         if (cep.length() != 8) {
             throw new IllegalArgumentException(ENTRADA_INVALIDA);
         }
     }
-    
+
     private void verificaSeCepENull(String cep) {
         if (StringUtils.isEmpty(cep)) {
-            throw new IllegalArgumentException(ENTRADA_NULA);
+            throw new NullPointerException(ENTRADA_NULA);
         }
     }
-    
-    private void verificaSeCepContemEmpeciais(String cep) {
+
+    private void verificaSeCepContemEspeciais(String cep) {
         if (cep.contains("!") || cep.contains("@") || cep.contains("#") || cep.contains("$") || cep.contains("%") || cep.contains("¨") || cep.contains("&") || cep.contains("*") || cep.contains("(") ||
-            cep.contains(")") || cep.contains("-") || cep.contains("+") || cep.contains("/") || cep.contains(",") || cep.contains("?") || cep.contains(";") || cep.contains(":") ||
-            cep.contains("\\") || cep.contains("'")) {
+            cep.contains(")") || cep.contains("-") || cep.contains("+") || cep.contains("/") || cep.contains(",") || cep.contains("?") || cep.contains(";") || cep.contains(":") || cep.contains("\\") ||
+            cep.contains("'")) {
             throw new IllegalArgumentException(CARACTERE_INVALIDO);
         }
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((bairro == null) ? 0 : bairro.hashCode());
+        result = prime * result + ((cep == null) ? 0 : cep.hashCode());
+        result = prime * result + numero;
+        result = prime * result + ((regiao == null) ? 0 : regiao.hashCode());
+        result = prime * result + ((rua == null) ? 0 : rua.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Endereco other = (Endereco) obj;
+        if (bairro == null) {
+            if (other.bairro != null)
+                return false;
+        } else if (!bairro.equals(other.bairro))
+            return false;
+        if (cep == null) {
+            if (other.cep != null)
+                return false;
+        } else if (!cep.equals(other.cep))
+            return false;
+        if (numero != other.numero)
+            return false;
+        if (regiao == null) {
+            if (other.regiao != null)
+                return false;
+        } else if (!regiao.equals(other.regiao))
+            return false;
+        if (rua == null) {
+            if (other.rua != null)
+                return false;
+        } else if (!rua.equals(other.rua))
+            return false;
+        return true;
+    }
     
     
+
 }

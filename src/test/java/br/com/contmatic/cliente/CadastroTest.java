@@ -4,197 +4,211 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
 import org.apache.commons.lang3.StringUtils;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import br.com.six2six.fixturefactory.Fixture;
+import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
+
 public class CadastroTest {
-    Cadastro cadastro = new Cadastro("Jose Garcia", "jose.garcia@gmail.com", "sapinho123", "46720276539", "657849875", "Rua Fada Selvagem 234");
+    Cadastro cadastro;
+
+    @BeforeClass
+    public static void setUp() {
+        FixtureFactoryLoader.loadTemplates("br.com.contmatic.FixtureFactory");
+    }
 
     @Test
     public void deve_verificar_igualdade_de_classes_com_hashcode() {
-        Cadastro cadastro1 = new Cadastro("Jose Garcia", "jose.garcia@gmail.com", "sapinho123", "46720276539", "657849875", "Rua Fada Selvagem 234");
-        Cadastro cadastro2 = new Cadastro("Jose Garcia", "jose.garcia@gmail.com", "sapinho123", "46720276539", "657849875", "Rua Fada Selvagem 234");
+        Cadastro cadastro1 = new Cadastro("Jose Garcia", "jose.garcia@gmail.com", "sapinho123", "46720276539", "657849875");
+        Cadastro cadastro2 = new Cadastro("Jose Garcia", "jose.garcia@gmail.com", "sapinho123", "46720276539", "657849875");
 
         assertEquals(cadastro1.hashCode(), cadastro2.hashCode());
     }
-    
+
     @Test
     public void deve_verificar_igualdade_de_classes_com_equals() {
-        Cadastro cadastro1 = new Cadastro("Jose Garcia", "jose.garcia@gmail.com", "sapinho123", "46720276539", "657849875", "Rua Fada Selvagem 234");
-        Cadastro cadastro2 = new Cadastro("Jose Garcia", "jose.garcia@gmail.com", "sapinho123", "46720276539", "657849875", "Rua Fada Selvagem 234");
-
+        Cadastro cadastro1 = new Cadastro("Jose Garcia", "jose.garcia@gmail.com", "sapinho123", "46720276539", "657849875");
+        Cadastro cadastro2 = new Cadastro("Jose Garcia", "jose.garcia@gmail.com", "sapinho123", "46720276539", "657849875");
         assertEquals(cadastro1, cadastro2);
     }
 
     @Test
-    public void deve_armazenar_nome_cliente() {
-        cadastro.setNome("Jose Garcia");
+    public void deve_armazenar_nome() {
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        user.setNome("Marcio Jose");
     }
 
     @Test
     public void deve_verificar_nome_null() {
-        assertNotNull(cadastro.getNome());
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        assertNotNull(user.getNome());
     }
 
     @Test
     public void deve_verificar_se_nome_contem_numerico() {
-        assertFalse(StringUtils.isNumeric(cadastro.getNome()));
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        assertFalse(StringUtils.isNumeric(user.getNome()));
     }
 
     @Test
     public void deve_armazenar_email() {
-        cadastro.setEmail("jose.garcia@gmail.com");
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        user.setEmail("jose.garcia@gmail.com");
     }
-    
+
     @Test
     public void deve_verificar_email_null() {
-        assertNotNull(cadastro.getEmail());
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        assertNotNull(user.getEmail());
     }
-    
+
     @Test
     public void deve_armazenar_senha() {
-        cadastro.setSenha("sapinho123");
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        user.setSenha("sapinho123");
     }
-    
+
     @Test
     public void deve_verificar_senha_not_null() {
-        assertNotNull(cadastro.getSenha());
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        assertNotNull(user.getSenha());
     }
-    
+
     @Test
     public void deve_verificar_senha_alphanumerica() {
-        assertTrue(StringUtils.isAlphanumeric(cadastro.getSenha()));
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        assertTrue(StringUtils.isAlphanumeric(user.getSenha()));
     }
 
     @Test
     public void deve_armazenar_cpf() {
-        cadastro.setCpf("50740457896");
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        user.setCpf("50740457896");
     }
-    
+
     @Test
     public void deve_verificar_cpf_not_null() {
-        assertNotNull(cadastro.getCpf());
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        assertNotNull(user.getCpf());
     }
-    
+
     @Test
     public void deve_verificar_cpf_somente_numerico() {
-        assertTrue(StringUtils.isNumeric(cadastro.getCpf()));
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        assertTrue(StringUtils.isNumeric(user.getCpf()));
     }
 
     @Test
     public void deve_armazenar_rg() {
-        cadastro.setRg("488178678");
-    }
-    
-    @Test
-    public void deve_verificar_rg_not_null() {
-        assertNotNull(cadastro.getRg());
-    }
-    
-    @Test
-    public void dece_verificar_se_rg_contem_apenas_numericos() {
-        assertTrue(StringUtils.isNumeric(cadastro.getRg()));
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        user.setRg("488178678");
     }
 
     @Test
-    public void deve_armazenar_endereco() {
-        cadastro.setEndereco("Rua Highway To Hell 666");
+    public void deve_verificar_rg_not_null() {
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        assertNotNull(user.getRg());
     }
-    
+
     @Test
-    public void deve_verificar_endereco_not_null() {
-        assertNotNull(cadastro.getEndereco());
+    public void dece_verificar_se_rg_contem_apenas_numericos() {
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        assertTrue(StringUtils.isNumeric(user.getRg()));
     }
-    
+
     @Test(expected = AssertionError.class)
     public void nao_deve_verificar_igualdade_de_classes_com_hashcode() {
-        Cadastro cadastro1 = new Cadastro("Jose Garcia", "jose.garcia@gmail.com", "sapinho123", "46720276539", "657849875", "Rua Fada Selvagem 234");
-        Cadastro cadastro2 = new Cadastro("Jose Garcia", "jose.garcia@hotmail.com", "sapinho123", "46720276539", "657849875", "Rua Fada Selvagem 234");
+        Cadastro cadastro1 = new Cadastro("Jose Garcia", "jose.garcia@gmail.com", "sapinho123", "46720276539", "657849875");
+        Cadastro cadastro2 = new Cadastro("Jose Garcia", "jose.garcia@hotmail.com", "sapinho123", "46720276539", "657849875");
 
         assertEquals(cadastro1.hashCode(), cadastro2.hashCode());
     }
-    
+
     @Test(expected = AssertionError.class)
     public void nao_deve_verificar_igualdade_de_classes_com_equals() {
-        Cadastro cadastro1 = new Cadastro("Jose Garcia", "jose.garcia@gmail.com", "sapinho123", "46720276539", "657849875", "Rua Fada Selvagem 234");
-        Cadastro cadastro2 = new Cadastro("Jose Garcia", "jose.garcia@hotmail.com", "sapinho123", "46720276539", "657849875", "Rua Fada Selvagem 234");
+        Cadastro cadastro1 = new Cadastro("Jose Garcia", "jose.garcia@gmail.com", "sapinho123", "46720276539", "657849875");
+        Cadastro cadastro2 = new Cadastro("Jose Garcia", "jose.garcia@hotmail.com", "sapinho123", "46720276539", "657849875");
 
         assertEquals(cadastro1, cadastro2);
     }
-    
+
     @Test(expected = NullPointerException.class)
     public void nao_deve_validar_nome_null() {
-        cadastro.setNome(null);
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        user.setNome(null);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void neo_deve_validar_nome_numerico() {
-        cadastro.setNome("J0se Bonif4cio");
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        user.setNome("J0se Bonif4cio");
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void neo_deve_validar_nome_com_especiais() {
-        cadastro.setNome("J@se Bon!facio");
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        user.setNome("J@se Bon!facio");
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void neo_deve_validar_nome_sem_espaco() {
-        cadastro.setNome("JoseBonifacio");
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        user.setNome("JoseBonifacio");
     }
-    
+
     @Test(expected = NullPointerException.class)
     public void neo_deve_validar_email_nulo() {
-        cadastro.setEmail(null);
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        user.setEmail(null);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void neo_deve_validar_email_sem_dominio() {
-        cadastro.setEmail("jose.bonifacio@.com");
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        user.setEmail("jose.bonifacio@.com");
     }
-    
+
     @Test(expected = NullPointerException.class)
     public void nao_deve_aceitar_cpf_null() {
-        cadastro.setCpf(null);
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        user.setCpf(null);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void nao_deve_aceitar_cpf_com_menos_de_quatorze_caracteres() {
-        cadastro.setCpf("507404");
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        user.setCpf("507404");
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void nao_deve_aceitar_cpf_com_caracteres() {
-        cadastro.setCpf("507.404.578");
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        user.setCpf("507.404.578");
     }
-    
+
     @Test(expected = NullPointerException.class)
     public void nao_deve_aceitar_rg_nulo() {
-        cadastro.setRg(null);
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        user.setRg(null);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void nao_deve_aceitar_rg_caractere() {
-        cadastro.setRg("488.8678");
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        user.setRg("488.8678");
     }
-   
+
     @Test(expected = NullPointerException.class)
-    public void nao_deve_aceitar_endereco_nulo() {
-        cadastro.setEndereco(null);
+    public void nao_deve_aceitar_senha_nula() {
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        user.setSenha(null);
     }
-    
-    @Test(expected = IllegalArgumentException.class)
-    public void nao_deve_aceitar_endereco_caractere() {
-        cadastro.setEndereco("Rua H!ghway to Hell 666");
-    }
-    
-    @Test(expected = NullPointerException.class)
-    public void  nao_deve_aceitar_senha_nula() {
-        cadastro.setSenha(null);
-    }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void nao_deve_aceitar_senha_pequena() {
-        cadastro.setSenha("123");
+        Cadastro user = Fixture.from(Cadastro.class).gimme("cadastro");
+        user.setSenha("123");
     }
 }

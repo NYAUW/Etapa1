@@ -21,17 +21,16 @@ public class Cadastro {
     private String cpf;
 
     private String rg;
-
-    private String endereco;
-
-    public Cadastro(String nome, String email, String senha, String cpf, String rg, String endereco) {
-        super();
+    
+    public Cadastro() {
+    }
+    
+    public Cadastro(String nome, String email, String senha, String cpf, String rg) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.cpf = cpf;
         this.rg = rg;
-        this.endereco = endereco;
     }
 
     public String getNome() {
@@ -54,9 +53,6 @@ public class Cadastro {
         return rg;
     }
 
-    public String getEndereco() {
-        return endereco;
-    }
 
     public void setNome(String nome) {
         verificaNomeNull(nome);
@@ -89,12 +85,6 @@ public class Cadastro {
         verificaRgNUll(rg);
         verificaCaracteressRg(rg);
         this.rg = rg;
-    }
-
-    public void setEndereco(String endereco) {
-        verificaSeEnderecoENull(endereco);
-        verificaCaracteresEndereco(endereco);
-        this.endereco = endereco;
     }
 
     private void verificaEspeciaisNome(String nome) {
@@ -167,21 +157,6 @@ public class Cadastro {
         }
     }
 
-    private void verificaCaracteresEndereco(String endereco) {
-        if (endereco.contains("!") || endereco.contains("@") || endereco.contains("#") || endereco.contains("$") || endereco.contains("%") || endereco.contains("¨") || endereco.contains("&") ||
-            endereco.contains("*") || endereco.contains("(") || endereco.contains(")") || endereco.contains("-") || endereco.contains("+") || endereco.contains("/") || endereco.contains(".") ||
-            endereco.contains(",") || endereco.contains("?") || endereco.contains(";") || endereco.contains(":") || endereco.contains(">") || endereco.contains("<") || endereco.contains("\\") ||
-            endereco.contains("'")) {
-            throw new IllegalArgumentException(CARACTERE_INVALIDO);
-        }
-    }
-
-    private void verificaSeEnderecoENull(String endereco) {
-        if (StringUtils.isEmpty(endereco)) {
-            throw new NullPointerException(ENTRADA_NULA);
-        }
-    }
-
     private void verificaTamanhoSenha(String senha) {
         if (senha.length() < 5) {
             throw new IllegalArgumentException(ENTRADA_INVALIDA);
@@ -200,7 +175,6 @@ public class Cadastro {
         int result = 1;
         result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
         result = prime * result + ((email == null) ? 0 : email.hashCode());
-        result = prime * result + ((endereco == null) ? 0 : endereco.hashCode());
         result = prime * result + ((nome == null) ? 0 : nome.hashCode());
         result = prime * result + ((rg == null) ? 0 : rg.hashCode());
         result = prime * result + ((senha == null) ? 0 : senha.hashCode());
@@ -226,11 +200,6 @@ public class Cadastro {
                 return false;
         } else if (!email.equals(other.email))
             return false;
-        if (endereco == null) {
-            if (other.endereco != null)
-                return false;
-        } else if (!endereco.equals(other.endereco))
-            return false;
         if (nome == null) {
             if (other.nome != null)
                 return false;
@@ -248,6 +217,4 @@ public class Cadastro {
             return false;
         return true;
     }
-    
-    
 }

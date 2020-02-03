@@ -36,6 +36,7 @@ public class Orcamento {
     }
 
     public void setSerial(String serial) {
+        verificaSerialNulo(serial);
         this.serial = serial;
     }
 
@@ -56,9 +57,15 @@ public class Orcamento {
             throw new IllegalArgumentException("A marca nao pode conter numeros");
         }
     }
+    
+    public void verificaSerialNulo(String serial) {
+        if (StringUtils.isEmpty(serial)) {
+            throw new NullPointerException("O serial não pode ficar nulo!");
+        }
+    }
 
     private void verificaDefeitoCompleto(String defeito) {
-        if (defeito.contains(" ")) {
+        if (!defeito.contains(" ")) {
             throw new IllegalArgumentException("O defeito precisa ser especificado de maneira legivel e detalhado");
         }
     }
@@ -68,4 +75,43 @@ public class Orcamento {
             throw new NullPointerException("O campo de defeito não pode estar vazio");
         }
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((defeito == null) ? 0 : defeito.hashCode());
+        result = prime * result + ((marca == null) ? 0 : marca.hashCode());
+        result = prime * result + ((serial == null) ? 0 : serial.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Orcamento other = (Orcamento) obj;
+        if (defeito == null) {
+            if (other.defeito != null)
+                return false;
+        } else if (!defeito.equals(other.defeito))
+            return false;
+        if (marca == null) {
+            if (other.marca != null)
+                return false;
+        } else if (!marca.equals(other.marca))
+            return false;
+        if (serial == null) {
+            if (other.serial != null)
+                return false;
+        } else if (!serial.equals(other.serial))
+            return false;
+        return true;
+    }
+    
+    
 }

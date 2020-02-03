@@ -17,6 +17,9 @@ public class Telefone {
     String ramal;
     
     String tipo;
+    
+    public Telefone() {
+    }
 
     public Telefone(String numero, String ramal, String tipo) {
         super();
@@ -40,8 +43,7 @@ public class Telefone {
     public void setNumero(String numero) {
         verificaSeTelefoneENull(numero);
         verificaTelefoneCaracteres(numero);
-        verificaSeTelefoneContemApenasNumeros(numero);
-        verificaTelefoneTemDezDigitos(numero);
+        verificaEspeciaisNumero(numero);
         this.numero = numero;
     }
 
@@ -59,27 +61,24 @@ public class Telefone {
     }
     
     private void verificaTelefoneCaracteres(String numero) {
-        if (StringUtils.isAlphanumeric(numero)) {
-            throw new IllegalArgumentException(CARACTERE_INVALIDO);
-        }
-    }
-    
-    private void verificaTelefoneTemDezDigitos(String numero) {
-        if (numero.length() != 10) {
-            throw new IllegalArgumentException(CARACTERE_INVALIDO);
-        }
-    }
-    
-    private void verificaSeTelefoneContemApenasNumeros(String numero) {
-        if (!StringUtils.isNumeric(numero)) {
+        if (StringUtils.isAlpha(numero)) {
             throw new IllegalArgumentException(CARACTERE_INVALIDO);
         }
     }
     
     private void verificaSeTelefoneENull(String numero) {
         if (StringUtils.isEmpty(numero)) {
-            throw new IllegalArgumentException(ENTRADA_NULA);
+            throw new NullPointerException(ENTRADA_NULA);
         }
+    }
+    
+    public void verificaEspeciaisNumero(String numero) {
+        if(numero.contains("!") || numero.contains("@") || numero.contains("#") || numero.contains("$") || numero.contains("%") || numero.contains("¨")
+                || numero.contains("&") || numero.contains("*") || numero.contains("(") || numero.contains(")") || numero.contains("-") || numero.contains("+") || numero.contains("/") || 
+                numero.contains(".") || numero.contains(",") || numero.contains("?") || numero.contains(";") || numero.contains(":") || numero.contains(">") || numero.contains("<") || numero.contains("\\") 
+                || numero.contains("'")) {
+                 throw new IllegalArgumentException(CARACTERE_INVALIDO);
+             }
     }
     
     private void verificaSeRamalContemExatosTresDigitos(String ramal) {
@@ -89,14 +88,14 @@ public class Telefone {
     }
     
     private void verificaSeRamalContemCaracteres(String ramal) {
-        if (StringUtils.isAlphanumeric(ramal)) {
+        if (StringUtils.isAlpha(ramal)) {
             throw new IllegalArgumentException(CARACTERE_INVALIDO);
         }
     }
     
     private void verificaSeRamalENull(String ramal) {
         if (StringUtils.isEmpty(ramal)) {
-            throw new IllegalArgumentException(ENTRADA_NULA);
+            throw new NullPointerException(ENTRADA_NULA);
         }
     }
     
@@ -108,7 +107,46 @@ public class Telefone {
     
     private void verificaSeTipoENUll(String tipo) {
         if (StringUtils.isEmpty(tipo)) {
-            throw new IllegalArgumentException(ENTRADA_NULA);
+            throw new NullPointerException(ENTRADA_NULA);
         }
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((numero == null) ? 0 : numero.hashCode());
+        result = prime * result + ((ramal == null) ? 0 : ramal.hashCode());
+        result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Telefone other = (Telefone) obj;
+        if (numero == null) {
+            if (other.numero != null)
+                return false;
+        } else if (!numero.equals(other.numero))
+            return false;
+        if (ramal == null) {
+            if (other.ramal != null)
+                return false;
+        } else if (!ramal.equals(other.ramal))
+            return false;
+        if (tipo == null) {
+            if (other.tipo != null)
+                return false;
+        } else if (!tipo.equals(other.tipo))
+            return false;
+        return true;
+    }
+    
+    
 }

@@ -141,9 +141,4 @@ public class Empresa {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "Empresa [cnpj=" + cnpj + ", nome=" + nome + ", razaoSocial=" + razaoSocial + ", proprietarios=" + proprietarios + "]";
-    }
-
 }

@@ -1,99 +1,110 @@
 package br.com.contmatic.cliente;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import org.apache.commons.lang3.StringUtils;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.com.contmatic.cliente.Orcamento;
+import br.com.six2six.fixturefactory.Fixture;
+import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
 public class OrcamentoTest {
+    
+    @BeforeClass
+    public static void setUp() {
+        FixtureFactoryLoader.loadTemplates("br.com.contmatic.FixtureFactory");
+    }
 
-    @Test
-    public void deve_armazernar_a_marca() {
-        Orcamento orcamento = new Orcamento("Sony", "HTC2752", "NAO LIGA");
-        assertTrue(orcamento.getMarca().equals("Sony"));
+    @Before
+    public void deve_verificar_igualdade_classes_hashcode() {
+        Orcamento orcamento = new Orcamento("Sony", "HYT367", "Nao Liga");
+        Orcamento orcamento2 = new Orcamento("Sony", "HYT367", "Nao Liga");
+
+        assertEquals(orcamento.hashCode(), orcamento2.hashCode());
+    }
+
+    @Before
+    public void deve_verificar_igualdade_classes_equals() {
+        Orcamento orcamento = new Orcamento("Sony", "HYT367", "Nao Liga");
+        Orcamento orcamento2 = new Orcamento("Sony", "HYT367", "Nao Liga");
+
+        assertEquals(orcamento, orcamento2);
     }
 
     @Test
-    public void nao_deve_armazernar_a_marca() {
-        Orcamento orcamento = new Orcamento("Nintendo", "HTC2752", "NAO LIGA");
-        assertFalse(orcamento.getMarca().equals("Sony"));
+    public void deve_verificvar_marca_not_null() {
+        Orcamento orcamento = Fixture.from(Orcamento.class).gimme("orcamento");
+        assertNotNull(orcamento.getMarca());
     }
 
     @Test
-    public void deve_armazernar_a_marca_hashcode() {
-        Orcamento orcamento = new Orcamento("Sony", "HTC2752", "NAO LIGA");
-        assertEquals(orcamento.getMarca().hashCode(), orcamento.getMarca().hashCode());
+    public void deve_verificar_marca_numerica() {
+        Orcamento orcamento = Fixture.from(Orcamento.class).gimme("orcamento");
+        assertTrue(StringUtils.isAlpha(orcamento.getMarca()));
     }
 
     @Test
-    public void nao_deve_armazernar_a_marca_hashcode() throws Exception {
-        Orcamento orcamento = new Orcamento("Sony", "HTC2752", "NAO LIGA");
-        Orcamento orcamento2 = new Orcamento("Sony", "HTC2752", "NAO LIGA");
-        orcamento2.setMarca("Nitendo");
-        String marca = orcamento2.getMarca();
-        assertNotEquals(orcamento.getMarca().hashCode(), marca.hashCode());
+    public void deve_verificar_serial_nulo() {
+        Orcamento orcamento = Fixture.from(Orcamento.class).gimme("orcamento");
+        assertNotNull(orcamento.getSerial());
     }
 
     @Test
-    public void deve_armazenar_serial() {
-        Orcamento orcamento = new Orcamento("Philips", "XVC3421", "NAO CONECTA");
-
-        assertTrue(orcamento.getSerial().equals("XVC3421"));
+    public void deve_verificar_defeito_null() {
+        Orcamento orcamento = Fixture.from(Orcamento.class).gimme("orcamento");
+        assertNotNull(orcamento.getDefeito());
     }
 
     @Test
-    public void nao_deve_armazenar_serial() {
-        Orcamento orcamento = new Orcamento("Philips", "XVC3421", "NAO CONECTA");
-
-        assertFalse(orcamento.getSerial().equals("XVX3431"));
+    public void deve_setar_marca() {
+        Orcamento orcamento = Fixture.from(Orcamento.class).gimme("orcamento");
+        orcamento.setMarca("Sony");
     }
-
+    
     @Test
-    public void deve_armazenar_serial_hashcode() {
-        Orcamento orcamento = new Orcamento("Nintendo", "HTC2752", "NAO LIGA");
-        assertEquals(orcamento.getSerial().hashCode(), orcamento.getSerial().hashCode());
+    public void deve_setar_serial() {
+        Orcamento orcamento = Fixture.from(Orcamento.class).gimme("orcamento");
+        orcamento.setSerial("JDK789");
     }
-
+    
     @Test
-    public void nao_deve_armazernar_serial_hashcode() {
-        Orcamento orcamento = new Orcamento("Sony", "HTC2752", "NAO LIGA");
-        Orcamento orcamento2 = new Orcamento("Sony", "HTC2752", "NAO LIGA");
-        orcamento2.setSerial("HTC2222");
-        String marca = orcamento2.getSerial();
-        assertNotEquals(orcamento.getSerial().hashCode(), marca.hashCode());
+    public void deve_setar_defeito() {
+        Orcamento orcamento = Fixture.from(Orcamento.class).gimme("orcamento");
+        orcamento.setDefeito("Nao Liga");
     }
-
-    @Test
-    public void deve_armazenar_defeito() {
-        Orcamento orcamento = new Orcamento("Philips", "XVC3421", "NAO CONECTA");
-
-        assertTrue(orcamento.getDefeito().equals("NAO CONECTA"));
+    
+    @Test(expected = NullPointerException.class)
+    public void nao_deve_aceitar_marca_nula() {
+        Orcamento orcamento = Fixture.from(Orcamento.class).gimme("orcamento");
+        orcamento.setMarca(null);
     }
-
-    @Test
-    public void nao_deve_armazenar_defeito() {
-        Orcamento orcamento = new Orcamento("Philips", "XVC3421", "NAO CONECTA");
-
-        assertFalse(orcamento.getDefeito().equals("CONECTA"));
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void nao_deve_aceitar_marca_numerica() {
+        Orcamento orcamento = Fixture.from(Orcamento.class).gimme("orcamento");
+        orcamento.setMarca("2003");
     }
-
-    @Test
-    public void deve_armazenar_defeito_hashcode() {
-        Orcamento orcamento = new Orcamento("Nintendo", "HTC2752", "NAO LIGA");
-        assertEquals(orcamento.getDefeito().hashCode(), orcamento.getDefeito().hashCode());
+    
+    @Test(expected = NullPointerException.class)
+    public void nao_deve_aceitar_serial_nula() {
+        Orcamento orcamento = Fixture.from(Orcamento.class).gimme("orcamento");
+        orcamento.setSerial(null);
     }
-
-    @Test
-    public void nao_deve_armazernar_defeito_hashcode() throws Exception {
-        Orcamento orcamento = new Orcamento("Sony", "HTC2752", "NAO LIGA");
-        Orcamento orcamento2 = new Orcamento("Sony", "HTC2752", "NAO LIGA");
-        orcamento2.setDefeito("Nitendo");
-        String defeito = orcamento2.getDefeito();
-        assertNotEquals(orcamento.getDefeito().hashCode(), defeito.hashCode());
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void nao_deve_aceitar_defeito_incompleto() {
+        Orcamento orcamento = Fixture.from(Orcamento.class).gimme("orcamento");
+        orcamento.setDefeito("NaoConEcta");
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public void nao_deve_aceitar_defeito_nulo() {
+        Orcamento orcamento = Fixture.from(Orcamento.class).gimme("orcamento");
+        orcamento.setDefeito(null);
     }
 
 }
