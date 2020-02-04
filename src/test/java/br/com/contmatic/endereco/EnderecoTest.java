@@ -1,6 +1,8 @@
 package br.com.contmatic.endereco;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
@@ -16,20 +18,20 @@ public class EnderecoTest {
     public static void setUp() {
         FixtureFactoryLoader.loadTemplates("br.com.contmatic.FixtureFactory");
     }
-    
+
     @Before
     public void deve_comparar_as_classes_com_hashcode() {
         Endereco endereco = new Endereco("Rua Fada Magica", 289, "Vila Ema", "Grande ABC", "03977120");
         Endereco endereco2 = new Endereco("Rua Fada Magica", 289, "Vila Ema", "Grande ABC", "03977120");
-    
+
         assertEquals(endereco.hashCode(), endereco2.hashCode());
     }
-    
+
     @Before
     public void deve_comparar_as_classes_com_equals() {
         Endereco endereco = new Endereco("Rua Fada Magica", 289, "Vila Ema", "Grande ABC", "03977120");
         Endereco endereco2 = new Endereco("Rua Fada Magica", 289, "Vila Ema", "Grande ABC", "03977120");
-    
+
         assertEquals(endereco, endereco2);
     }
 
@@ -169,7 +171,7 @@ public class EnderecoTest {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.setCep("03977");
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void nao_deve_aceitar_cep_especials() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");

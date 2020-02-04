@@ -1,26 +1,29 @@
 package br.com.contmatic.empresa;
 
-import java.util.List;
+import javax.validation.constraints.NotBlank;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.validator.constraints.br.CNPJ;
+
+import br.com.contmatic.constante.Constante;
 
 public class Empresa {
 
-    private static final String ENTRADA_INVALIDA = "Entrada inválida";
-
-    private static final String ENTRADA_NULA = "A entrada não pode ficar nula";
-
-    private static final String CARACTERE_INVALIDO = "Caracteres Inválidos";
-
+    @NotBlank(message = Constante.ENTRADA_NULA)
+    @CNPJ(message = "Cnpj Inválido")
     private String cnpj;
 
     private String nome;
 
     private String razaoSocial;
 
-    List<String> proprietarios;
+    private String proprietarios;
 
-    public Empresa(String cnpj, String nome, String razaoSocial, List<String> proprietarios) {
+    public Empresa() {
+
+    }
+
+    public Empresa(String cnpj, String nome, String razaoSocial, String proprietarios) {
 
         super();
         this.cnpj = cnpj;
@@ -41,14 +44,12 @@ public class Empresa {
         return razaoSocial;
     }
 
-    public List<String> getProprietarios() {
+    public String getProprietarios() {
         return proprietarios;
     }
 
     public void setCnpj(String cnpj) {
-        verificaNullCnpj(cnpj);
         verificaTamanhoCnpjValido(cnpj);
-        verificaCnpjEspecial(cnpj);
         this.cnpj = cnpj;
     }
 
@@ -61,40 +62,26 @@ public class Empresa {
         this.razaoSocial = razaoSocial;
     }
 
-    public void setProprietarios(List<String> proprietarios) {
+    public void setProprietarios(String proprietarios) {
         verificaProprietarioNull(proprietarios);
         this.proprietarios = proprietarios;
     }
 
-    private void verificaNullCnpj(String cnpj) {
-        if (StringUtils.isEmpty(cnpj)) {
-            throw new NullPointerException(ENTRADA_NULA);
-        }
-    }
-
     private void verificaTamanhoCnpjValido(String cnpj) {
-        if (cnpj.length() != 14) {
-            throw new IllegalArgumentException(ENTRADA_INVALIDA);
-        }
-    }
-
-    private void verificaCnpjEspecial(String cnpj) {
-        if (cnpj.contains("!") || cnpj.contains("@") || cnpj.contains("#") || cnpj.contains("$") || cnpj.contains("%") || cnpj.contains("¨") || cnpj.contains("&") || cnpj.contains("*") ||
-            cnpj.contains("(") || cnpj.contains(")") || cnpj.contains("-") || cnpj.contains("+") || cnpj.contains("/") || cnpj.contains(".") || cnpj.contains(",") || cnpj.contains("?") ||
-            cnpj.contains(";") || cnpj.contains(":") || cnpj.contains(">") || cnpj.contains("<") || cnpj.contains("\\") || cnpj.contains("'")) {
-            throw new IllegalArgumentException(CARACTERE_INVALIDO);
+        if (cnpj.length() != 18) {
+            throw new IllegalArgumentException(Constante.ENTRADA_INVALIDA);
         }
     }
 
     private void verificaRazaoSocialCompleta(String razaoSocial) {
         if (!StringUtils.containsWhitespace(razaoSocial)) {
-            throw new IllegalArgumentException(ENTRADA_INVALIDA);
+            throw new IllegalArgumentException(Constante.ENTRADA_INVALIDA);
         }
     }
 
-    private void verificaProprietarioNull(List<String> proprietarios) {
-        if (proprietarios == null) {
-            throw new NullPointerException(ENTRADA_NULA);
+    private void verificaProprietarioNull(String proprietarios2) {
+        if (proprietarios2 == null) {
+            throw new NullPointerException(Constante.ENTRADA_NULA);
         }
     }
 

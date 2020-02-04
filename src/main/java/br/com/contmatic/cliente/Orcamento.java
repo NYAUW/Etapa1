@@ -1,17 +1,33 @@
 package br.com.contmatic.cliente;
 
-import org.apache.commons.lang3.StringUtils;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import br.com.contmatic.constante.Constante;
 
 public class Orcamento {
 
+    @NotNull(message = Constante.ENTRADA_NULA)
+    @Pattern(regexp = Constante.SOMENTE_ALFA)
     private String marca;
 
+    @NotBlank(message = Constante.ENTRADA_NULA)
+    @Pattern(regexp = Constante.SERIAL)
     private String serial;
 
+    @Min(value = 10, message = "Por favor, especifique com mais detalhes")
+    @Max(value = 100, message = "LIMITE DE CARACTERES EXCEDIDOS!")
+    @NotBlank(message = Constante.ENTRADA_NULA)
     private String defeito;
 
+    public Orcamento() {
+
+    }
+
     public Orcamento(String marca, String serial, String defeito) {
-        super();
         this.marca = marca;
         this.serial = serial;
         this.defeito = defeito;
@@ -30,49 +46,21 @@ public class Orcamento {
     }
 
     public void setMarca(String marca) {
-        verificaMarcaNula(marca);
-        verificaNumeroMarca(marca);
         this.marca = marca;
     }
 
     public void setSerial(String serial) {
-        verificaSerialNulo(serial);
         this.serial = serial;
     }
 
     public void setDefeito(String defeito) {
-        verificaDefeitoNull(defeito);
         verificaDefeitoCompleto(defeito);
         this.defeito = defeito;
-    }
-
-    private void verificaMarcaNula(String marca) {
-        if (StringUtils.isEmpty(marca)) {
-            throw new NullPointerException("A marca não pode ficar nula!");
-        }
-    }
-
-    private void verificaNumeroMarca(String marca) {
-        if (StringUtils.isNumeric(marca)) {
-            throw new IllegalArgumentException("A marca nao pode conter numeros");
-        }
-    }
-    
-    public void verificaSerialNulo(String serial) {
-        if (StringUtils.isEmpty(serial)) {
-            throw new NullPointerException("O serial não pode ficar nulo!");
-        }
     }
 
     private void verificaDefeitoCompleto(String defeito) {
         if (!defeito.contains(" ")) {
             throw new IllegalArgumentException("O defeito precisa ser especificado de maneira legivel e detalhado");
-        }
-    }
-
-    private void verificaDefeitoNull(String defeito) {
-        if (StringUtils.isEmpty(defeito)) {
-            throw new NullPointerException("O campo de defeito não pode estar vazio");
         }
     }
 
@@ -112,6 +100,5 @@ public class Orcamento {
             return false;
         return true;
     }
-    
-    
+
 }

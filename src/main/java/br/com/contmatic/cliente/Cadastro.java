@@ -1,30 +1,42 @@
 package br.com.contmatic.cliente;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.validator.constraints.br.CPF;
+
+import br.com.contmatic.constante.Constante;
 
 public class Cadastro {
 
-    private static final String NUMEROS = "Numeros Encontrados";
-
-    private static final String ENTRADA_INVALIDA = "Entrada inválida";
-
-    private static final String CARACTERE_INVALIDO = "Caracteres Inválidos";
-
-    private static final String ENTRADA_NULA = "A entrada não pode ficar nula";
-
+    @NotBlank(message = Constante.ENTRADA_NULA)
+    @Pattern(regexp = Constante.SOMENTE_ALFA)
     private String nome;
 
+    @NotNull(message = Constante.ENTRADA_NULA)
+    @Email(message = Constante.ENTRADA_INVALIDA)
     private String email;
 
+    @NotEmpty(message = Constante.ENTRADA_NULA)
     private String senha;
 
+    @NotEmpty(message = Constante.ENTRADA_NULA)
+    @CPF(message = Constante.ENTRADA_INVALIDA)
+    @Pattern(regexp = "[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}")
     private String cpf;
 
+    @NotEmpty(message = Constante.ENTRADA_NULA)
+    @Pattern(regexp = Constante.RG)
     private String rg;
-    
+
     public Cadastro() {
+
     }
-    
+
     public Cadastro(String nome, String email, String senha, String cpf, String rg) {
         this.nome = nome;
         this.email = email;
@@ -34,6 +46,7 @@ public class Cadastro {
     }
 
     public String getNome() {
+
         return nome;
     }
 
@@ -53,9 +66,7 @@ public class Cadastro {
         return rg;
     }
 
-
     public void setNome(String nome) {
-        verificaNomeNull(nome);
         verificaNumeroNome(nome);
         verificaEspeciaisNome(nome);
         verificaTamanhoNome(nome);
@@ -63,109 +74,68 @@ public class Cadastro {
     }
 
     public void setEmail(String email) {
-        verificaEmailNull(email);
         verificaDominioEmail(email);
         this.email = email;
     }
 
     public void setSenha(String senha) {
         verificaSeSenhaENull(senha);
-        verificaTamanhoSenha(senha);
         this.senha = senha;
     }
 
     public void setCpf(String cpf) {
-        verificaCpfNull(cpf);
         verificaTamanhoCpf(cpf);
-        verificaCaracteresCpf(cpf);
         this.cpf = cpf;
     }
 
     public void setRg(String rg) {
-        verificaRgNUll(rg);
         verificaCaracteressRg(rg);
         this.rg = rg;
+    }
+
+    private void verificaDominioEmail(String email) {
+        if (!(email.contains("@") && email.contains(".com") && email.contains("gmail") || email.contains("hotmail") || email.contains("yahoo") || email.contains("contmatic") ||
+            email.contains("outlook") || email.contains("ig") || email.contains("email") || email.contains("uol") || email.contains("globo"))) {
+            throw new IllegalArgumentException(Constante.ENTRADA_INVALIDA);
+        }
     }
 
     private void verificaEspeciaisNome(String nome) {
         if (nome.contains("@") || nome.contains("-") || nome.contains("#") || nome.contains("$") || nome.contains("%") || nome.contains("¨") || nome.contains("&") || nome.contains("*") ||
             nome.contains("(") || nome.contains(")") || nome.contains("=") || nome.contains("+") || nome.contains("/")) {
-            throw new IllegalArgumentException(CARACTERE_INVALIDO);
+            throw new IllegalArgumentException(Constante.CARACTERE_INVALIDO);
+        }
+    }
+
+    private void verificaTamanhoNome(String nome) {
+        if (!StringUtils.containsWhitespace(nome)) {
+            throw new IllegalArgumentException(Constante.ENTRADA_INVALIDA);
         }
     }
 
     private void verificaNumeroNome(String nome) {
         for(int i = 0 ; nome.length() > i ; i++) {
             if (Character.isDigit(nome.charAt(i))) {
-                throw new IllegalArgumentException(NUMEROS);
+                throw new IllegalArgumentException(Constante.NUMEROS);
             }
-        }
-    }
-
-    private void verificaTamanhoNome(String nome) {
-        if (!StringUtils.containsWhitespace(nome)) {
-            throw new IllegalArgumentException(ENTRADA_INVALIDA);
-        }
-    }
-
-    private void verificaNomeNull(String nome) {
-        if (StringUtils.isEmpty(nome)) {
-            throw new NullPointerException(ENTRADA_NULA);
-        }
-    }
-
-    private void verificaDominioEmail(String email) {
-        if (!(email.contains("@") && email.contains(".com") && email.contains("gmail") || email.contains("hotmail") || email.contains("yahoo") || email.contains("contmatic") ||
-            email.contains("outlook") || email.contains("ig") || email.contains("email") || email.contains("uol") || email.contains("globo"))) {
-            throw new IllegalArgumentException(ENTRADA_INVALIDA);
-        }
-    }
-
-    private void verificaEmailNull(String email) {
-        if (StringUtils.isEmpty(email)) {
-            throw new NullPointerException(ENTRADA_NULA);
-        }
-    }
-
-    private void verificaCaracteresCpf(String cpf) {
-        if (!StringUtils.isNumeric(cpf)) {
-            throw new IllegalArgumentException(CARACTERE_INVALIDO);
-        }
-    }
-
-    private void verificaCaracteressRg(String rg) {
-        if (!StringUtils.isNumeric(rg)) {
-            throw new IllegalArgumentException(CARACTERE_INVALIDO);
-        }
-    }
-
-    private void verificaRgNUll(String rg) {
-        if (StringUtils.isEmpty(rg)) {
-            throw new NullPointerException(ENTRADA_NULA);
-        }
-    }
-
-    private void verificaTamanhoCpf(String cpf) {
-        if (cpf.length() != 11) {
-            throw new IllegalArgumentException(ENTRADA_INVALIDA);
-        }
-    }
-
-    private void verificaCpfNull(String cpf) {
-        if (StringUtils.isEmpty(cpf)) {
-            throw new NullPointerException(ENTRADA_NULA);
-        }
-    }
-
-    private void verificaTamanhoSenha(String senha) {
-        if (senha.length() < 5) {
-            throw new IllegalArgumentException(ENTRADA_INVALIDA);
         }
     }
 
     private void verificaSeSenhaENull(String senha) {
         if (StringUtils.isEmpty(senha)) {
-            throw new NullPointerException(ENTRADA_NULA);
+            throw new NullPointerException(Constante.ENTRADA_NULA);
+        }
+    }
+
+    private void verificaCaracteressRg(String rg) {
+        if (!rg.contains(".") && !rg.matches("[0-9]")) {
+            throw new IllegalArgumentException(Constante.CARACTERE_INVALIDO);
+        }
+    }
+
+    private void verificaTamanhoCpf(String cpf) {
+        if (cpf.length() != 14) {
+            throw new IllegalArgumentException(Constante.ENTRADA_INVALIDA);
         }
     }
 
