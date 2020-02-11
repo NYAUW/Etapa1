@@ -14,7 +14,9 @@ public class ValidateAnnotations<T> {
         Validator validador = Validation.buildDefaultValidatorFactory().getValidator();
         Set<ConstraintViolation<T>> erros = validador.validate(t);
         List<String> errosMsg = new ArrayList<>();
-        erros.stream().forEach(t1 -> errosMsg.add(t1.getMessage()));
+        for(ConstraintViolation<T> teste : erros) {
+            errosMsg.add(teste.getMessage());
+        }
         return errosMsg.toString().replace("[", "").replace("]", "");
 
     }

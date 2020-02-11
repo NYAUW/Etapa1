@@ -1,9 +1,7 @@
 package br.com.contmatic.telefone;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -50,7 +48,7 @@ public class TelefoneTest {
     @Test
     public void deve_setar_telefone() {
         Telefone telefone = Fixture.from(Telefone.class).gimme("telefone");
-        telefone.setNumero("11931509160");
+        telefone.setNumero("11931509167");
         valid = new ValidateAnnotations<>();
         System.out.println(valid.returnAnnotationMsgError(telefone));
     }
@@ -85,22 +83,6 @@ public class TelefoneTest {
         telefone.setTipo(TipoTelefone.DOMESTICO);
         valid = new ValidateAnnotations<>();
         System.out.println(valid.returnAnnotationMsgError(telefone));
-    }
-
-    @After
-    public void nao_deve_verificar_igualdade_de_classes_hashcode() {
-        Telefone telefone = new Telefone("20117414", null, TipoTelefone.DOMESTICO);
-        Telefone telefone2 = new Telefone("20317414", "201", TipoTelefone.EMPRESARIAL);
-
-        assertNotEquals(telefone.hashCode(), telefone2.hashCode());
-    }
-
-    @After
-    public void nao_deve_verificar_igualdade_de_classes_equals() {
-        Telefone telefone = new Telefone("20117414", "201", TipoTelefone.DOMESTICO);
-        Telefone telefone2 = new Telefone("20317414", null, TipoTelefone.DOMESTICO);
-
-        assertNotEquals(telefone, telefone2);
     }
 
 }

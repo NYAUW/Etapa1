@@ -34,7 +34,8 @@ public class FixtureFactoryTest implements TemplateLoader {
 
         Fixture.of(Telefone.class).addTemplate("telefone", new Rule() {
             {
-                add("numero", regex("[0-9]{10}"));
+                add("numero", regex(
+                    "(([1][1-9])|([2][1-2])|([2][4-8])|([3][1-5])|([3][7-8])|([4][1-9])|([5][1])|([5][3-5])|([6][1-9])|([7][1])|([7][3-5])|([7][7])|([7][9])|([8][1-9]))(([0-9]{8})|([0-9]{9}))"));
                 add("ramal", regex("[0-9]{3}"));
                 add("tipo", random(TipoTelefone.DOMESTICO, TipoTelefone.EMPRESARIAL));
             }
