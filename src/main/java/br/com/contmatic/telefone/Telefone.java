@@ -1,27 +1,31 @@
 package br.com.contmatic.telefone;
 
-import org.apache.commons.lang3.StringUtils;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import br.com.contmatic.constante.Constante;
 
 public class Telefone {
-    
-    private static final String NUMEROS = "Numeros Encontrados";
 
-    private static final String ENTRADA_INVALIDA = "Entrada inválida";
-
-    private static final String ENTRADA_NULA = "A entrada não pode ficar nula";
-
-    private static final String CARACTERE_INVALIDO = "Caracteres Inválidos";
-    
+    @NotEmpty(message = Constante.ENTRADA_NULA)
+    @NotNull(message = Constante.ENTRADA_NULA)
+    @Pattern(regexp = "[0-9]{10}|[0-9]{11}", message = Constante.ENTRADA_INVALIDA)
     String numero;
-    
+
+    @NotEmpty(message = Constante.ENTRADA_NULA)
+    @NotNull(message = Constante.ENTRADA_NULA)
+    @Pattern(regexp = "^[0-9]{3}$*", message = Constante.ENTRADA_INVALIDA)
     String ramal;
-    
-    String tipo;
-    
+
+    @NotNull(message = Constante.ENTRADA_NULA)
+    TipoTelefone tipo;
+
     public Telefone() {
+
     }
 
-    public Telefone(String numero, String ramal, String tipo) {
+    public Telefone(String numero, String ramal, TipoTelefone tipo) {
         super();
         this.numero = numero;
         this.ramal = ramal;
@@ -36,79 +40,20 @@ public class Telefone {
         return ramal;
     }
 
-    public String getTipo() {
+    public TipoTelefone getTipo() {
         return tipo;
     }
 
     public void setNumero(String numero) {
-        verificaSeTelefoneENull(numero);
-        verificaTelefoneCaracteres(numero);
-        verificaEspeciaisNumero(numero);
         this.numero = numero;
     }
 
     public void setRamal(String ramal) {
-        verificaSeRamalENull(ramal);
-        verificaSeRamalContemExatosTresDigitos(ramal);
-        verificaSeRamalContemCaracteres(ramal);
         this.ramal = ramal;
     }
 
-    public void setTipo(String tipo) {
-        verificaSeTipoENUll(tipo);
-        verificaSeTipoContemNumero(tipo); 
+    public void setTipo(TipoTelefone tipo) {
         this.tipo = tipo;
-    }
-    
-    private void verificaTelefoneCaracteres(String numero) {
-        if (StringUtils.isAlpha(numero)) {
-            throw new IllegalArgumentException(CARACTERE_INVALIDO);
-        }
-    }
-    
-    private void verificaSeTelefoneENull(String numero) {
-        if (StringUtils.isEmpty(numero)) {
-            throw new NullPointerException(ENTRADA_NULA);
-        }
-    }
-    
-    public void verificaEspeciaisNumero(String numero) {
-        if(numero.contains("!") || numero.contains("@") || numero.contains("#") || numero.contains("$") || numero.contains("%") || numero.contains("¨")
-                || numero.contains("&") || numero.contains("*") || numero.contains("(") || numero.contains(")") || numero.contains("-") || numero.contains("+") || numero.contains("/") || 
-                numero.contains(".") || numero.contains(",") || numero.contains("?") || numero.contains(";") || numero.contains(":") || numero.contains(">") || numero.contains("<") || numero.contains("\\") 
-                || numero.contains("'")) {
-                 throw new IllegalArgumentException(CARACTERE_INVALIDO);
-             }
-    }
-    
-    private void verificaSeRamalContemExatosTresDigitos(String ramal) {
-        if (ramal.length() != 3) {
-            throw new IllegalArgumentException(ENTRADA_INVALIDA);
-        }
-    }
-    
-    private void verificaSeRamalContemCaracteres(String ramal) {
-        if (StringUtils.isAlpha(ramal)) {
-            throw new IllegalArgumentException(CARACTERE_INVALIDO);
-        }
-    }
-    
-    private void verificaSeRamalENull(String ramal) {
-        if (StringUtils.isEmpty(ramal)) {
-            throw new NullPointerException(ENTRADA_NULA);
-        }
-    }
-    
-    private void verificaSeTipoContemNumero(String tipo) {
-        if (StringUtils.isNumeric(tipo)) {
-            throw new IllegalArgumentException(NUMEROS);
-        }
-    }
-    
-    private void verificaSeTipoENUll(String tipo) {
-        if (StringUtils.isEmpty(tipo)) {
-            throw new NullPointerException(ENTRADA_NULA);
-        }
     }
 
     @Override
@@ -147,6 +92,5 @@ public class Telefone {
             return false;
         return true;
     }
-    
-    
+
 }

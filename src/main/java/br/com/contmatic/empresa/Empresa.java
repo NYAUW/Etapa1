@@ -1,23 +1,40 @@
 package br.com.contmatic.empresa;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+import javax.validation.constraints.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.br.CNPJ;
+
+import com.google.common.base.Preconditions;
 
 import br.com.contmatic.constante.Constante;
 
 public class Empresa {
 
-    @NotBlank(message = Constante.ENTRADA_NULA)
+    @NotEmpty(message = Constante.ENTRADA_NULA)
+    @NotBlank(message = Constante.ENTRADA_INVALIDA)
     @CNPJ(message = "Cnpj Inválido")
     private String cnpj;
 
+    @NotNull(message = Constante.ENTRADA_NULA)
+    @NotEmpty(message = Constante.ENTRADA_NULA)
+    @Pattern(regexp = Constante.SOMENTE_ALFA, message = Constante.ENTRADA_INVALIDA)
     private String nome;
 
+    @NotNull(message = Constante.ENTRADA_NULA)
     private String razaoSocial;
 
+    @NotBlank(message = Constante.ENTRADA_NULA)
+    @NotNull(message = Constante.ENTRADA_NULA)
+    @Pattern(regexp = Constante.SOMENTE_ALFA, message = Constante.ENTRADA_INVALIDA)
     private String proprietarios;
+
+    @Null
+    private String observaçoes;
 
     public Empresa() {
 
@@ -49,7 +66,6 @@ public class Empresa {
     }
 
     public void setCnpj(String cnpj) {
-        verificaTamanhoCnpjValido(cnpj);
         this.cnpj = cnpj;
     }
 
@@ -58,31 +74,16 @@ public class Empresa {
     }
 
     public void setRazaoSocial(String razaoSocial) {
-        verificaRazaoSocialCompleta(razaoSocial);
+        invalidaRazaoSocialIncompleta(razaoSocial);
         this.razaoSocial = razaoSocial;
     }
 
     public void setProprietarios(String proprietarios) {
-        verificaProprietarioNull(proprietarios);
         this.proprietarios = proprietarios;
     }
 
-    private void verificaTamanhoCnpjValido(String cnpj) {
-        if (cnpj.length() != 18) {
-            throw new IllegalArgumentException(Constante.ENTRADA_INVALIDA);
-        }
-    }
-
-    private void verificaRazaoSocialCompleta(String razaoSocial) {
-        if (!StringUtils.containsWhitespace(razaoSocial)) {
-            throw new IllegalArgumentException(Constante.ENTRADA_INVALIDA);
-        }
-    }
-
-    private void verificaProprietarioNull(String proprietarios2) {
-        if (proprietarios2 == null) {
-            throw new NullPointerException(Constante.ENTRADA_NULA);
-        }
+    private void invalidaRazaoSocialIncompleta(String razaoSocial) {
+        Preconditions.checkArgument(StringUtils.containsWhitespace(razaoSocial), Constante.ENTRADA_INVALIDA);
     }
 
     @Override

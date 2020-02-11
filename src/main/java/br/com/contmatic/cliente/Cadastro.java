@@ -5,16 +5,23 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
-import org.apache.commons.lang3.StringUtils;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
+
+import com.google.common.base.Preconditions;
 
 import br.com.contmatic.constante.Constante;
 
 public class Cadastro {
 
     @NotBlank(message = Constante.ENTRADA_NULA)
-    @Pattern(regexp = Constante.SOMENTE_ALFA)
+    @NotEmpty(message = Constante.ENTRADA_NULA)
+    @NotNull(message = Constante.ENTRADA_NULA)
+    @Pattern(regexp = Constante.SOMENTE_ALFA, message = Constante.ENTRADA_INVALIDA)
+    @Length(min = 5, message = "Nome Incompleto")
+    @Size(max = 50, message = "Quantidade de caracteres excedida")
     private String nome;
 
     @NotNull(message = Constante.ENTRADA_NULA)
@@ -22,15 +29,15 @@ public class Cadastro {
     private String email;
 
     @NotEmpty(message = Constante.ENTRADA_NULA)
+    @NotNull(message = Constante.ENTRADA_NULA)
     private String senha;
 
     @NotEmpty(message = Constante.ENTRADA_NULA)
     @CPF(message = Constante.ENTRADA_INVALIDA)
-    @Pattern(regexp = "[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}")
     private String cpf;
 
     @NotEmpty(message = Constante.ENTRADA_NULA)
-    @Pattern(regexp = Constante.RG)
+    @Pattern(regexp = Constante.RG, message = "Rg Inválido")
     private String rg;
 
     public Cadastro() {
@@ -67,9 +74,6 @@ public class Cadastro {
     }
 
     public void setNome(String nome) {
-        verificaNumeroNome(nome);
-        verificaEspeciaisNome(nome);
-        verificaTamanhoNome(nome);
         this.nome = nome;
     }
 
@@ -79,64 +83,21 @@ public class Cadastro {
     }
 
     public void setSenha(String senha) {
-        verificaSeSenhaENull(senha);
         this.senha = senha;
     }
 
     public void setCpf(String cpf) {
-        verificaTamanhoCpf(cpf);
         this.cpf = cpf;
     }
 
     public void setRg(String rg) {
-        verificaCaracteressRg(rg);
         this.rg = rg;
     }
 
     private void verificaDominioEmail(String email) {
-        if (!(email.contains("@") && email.contains(".com") && email.contains("gmail") || email.contains("hotmail") || email.contains("yahoo") || email.contains("contmatic") ||
-            email.contains("outlook") || email.contains("ig") || email.contains("email") || email.contains("uol") || email.contains("globo"))) {
-            throw new IllegalArgumentException(Constante.ENTRADA_INVALIDA);
-        }
-    }
-
-    private void verificaEspeciaisNome(String nome) {
-        if (nome.contains("@") || nome.contains("-") || nome.contains("#") || nome.contains("$") || nome.contains("%") || nome.contains("¨") || nome.contains("&") || nome.contains("*") ||
-            nome.contains("(") || nome.contains(")") || nome.contains("=") || nome.contains("+") || nome.contains("/")) {
-            throw new IllegalArgumentException(Constante.CARACTERE_INVALIDO);
-        }
-    }
-
-    private void verificaTamanhoNome(String nome) {
-        if (!StringUtils.containsWhitespace(nome)) {
-            throw new IllegalArgumentException(Constante.ENTRADA_INVALIDA);
-        }
-    }
-
-    private void verificaNumeroNome(String nome) {
-        for(int i = 0 ; nome.length() > i ; i++) {
-            if (Character.isDigit(nome.charAt(i))) {
-                throw new IllegalArgumentException(Constante.NUMEROS);
-            }
-        }
-    }
-
-    private void verificaSeSenhaENull(String senha) {
-        if (StringUtils.isEmpty(senha)) {
-            throw new NullPointerException(Constante.ENTRADA_NULA);
-        }
-    }
-
-    private void verificaCaracteressRg(String rg) {
-        if (!rg.contains(".") && !rg.matches("[0-9]")) {
-            throw new IllegalArgumentException(Constante.CARACTERE_INVALIDO);
-        }
-    }
-
-    private void verificaTamanhoCpf(String cpf) {
-        if (cpf.length() != 14) {
-            throw new IllegalArgumentException(Constante.ENTRADA_INVALIDA);
-        }
+        Preconditions.checkArgument((!(email.contains("@") && email.contains(".com")) && email.contains("gmail") || email.contains("hotmail") || email.contains("yahoo") ||
+            email.contains("contmatic") || email.contains("outlook") || email.contains("ig") || email.contains("email") || email.contains("uol") || email.contains("globo")),
+            Constante.ENTRADA_INVALIDA);
     }
 
     @Override

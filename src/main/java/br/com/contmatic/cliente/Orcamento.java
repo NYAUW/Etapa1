@@ -1,10 +1,11 @@
 package br.com.contmatic.cliente;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.joda.time.DateTime;
 
 import br.com.contmatic.constante.Constante;
 
@@ -18,19 +19,21 @@ public class Orcamento {
     @Pattern(regexp = Constante.SERIAL)
     private String serial;
 
-    @Min(value = 10, message = "Por favor, especifique com mais detalhes")
-    @Max(value = 100, message = "LIMITE DE CARACTERES EXCEDIDOS!")
-    @NotBlank(message = Constante.ENTRADA_NULA)
+    @Size(min = 10, max = 200, message = Constante.ENTRADA_INVALIDA)
+    @NotNull(message = Constante.ENTRADA_NULA)
     private String defeito;
+
+    private DateTime data;
 
     public Orcamento() {
 
     }
 
-    public Orcamento(String marca, String serial, String defeito) {
+    public Orcamento(String marca, String serial, String defeito, DateTime data) {
         this.marca = marca;
         this.serial = serial;
         this.defeito = defeito;
+        this.data = data;
     }
 
     public String getMarca() {
@@ -45,6 +48,10 @@ public class Orcamento {
         return defeito;
     }
 
+    public DateTime getData() {
+        return data;
+    }
+
     public void setMarca(String marca) {
         this.marca = marca;
     }
@@ -54,14 +61,11 @@ public class Orcamento {
     }
 
     public void setDefeito(String defeito) {
-        verificaDefeitoCompleto(defeito);
         this.defeito = defeito;
     }
 
-    private void verificaDefeitoCompleto(String defeito) {
-        if (!defeito.contains(" ")) {
-            throw new IllegalArgumentException("O defeito precisa ser especificado de maneira legivel e detalhado");
-        }
+    public void setData(DateTime data) {
+        this.data = data;
     }
 
     @Override

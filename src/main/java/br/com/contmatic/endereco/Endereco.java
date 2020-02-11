@@ -1,37 +1,55 @@
 package br.com.contmatic.endereco;
 
-import org.apache.commons.lang3.StringUtils;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.google.common.base.Preconditions;
+
+import br.com.contmatic.constante.Constante;
 
 public class Endereco {
 
-    private static final String NUMEROS = "Numeros Encontrados";
-
-    private static final String ENTRADA_INVALIDA = "Entrada inválida";
-
-    private static final String ENTRADA_NULA = "A entrada não pode ficar nula";
-
-    private static final String CARACTERE_INVALIDO = "Caracteres Inválidos";
-
+    @NotNull(message = Constante.ENTRADA_NULA)
+    @Pattern(regexp = Constante.SOMENTE_ALFA, message = Constante.ENTRADA_INVALIDA)
     String rua;
 
+    @NotEmpty(message = Constante.ENTRADA_NULA)
+    @NotNull(message = Constante.ENTRADA_NULA)
+    @Pattern(regexp = Constante.SOMENTE_ALFA, message = "Test")
     String bairro;
 
     int numero;
 
+    @NotEmpty(message = Constante.ENTRADA_NULA)
+    @NotNull(message = Constante.ENTRADA_NULA)
+    @Pattern(regexp = Constante.SOMENTE_ALFA, message = Constante.ENTRADA_INVALIDA)
     String regiao;
 
+    @NotBlank(message = Constante.ENTRADA_INVALIDA)
+    @NotEmpty(message = Constante.ENTRADA_NULA)
+    @NotNull(message = Constante.ENTRADA_NULA)
+    @Length(max = 8, min = 8, message = Constante.ENTRADA_INVALIDA)
+    @Pattern(regexp = "[0-9]{8}", message = Constante.ENTRADA_INVALIDA)
     String cep;
+
+    @NotNull
+    TipoEndereco tipo;
 
     public Endereco() {
     }
 
-    public Endereco(String rua, int numero, String bairro, String regiao, String cep) {
+    public Endereco(String rua, int numero, String bairro, String regiao, String cep, TipoEndereco tipo) {
         super();
         this.bairro = rua;
         this.numero = numero;
         this.bairro = bairro;
         this.regiao = regiao;
         this.cep = cep;
+        this.tipo = tipo;
     }
 
     public String getRua() {
@@ -54,10 +72,12 @@ public class Endereco {
         return cep;
     }
 
+    public TipoEndereco getTipo() {
+        return tipo;
+    }
+
     public void setRua(String rua) {
-        verificaSeRuaENull(rua);
-        verificaSeRuaContemNumero(rua);
-        verificaSeRuaContemEspeciais(rua);
+        verificaSeContemEspeciais(rua);
         this.bairro = rua;
     }
 
@@ -67,101 +87,31 @@ public class Endereco {
     }
 
     public void setBairro(String bairro) {
-        verificaSeBairroEnulo(bairro);
-        verificaSeBairroContemNumero(bairro);
-        verificaSeBairroContemEmpeciais(bairro);
+        verificaSeContemEspeciais(bairro);
         this.bairro = bairro;
     }
 
     public void setRegiao(String regiao) {
-        verificaSeRegiaoEnulo(regiao);
-        verificaSeRegiaoContemNumero(regiao);
         this.regiao = regiao;
     }
 
     public void setCep(String cep) {
-        verificaSeCepENull(cep);
-        verificaSeCepContemOitoDigitos(cep);
-        verificaSeCepContemEspeciais(cep);
+        verificaSeContemEspeciais(cep);
         this.cep = cep;
     }
 
-    private void verificaSeRuaENull(String rua) {
-        if (StringUtils.isEmpty(rua)) {
-            throw new NullPointerException(ENTRADA_NULA);
-        }
-    }
-
-    private void verificaSeRuaContemNumero(String rua) {
-        if (StringUtils.isNumeric(rua)) {
-            throw new IllegalArgumentException(NUMEROS);
-        }
-    }
-
-    private void verificaSeRuaContemEspeciais(String rua) {
-        if (rua.contains("!") || rua.contains("@") || rua.contains("#") || rua.contains("$") || rua.contains("%") || rua.contains("¨") || rua.contains("&") || rua.contains("*") || rua.contains("(") ||
-            rua.contains(")") || rua.contains("-") || rua.contains("+") || rua.contains("/") || rua.contains(",") || rua.contains("?") || rua.contains(";") || rua.contains(":") ||
-            rua.contains("\\") || rua.contains("'")) {
-            throw new IllegalArgumentException(CARACTERE_INVALIDO);
-        }
+    public void setTipo(TipoEndereco tipo) {
+        this.tipo = tipo;
     }
 
     private void verificaSeNumeroEZero(int numero) {
-        if (numero == 0) {
-            throw new NullPointerException(ENTRADA_NULA);
-        }
+        Preconditions.checkArgument(!(numero == 0), Constante.ENTRADA_NULA);
     }
 
-    private void verificaSeBairroEnulo(String bairro) {
-        if (StringUtils.isEmpty(bairro)) {
-            throw new NullPointerException(ENTRADA_NULA);
-        }
-    }
-
-    private void verificaSeBairroContemNumero(String bairro) {
-        if (StringUtils.isNumeric(bairro)) {
-            throw new IllegalArgumentException(ENTRADA_NULA);
-        }
-    }
-
-    private void verificaSeBairroContemEmpeciais(String bairro) {
-        if (bairro.contains("!") || bairro.contains("@") || bairro.contains("#") || bairro.contains("$") || bairro.contains("%") || bairro.contains("¨") || bairro.contains("&") ||
-            bairro.contains("*") || bairro.contains("(") || bairro.contains(")") || bairro.contains("-") || bairro.contains("+") || bairro.contains("/") || bairro.contains(",") ||
-            bairro.contains("?") || bairro.contains(";") || bairro.contains(":") || bairro.contains("\\") || bairro.contains("'")) {
-            throw new IllegalArgumentException(CARACTERE_INVALIDO);
-        }
-    }
-
-    private void verificaSeRegiaoEnulo(String regiao) {
-        if (StringUtils.isEmpty(regiao)) {
-            throw new NullPointerException(ENTRADA_NULA);
-        }
-    }
-
-    private void verificaSeRegiaoContemNumero(String regiao) {
-        if (StringUtils.isNumeric(regiao)) {
-            throw new IllegalArgumentException(ENTRADA_NULA);
-        }
-    }
-
-    private void verificaSeCepContemOitoDigitos(String cep) {
-        if (cep.length() != 8) {
-            throw new IllegalArgumentException(ENTRADA_INVALIDA);
-        }
-    }
-
-    private void verificaSeCepENull(String cep) {
-        if (StringUtils.isEmpty(cep)) {
-            throw new NullPointerException(ENTRADA_NULA);
-        }
-    }
-
-    private void verificaSeCepContemEspeciais(String cep) {
-        if (cep.contains("!") || cep.contains("@") || cep.contains("#") || cep.contains("$") || cep.contains("%") || cep.contains("¨") || cep.contains("&") || cep.contains("*") || cep.contains("(") ||
-            cep.contains(")") || cep.contains("-") || cep.contains("+") || cep.contains("/") || cep.contains(",") || cep.contains("?") || cep.contains(";") || cep.contains(":") || cep.contains("\\") ||
-            cep.contains("'")) {
-            throw new IllegalArgumentException(CARACTERE_INVALIDO);
-        }
+    private void verificaSeContemEspeciais(String var) {
+        Preconditions.checkArgument(!(var.contains("!") || var.contains("@") || var.contains("#") || var.contains("$") || var.contains("%") || var.contains("¨") || var.contains("&") ||
+            var.contains("*") || var.contains("(") || var.contains(")") || var.contains("-") || var.contains("+") || var.contains("/") || var.contains(",") || var.contains("?") || var.contains(";") ||
+            var.contains(":") || var.contains("\\") || var.contains("'")), Constante.ENTRADA_INVALIDA);
     }
 
     @Override
@@ -209,7 +159,5 @@ public class Endereco {
             return false;
         return true;
     }
-    
-    
 
 }

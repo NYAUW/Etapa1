@@ -1,24 +1,39 @@
 package br.com.contmatic.empresa;
 
-import org.apache.commons.lang3.StringUtils;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import com.google.common.base.Preconditions;
+
+import br.com.contmatic.constante.Constante;
 
 public class Funcionario {
 
-    private static final String NUMEROS = "Numeros Encontrados";
-
-    private static final String ENTRADA_INVALIDA = "Entrada inválida";
-
-    private static final String ENTRADA_NULA = "A entrada não pode ficar nula";
-
+    @NotNull(message = Constante.ENTRADA_NULA)
+    @NotBlank(message = Constante.ENTRADA_INVALIDA)
+    @Pattern(regexp = Constante.SOMENTE_ALFA, message = Constante.ENTRADA_INVALIDA)
     private String nome;
 
+    @NotNull(message = Constante.ENTRADA_NULA)
+    @Pattern(regexp = Constante.SOMENTE_ALFA, message = Constante.ENTRADA_INVALIDA)
     private String cargo;
 
+    @NotNull(message = Constante.ENTRADA_NULA)
+    @Min(value = 1)
+    @Max(value = 9999)
     private int codigo;
 
-    private double salario;
+    @NotNull(message = Constante.ENTRADA_NULA)
+    private int salario;
 
-    public Funcionario(String nome, String cargo, int codigo, double salario) {
+    public Funcionario() {
+
+    }
+
+    public Funcionario(String nome, String cargo, int codigo, int salario) {
         super();
         this.nome = nome;
         this.cargo = cargo;
@@ -43,14 +58,10 @@ public class Funcionario {
     }
 
     public void setNome(String nome) {
-        verificaNomeNuloFuncionario(nome);
-        verificaNomeCompleto(nome);
-        verificaNomeNumero(nome);
         this.nome = nome;
     }
 
     public void setCargo(String cargo) {
-        verificaSeCargoENull(cargo);
         verificaSelecaoCargo(cargo);
         this.cargo = cargo;
     }
@@ -60,46 +71,11 @@ public class Funcionario {
     }
 
     public void setSalario(int salario) {
-        verificaNullSalario(salario);
         this.salario = salario;
     }
 
-    private void verificaNomeNuloFuncionario(String nome) {
-        if (StringUtils.isEmpty(nome)) {
-            throw new NullPointerException(ENTRADA_NULA);
-        }
-    }
-
-    private void verificaNomeNumero(String nome) {
-        for(int i = 0; nome.length() > i; i++) {
-            if (Character.isDigit(nome.charAt(i))) {
-                throw new IllegalArgumentException(NUMEROS);
-            }
-         }
-    }
-
-    private void verificaNomeCompleto(String nome) {
-        if (!StringUtils.containsWhitespace(nome)) {
-            throw new IllegalArgumentException(ENTRADA_NULA);
-        }
-    }
-
     private void verificaSelecaoCargo(String cargo) {
-        if (!(cargo.equals("Atendente")) || (cargo.equals("Tecnico")) || (cargo.equals("Auxiliar"))) {
-            throw new IllegalArgumentException(ENTRADA_INVALIDA);
-        }
-    }
-
-    private void verificaSeCargoENull(String cargo) {
-        if (StringUtils.isEmpty(cargo)) {
-            throw new NullPointerException(ENTRADA_NULA);
-        }
-    }
-
-    private void verificaNullSalario(double salario) {
-        if (salario == 0) {
-            throw new NullPointerException(ENTRADA_NULA);
-        }
+        Preconditions.checkArgument(cargo.equals("Atendente") || (cargo.equals("Tecnico") || (cargo.equals("Auxiliar"))), Constante.ENTRADA_INVALIDA);
     }
 
     @Override
