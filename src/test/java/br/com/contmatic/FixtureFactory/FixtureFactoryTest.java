@@ -1,6 +1,7 @@
 package br.com.contmatic.FixtureFactory;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Random;
 
 import org.junit.Test;
@@ -35,9 +36,9 @@ public class FixtureFactoryTest implements TemplateLoader {
         Fixture.of(Telefone.class).addTemplate("telefone", new Rule() {
             {
                 add("numero", regex(
-                    "(([1][1-9])|([2][1-2])|([2][4-8])|([3][1-5])|([3][7-8])|([4][1-9])|([5][1])|([5][3-5])|([6][1-9])|([7][1])|([7][3-5])|([7][7])|([7][9])|([8][1-9]))(([0-9]{8})|([0-9]{9}))"));
+                    "(([1][1-9])|([2][1-2])|([2][4-8])|([3][1-5])|([3][7-8])|([4][1-9])|([5][1])|([5][3-5])|([6][1-9])|([7][1])|([7][3-5])|([7][7])|([7][9])|([8][1-9]))(([2-9]{8})|([2-9]{9}))"));
                 add("ramal", regex("[0-9]{3}"));
-                add("tipo", random(TipoTelefone.DOMESTICO, TipoTelefone.EMPRESARIAL));
+                add("tipo", random(TipoTelefone.CELULAR, TipoTelefone.FIXO));
             }
         });
 
@@ -66,6 +67,8 @@ public class FixtureFactoryTest implements TemplateLoader {
                 add("nome", name());
                 add("razaoSocial", regex("[a-z]{7} [a-z]{15} [a-z]{10}"));
                 add("proprietarios", name());
+                add("telefones", new HashSet<>());
+                add("endereco", new HashSet<>());
             }
         });
 

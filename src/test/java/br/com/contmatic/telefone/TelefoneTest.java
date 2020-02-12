@@ -22,19 +22,12 @@ public class TelefoneTest {
     }
 
     @Before
-    public void deve_verificar_igualdade_de_classes_hashcode() {
-        Telefone telefone = new Telefone("1120117414", "201", TipoTelefone.DOMESTICO);
-        Telefone telefone2 = new Telefone("1120117414", "201", TipoTelefone.DOMESTICO);
-
-        assertEquals(telefone.hashCode(), telefone2.hashCode());
-    }
-
-    @Before
     public void deve_verificar_igualdade_de_classes_equals() {
-        Telefone telefone = new Telefone("1120117414", "201", TipoTelefone.EMPRESARIAL);
-        Telefone telefone2 = new Telefone("1120117414", "201", TipoTelefone.EMPRESARIAL);
+        Telefone telefone = new Telefone("1120117414", "201", TipoTelefone.FIXO);
+        Telefone telefone2 = new Telefone("1120117414", "201", TipoTelefone.FIXO);
 
         assertEquals(telefone, telefone2);
+        assertEquals(telefone.hashCode(), telefone2.hashCode());
     }
 
     @Test
@@ -49,6 +42,7 @@ public class TelefoneTest {
     public void deve_setar_telefone() {
         Telefone telefone = Fixture.from(Telefone.class).gimme("telefone");
         telefone.setNumero("11931509167");
+        ;
         valid = new ValidateAnnotations<>();
         System.out.println(valid.returnAnnotationMsgError(telefone));
     }
@@ -64,7 +58,7 @@ public class TelefoneTest {
     @Test
     public void deve_setar_ramal() {
         Telefone telefone = Fixture.from(Telefone.class).gimme("telefone");
-        telefone.setRamal("678");
+        telefone.setRamal("456");
         valid = new ValidateAnnotations<>();
         System.out.println(valid.returnAnnotationMsgError(telefone));
     }
@@ -80,7 +74,7 @@ public class TelefoneTest {
     @Test
     public void deve_setar_tipo() {
         Telefone telefone = Fixture.from(Telefone.class).gimme("telefone");
-        telefone.setTipo(TipoTelefone.DOMESTICO);
+        telefone.setTipo(TipoTelefone.FIXO);
         valid = new ValidateAnnotations<>();
         System.out.println(valid.returnAnnotationMsgError(telefone));
     }

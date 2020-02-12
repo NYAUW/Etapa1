@@ -26,7 +26,6 @@ public class Telefone {
     }
 
     public Telefone(String numero, String ramal, TipoTelefone tipo) {
-        super();
         this.numero = numero;
         this.ramal = ramal;
         this.tipo = tipo;
@@ -53,6 +52,11 @@ public class Telefone {
     }
 
     public void setTipo(TipoTelefone tipo) {
+        if (numero.substring(2, 3).equals("9")) {
+            tipo = TipoTelefone.CELULAR;
+        } else {
+            tipo = TipoTelefone.FIXO;
+        }
         this.tipo = tipo;
     }
 
@@ -61,8 +65,6 @@ public class Telefone {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((numero == null) ? 0 : numero.hashCode());
-        result = prime * result + ((ramal == null) ? 0 : ramal.hashCode());
-        result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
         return result;
     }
 
@@ -79,16 +81,6 @@ public class Telefone {
             if (other.numero != null)
                 return false;
         } else if (!numero.equals(other.numero))
-            return false;
-        if (ramal == null) {
-            if (other.ramal != null)
-                return false;
-        } else if (!ramal.equals(other.ramal))
-            return false;
-        if (tipo == null) {
-            if (other.tipo != null)
-                return false;
-        } else if (!tipo.equals(other.tipo))
             return false;
         return true;
     }

@@ -8,6 +8,8 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 
+import com.google.common.base.Preconditions;
+
 public class ValidateAnnotations<T> {
 
     public String returnAnnotationMsgError(T t) {
@@ -17,6 +19,8 @@ public class ValidateAnnotations<T> {
         for(ConstraintViolation<T> teste : erros) {
             errosMsg.add(teste.getMessage());
         }
+        String verificaErros = errosMsg.toString();
+        Preconditions.checkArgument(!(verificaErros.length() > 2), errosMsg);
         return errosMsg.toString().replace("[", "").replace("]", "");
 
     }

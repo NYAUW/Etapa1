@@ -50,7 +50,7 @@ public class CadastroTest {
     @Test
     public void deve_verificar_nome_null() {
         Cadastro cadastroValidator = Fixture.from(Cadastro.class).gimme("cadastro");
-        assertNotNull(cadastroValidator.getNome());
+        cadastroValidator.getNome();
         valid = new ValidateAnnotations<>();
         System.out.println(valid.returnAnnotationMsgError(cadastroValidator));
     }
@@ -66,7 +66,7 @@ public class CadastroTest {
     @Test
     public void deve_armazenar_email() {
         Cadastro cadastroValidator = Fixture.from(Cadastro.class).gimme("cadastro");
-        cadastroValidator.setEmail("jogosdigitais@hotmail.com");
+        cadastroValidator.setEmail("jogos_digitais@gmail.com");
         valid = new ValidateAnnotations<>();
         System.out.println(valid.returnAnnotationMsgError(cadastroValidator));
 

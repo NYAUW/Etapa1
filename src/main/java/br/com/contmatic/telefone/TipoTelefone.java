@@ -1,8 +1,8 @@
 package br.com.contmatic.telefone;
 
 public enum TipoTelefone {
-                          EMPRESARIAL("Empresarial"),
-                          DOMESTICO("Domestico");
+                          FIXO("Fixo"),
+                          CELULAR("Celular");
 
     String tipo;
 
