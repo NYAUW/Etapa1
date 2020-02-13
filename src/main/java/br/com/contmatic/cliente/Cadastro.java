@@ -1,5 +1,9 @@
 package br.com.contmatic.cliente;
 
+import static br.com.contmatic.constante.Constante.ENTRADA_INVALIDA;
+import static br.com.contmatic.constante.Constante.ENTRADA_NULA;
+import static br.com.contmatic.constante.Constante.RG;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -10,40 +14,52 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 
-import com.google.common.base.Preconditions;
-
-import br.com.contmatic.constante.Constante;
-
+/**
+ * The Class Cadastro.
+ */
 public class Cadastro {
 
-    @NotBlank(message = Constante.ENTRADA_NULA)
-    @NotEmpty(message = Constante.ENTRADA_NULA)
-    @NotNull(message = Constante.ENTRADA_NULA)
-    @Pattern(regexp = Constante.SOMENTE_ALFA, message = Constante.ENTRADA_INVALIDA)
+    /** The nome. */
+    @NotBlank(message = ENTRADA_NULA)
+    @NotEmpty(message = ENTRADA_NULA)
+    @NotNull(message = ENTRADA_NULA)
     @Length(min = 5, message = "Nome Incompleto")
     @Size(max = 50, message = "Quantidade de caracteres excedida")
     private String nome;
 
-    @NotNull(message = Constante.ENTRADA_NULA)
-    @Email(message = Constante.ENTRADA_INVALIDA)
+    /** The email. */
+    @Email(message = ENTRADA_INVALIDA)
     private String email;
 
-    @NotEmpty(message = Constante.ENTRADA_NULA)
-    @NotNull(message = Constante.ENTRADA_NULA)
+    /** The senha. */
+    @NotEmpty(message = ENTRADA_NULA)
+    @NotNull(message = ENTRADA_NULA)
     private String senha;
 
-    @NotEmpty(message = Constante.ENTRADA_NULA)
-    @CPF(message = Constante.ENTRADA_INVALIDA)
+    /** The cpf. */
+    @CPF(message = ENTRADA_INVALIDA)
     private String cpf;
 
-    @NotEmpty(message = Constante.ENTRADA_NULA)
-    @Pattern(regexp = Constante.RG, message = "Rg Inválido")
+    /** The rg. */
+    @NotEmpty(message = ENTRADA_NULA)
+    @Pattern(regexp = RG, message = "Rg Inválido")
     private String rg;
 
+    /**
+     * Instantiates a new cadastro.
+     */
     public Cadastro() {
-
     }
 
+    /**
+     * Instantiates a new cadastro.
+     *
+     * @param nome the nome
+     * @param email the email
+     * @param senha the senha
+     * @param cpf the cpf
+     * @param rg the rg
+     */
     public Cadastro(String nome, String email, String senha, String cpf, String rg) {
         this.nome = nome;
         this.email = email;
@@ -52,54 +68,108 @@ public class Cadastro {
         this.rg = rg;
     }
 
+    /**
+     * Gets the nome.
+     *
+     * @return the nome
+     */
     public String getNome() {
 
         return nome;
     }
 
+    /**
+     * Gets the email.
+     *
+     * @return the email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Gets the senha.
+     *
+     * @return the senha
+     */
     public String getSenha() {
         return senha;
     }
 
+    /**
+     * Gets the cpf.
+     *
+     * @return the cpf
+     */
     public String getCpf() {
         return cpf;
     }
 
+    /**
+     * Gets the rg.
+     *
+     * @return the rg
+     */
     public String getRg() {
         return rg;
     }
 
+    /**
+     * Sets the nome.
+     *
+     * @param nome the new nome
+     */
     public void setNome(String nome) {
         this.nome = nome;
     }
 
+    /**
+     * Sets the email.
+     *
+     * @param email the new email
+     */
     public void setEmail(String email) {
-        verificaDominioEmail(email);
         this.email = email;
     }
 
+    /**
+     * Sets the senha.
+     *
+     * @param senha the new senha
+     */
     public void setSenha(String senha) {
         this.senha = senha;
     }
 
+    /**
+     * Sets the cpf.
+     *
+     * @param cpf the new cpf
+     */
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
+    /**
+     * Sets the rg.
+     *
+     * @param rg the new rg
+     */
     public void setRg(String rg) {
         this.rg = rg;
     }
 
-    private void verificaDominioEmail(String email) {
-        Preconditions.checkArgument((!(email.contains("@") && email.contains(".com")) && email.contains("gmail") || email.contains("hotmail") || email.contains("yahoo") ||
-            email.contains("contmatic") || email.contains("outlook") || email.contains("ig") || email.contains("email") || email.contains("uol") || email.contains("globo")),
-            Constante.ENTRADA_INVALIDA);
-    }
+    /**
+     * Verifica dominio email.
+     *
+     * @param email the email
+     */
 
+    /**
+     * Hash code.
+     *
+     * @return the int
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -112,6 +182,12 @@ public class Cadastro {
         return result;
     }
 
+    /**
+     * Equals.
+     *
+     * @param obj the obj
+     * @return true, if successful
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)

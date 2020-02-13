@@ -14,19 +14,31 @@ import br.com.contmatic.annotation.ValidateAnnotations;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
+/**
+ * The Class OrcamentoTest.
+ */
 public class OrcamentoTest {
 
+    /** The orcamento. */
     Orcamento orcamento;
 
+    /** The date time. */
     DateTime dateTime = DateTime.now();
 
+    /** The valid. */
     ValidateAnnotations<Object> valid;
 
+    /**
+     * Set up.
+     */
     @BeforeClass
     public static void setUp() {
         FixtureFactoryLoader.loadTemplates("br.com.contmatic.FixtureFactory");
     }
 
+    /**
+     * Deve verificar igualdade classes hashcode.
+     */
     @Before
     public void deve_verificar_igualdade_classes_hashcode() {
         Orcamento orcamento = new Orcamento("Sony", "HYT367", "Nao Liga", dateTime);
@@ -35,6 +47,9 @@ public class OrcamentoTest {
         assertEquals(orcamento.hashCode(), orcamento2.hashCode());
     }
 
+    /**
+     * Deve verificar igualdade classes equals.
+     */
     @Before
     public void deve_verificar_igualdade_classes_equals() {
         Orcamento orcamento = new Orcamento("Sony", "HYT367", "Nao Liga", dateTime);
@@ -43,6 +58,9 @@ public class OrcamentoTest {
         assertEquals(orcamento, orcamento2);
     }
 
+    /**
+     * Deve verificvar marca not null.
+     */
     @Test
     public void deve_verificvar_marca_not_null() {
         Orcamento orcamento = Fixture.from(Orcamento.class).gimme("orcamento");
@@ -52,6 +70,9 @@ public class OrcamentoTest {
         System.out.println(valid.returnAnnotationMsgError(orcamento));
     }
 
+    /**
+     * Deve verificar marca numerica.
+     */
     @Test
     public void deve_verificar_marca_numerica() {
         Orcamento orcamento = Fixture.from(Orcamento.class).gimme("orcamento");
@@ -60,6 +81,9 @@ public class OrcamentoTest {
         System.out.println(valid.returnAnnotationMsgError(orcamento));
     }
 
+    /**
+     * Deve verificar serial nulo.
+     */
     @Test
     public void deve_verificar_serial_nulo() {
         Orcamento orcamento = Fixture.from(Orcamento.class).gimme("orcamento");
@@ -68,6 +92,9 @@ public class OrcamentoTest {
         System.out.println(valid.returnAnnotationMsgError(orcamento));
     }
 
+    /**
+     * Deve verificar defeito null.
+     */
     @Test
     public void deve_verificar_defeito_null() {
         Orcamento orcamento = Fixture.from(Orcamento.class).gimme("orcamento");
@@ -76,6 +103,9 @@ public class OrcamentoTest {
         System.out.println(valid.returnAnnotationMsgError(orcamento));
     }
 
+    /**
+     * Deve setar marca.
+     */
     @Test
     public void deve_setar_marca() {
         Orcamento orcamento = Fixture.from(Orcamento.class).gimme("orcamento");
@@ -84,6 +114,9 @@ public class OrcamentoTest {
         System.out.println(valid.returnAnnotationMsgError(orcamento));
     }
 
+    /**
+     * Deve setar serial.
+     */
     @Test
     public void deve_setar_serial() {
         Orcamento orcamento = Fixture.from(Orcamento.class).gimme("orcamento");
@@ -92,6 +125,9 @@ public class OrcamentoTest {
         System.out.println(valid.returnAnnotationMsgError(orcamento));
     }
 
+    /**
+     * Deve setar defeito.
+     */
     @Test
     public void deve_setar_defeito() {
         Orcamento orcamento = Fixture.from(Orcamento.class).gimme("orcamento");

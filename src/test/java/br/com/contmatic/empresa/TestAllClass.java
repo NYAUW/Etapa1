@@ -10,6 +10,9 @@ import br.com.contmatic.cliente.OrcamentoTest;
 import br.com.contmatic.endereco.EnderecoTest;
 import br.com.contmatic.telefone.TelefoneTest;
 
+/**
+ * The Class TestAllClass.
+ */
 @RunWith(Suite.class)
 @SuiteClasses({ EmpresaTest.class, FuncionarioTest.class, CadastroTest.class, OrcamentoTest.class, TelefoneTest.class, EnderecoTest.class, FixtureFactoryTest.class })
 public class TestAllClass {

@@ -1,5 +1,6 @@
 package br.com.contmatic.FixtureFactory;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
@@ -18,15 +19,21 @@ import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
 
+/**
+ * The Class FixtureFactoryTest.
+ */
 public class FixtureFactoryTest implements TemplateLoader {
 
+    /**
+     * Load.
+     */
     @Test
     @Override
     public void load() {
         Fixture.of(Cadastro.class).addTemplate("cadastro", new Rule() {
             {
                 add("nome", name());
-                add("email", "pauzinho@gmail.com");
+                add("email", regex("[a-z]{8}@gmail.com"));
                 add("senha", regex("[a-zA-Z0-9]{6}"));
                 add("cpf", GeraCpf());
                 add("rg", regex("[0-9]{1}.[0-9]{3}.[0-9]{3}-[0-9]{2}"));
@@ -44,9 +51,9 @@ public class FixtureFactoryTest implements TemplateLoader {
 
         Fixture.of(Endereco.class).addTemplate("endereco", new Rule() {
             {
-                add("rua", random("Rua Manoel Padre Satanista", "Rua Tuiti", "Av. Estados"));
+                add("rua", random("Rua Manoel Padre Satanista", "Rua Tuiti", "Av Estados"));
                 add("bairro", random("Mascarenhas de Morais", "Sao Matheus", "Santa Adélia"));
-                add("numero", random(1000));
+                add("numero", new Random().nextInt(9999));
                 add("regiao", random("Zona Leste", "Zona Sul", "Zona Norte", "Sudeste"));
                 add("cep", regex("[0-9]{8}"));
                 add("tipo", random(TipoEndereco.APARTAMENTO, TipoEndereco.CASA, TipoEndereco.CONDOMINIO, TipoEndereco.EMPRESARIAL));
@@ -77,12 +84,17 @@ public class FixtureFactoryTest implements TemplateLoader {
                 add("nome", name());
                 add("cargo", random("Atendente", "Tecnico", "Auxiliar"));
                 add("codigo", random(9999));
-                add("salario", random(9999));
+                add("salario", random(BigDecimal.class, range(1045, 5000)));
             }
         });
 
     }
 
+    /**
+     * Gera cpf.
+     *
+     * @return the string
+     */
     private String GeraCpf() {
         Random random = new Random();
         int numeros[] = new int[9];
@@ -115,7 +127,7 @@ public class FixtureFactoryTest implements TemplateLoader {
         } else if (aux2.length() >= 2) {
             Digito2 += -10;
         }
-        String cpf = Arrays.toString(numeros).replace("[", "").replace(",", "").replace("]", "").replace(" ", "") + Digito1 + Digito2;
-        return cpf;
+
+        return Arrays.toString(numeros).replace("[", "").replace(",", "").replace("]", "").replace(" ", "") + Digito1 + Digito2;
     }
 }
