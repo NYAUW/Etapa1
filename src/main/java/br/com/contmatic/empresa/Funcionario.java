@@ -3,6 +3,8 @@ package br.com.contmatic.empresa;
 import static br.com.contmatic.constante.Constante.ENTRADA_INVALIDA;
 import static br.com.contmatic.constante.Constante.ENTRADA_NULA;
 import static br.com.contmatic.constante.Constante.SOMENTE_ALFA;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
 import java.math.BigDecimal;
 
@@ -14,11 +16,6 @@ import javax.validation.constraints.Pattern;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import com.google.common.base.Preconditions;
-
-import br.com.contmatic.constante.Constante;
 
 /**
  * The Class Funcionario.
@@ -120,7 +117,6 @@ public class Funcionario {
      * @param cargo the new cargo
      */
     public void setCargo(String cargo) {
-        verificaSelecaoCargo(cargo);
         this.cargo = cargo;
     }
 
@@ -143,31 +139,30 @@ public class Funcionario {
     }
 
     /**
-     * Verifica selecao cargo.
-     *
-     * @param cargo the cargo
-     */
-    private void verificaSelecaoCargo(String cargo) {
-        Preconditions.checkArgument(cargo.equals("Atendente") || (cargo.equals("Tecnico") || (cargo.equals("Auxiliar"))), Constante.ENTRADA_INVALIDA);
-    }
-
-    /**
      * Hash code.
      *
      * @return the int
      */
+
     @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
+    public String toString() {
+        return reflectionToString(this, JSON_STYLE);
     }
 
     @Override
     public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return HashCodeBuilder.reflectionHashCode(codigo);
     }
 
     @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Funcionario other = (Funcionario) obj;
+        return new EqualsBuilder().append(codigo, other.codigo).isEquals();
     }
 }

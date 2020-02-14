@@ -31,7 +31,7 @@ public class ValidateAnnotations<T> {
             errosMsg.add(teste.getMessage());
         }
         String verificaErros = errosMsg.toString();
-        Preconditions.checkArgument(!(verificaErros.length() > 2), verificaErros);
+        Preconditions.checkArgument(!(verificaErros.length() > 2), verificaErros.replace("[", "").replace("]", ""));
         return errosMsg.toString().replace("[", "").replace("]", "");
 
     }

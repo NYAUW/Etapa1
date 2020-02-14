@@ -3,6 +3,8 @@ package br.com.contmatic.telefone;
 import static br.com.contmatic.constante.Constante.ENTRADA_INVALIDA;
 import static br.com.contmatic.constante.Constante.ENTRADA_NULA;
 import static br.com.contmatic.constante.Constante.NUMERO_TELEFONE;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -10,7 +12,6 @@ import javax.validation.constraints.Pattern;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * The Class Telefone.
@@ -18,14 +19,14 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class Telefone {
 
     /** The numero. */
-    @NotEmpty(message = ENTRADA_NULA)
     @NotNull(message = ENTRADA_NULA)
+    @NotEmpty(message = ENTRADA_NULA)
     @Pattern(regexp = NUMERO_TELEFONE, message = "Numero Inválido")
     private String numero;
 
     /** The ramal. */
-    @NotEmpty(message = ENTRADA_NULA)
     @NotNull(message = ENTRADA_NULA)
+    @NotEmpty(message = ENTRADA_NULA)
     @Pattern(regexp = "^[0-9]{3}$*", message = ENTRADA_INVALIDA)
     private String ramal;
 
@@ -104,11 +105,6 @@ public class Telefone {
      * @param tipo the new tipo
      */
     public void setTipo(TipoTelefone tipo) {
-        if (numero.substring(2, 3).equals("9")) {
-            tipo = TipoTelefone.CELULAR;
-        } else {
-            tipo = TipoTelefone.FIXO;
-        }
         this.tipo = tipo;
     }
 
@@ -124,7 +120,7 @@ public class Telefone {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return reflectionToString(this, JSON_STYLE);
     }
 
 }

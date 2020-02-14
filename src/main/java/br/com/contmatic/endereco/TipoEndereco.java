@@ -28,8 +28,4 @@ public enum TipoEndereco {
     private TipoEndereco(String tipo) {
         this.tipo = tipo;
     }
-
-    public String getTipo() {
-        return tipo;
-    }
 }

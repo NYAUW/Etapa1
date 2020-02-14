@@ -1,9 +1,12 @@
 package br.com.contmatic.empresa;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 
 import java.math.BigDecimal;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -33,23 +36,51 @@ public class FuncionarioTest {
     /**
      * Verifica classes iguais hashcode.
      */
-    @Test
+    @Before
     public void verifica_classes_iguais_hashcode() {
-        Funcionario funcionario1 = new Funcionario("Marcela Oliveira", "Atendente", 0, new BigDecimal("5000.00"));
-        Funcionario funcionario2 = new Funcionario("Marcela Oliveira", "Atendente", 0, new BigDecimal("5000.00"));
+        Funcionario funcionario = Fixture.from(Funcionario.class).gimme("funcionario");
+        System.out.println(funcionario);
+        assertEquals(funcionario.hashCode(), funcionario.hashCode());
 
-        assertEquals(funcionario1.hashCode(), funcionario2.hashCode());
     }
 
-    /**
-     * Verifica classes iguais equals.
-     */
-    @Test
-    public void verifica_classes_iguais_equals() {
-        Funcionario funcionario1 = new Funcionario("Marcela Oliveira", "Atendente", 0, new BigDecimal("5000.00"));
-        Funcionario funcionario2 = new Funcionario("Marcela Oliveira", "Atendente", 0, new BigDecimal("5000.00"));
+    @Before
+    public void deve_comparar_dados_do_construtor() {
+        Funcionario funcionario = new Funcionario("Lucas Alves Ribeiro", "Auxiliar", 234, new BigDecimal("3000.00"));
+        assertEquals(funcionario, funcionario);
+    }
 
-        assertEquals(funcionario1, funcionario2);
+    @Before
+    public void deve_verificar_se_a_classe_contem_dados_nulos() {
+        Funcionario funcionario = Fixture.from(Funcionario.class).gimme("funcionario");
+        assertFalse(funcionario.equals(null));
+    }
+
+    @Before
+    public void deve_comparar_objetos_da_classe() {
+        Funcionario funcionario = Fixture.from(Funcionario.class).gimme("funcionario");
+        assertFalse(funcionario.equals(new Object()));
+    }
+
+    @Before
+    public void deve_verificar_classes_iguais() {
+        Funcionario funcionario = Fixture.from(Funcionario.class).gimme("funcionario");
+        assertEquals(funcionario, funcionario);
+    }
+
+    @Before
+    public void deve_verificar_classes_iguais_com_equals() {
+        Funcionario funcionario = Fixture.from(Funcionario.class).gimme("funcionario");
+        Funcionario funcionario2 = Fixture.from(Funcionario.class).gimme("funcionario");
+
+        assertNotEquals(funcionario, funcionario2);
+    }
+
+    @Before
+    public void deve_verificar_objeto_das_classes() {
+        Funcionario funcionario = Fixture.from(Funcionario.class).gimme("funcionario");
+        Funcionario funcionario2 = Fixture.from(Funcionario.class).gimme("funcionario");
+        assertNotEquals(funcionario, funcionario2);
     }
 
     /**
@@ -89,9 +120,25 @@ public class FuncionarioTest {
      * Deve verificar cargo simulando entrada de dados do usuario.
      */
     @Test
-    public void deve_verificar_cargo_simulando_entrada_de_dados_do_usuario() {
+    public void deve_verificar_cargo_tecnico_simulando_entrada_de_dados_do_usuario() {
         Funcionario funcionario = Fixture.from(Funcionario.class).gimme("funcionario");
         funcionario.setCargo("Tecnico");
+        valid = new ValidateAnnotations<>();
+        System.out.println(valid.returnAnnotationMsgError(funcionario));
+    }
+
+    @Test
+    public void deve_verificar_cargo_atendente_simulando_entrada_de_dados_do_usuario() {
+        Funcionario funcionario = Fixture.from(Funcionario.class).gimme("funcionario");
+        funcionario.setCargo("Atendente");
+        valid = new ValidateAnnotations<>();
+        System.out.println(valid.returnAnnotationMsgError(funcionario));
+    }
+
+    @Test
+    public void deve_verificar_cargo_auxiliar_simulando_entrada_de_dados_do_usuario() {
+        Funcionario funcionario = Fixture.from(Funcionario.class).gimme("funcionario");
+        funcionario.setCargo("Auxiliar");
         valid = new ValidateAnnotations<>();
         System.out.println(valid.returnAnnotationMsgError(funcionario));
     }
@@ -135,7 +182,6 @@ public class FuncionarioTest {
     @Test
     public void deve_setar_salario_simulando_entrada_de_dados() {
         Funcionario funcionario = Fixture.from(Funcionario.class).gimme("funcionario");
-        System.out.println(funcionario.getSalario());
         funcionario.setSalario(new BigDecimal("5000.00"));
         valid = new ValidateAnnotations<>();
         System.out.println(valid.returnAnnotationMsgError(funcionario));

@@ -3,6 +3,8 @@ package br.com.contmatic.empresa;
 import static br.com.contmatic.constante.Constante.ENTRADA_INVALIDA;
 import static br.com.contmatic.constante.Constante.ENTRADA_NULA;
 import static br.com.contmatic.constante.Constante.SOMENTE_ALFA;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,13 +16,9 @@ import javax.validation.constraints.Pattern;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang3.StringUtils;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CNPJ;
 
-import com.google.common.base.Preconditions;
-
-import br.com.contmatic.constante.Constante;
 import br.com.contmatic.endereco.Endereco;
 import br.com.contmatic.telefone.Telefone;
 
@@ -42,11 +40,12 @@ public class Empresa {
 
     /** The razao social. */
     @NotNull(message = ENTRADA_NULA)
+    @Length(min = 5, message = ENTRADA_INVALIDA)
     private String razaoSocial;
 
     /** The proprietarios. */
-    @NotBlank(message = ENTRADA_NULA)
     @NotNull(message = ENTRADA_NULA)
+    @NotBlank(message = ENTRADA_NULA)
     @Pattern(regexp = SOMENTE_ALFA, message = ENTRADA_INVALIDA)
     private String proprietarios;
 
@@ -183,7 +182,6 @@ public class Empresa {
      * @param razaoSocial the new razao social
      */
     public void setRazaoSocial(String razaoSocial) {
-        invalidaRazaoSocialIncompleta(razaoSocial);
         this.razaoSocial = razaoSocial;
     }
 
@@ -202,16 +200,7 @@ public class Empresa {
      * @param telefones the new telefones
      */
     public void setTelefones(Set<Telefone> telefones) {
-        this.telefones.addAll(telefones);
-    }
-
-    /**
-     * Invalida razao social incompleta.
-     *
-     * @param razaoSocial the razao social
-     */
-    private void invalidaRazaoSocialIncompleta(String razaoSocial) {
-        Preconditions.checkArgument(StringUtils.containsWhitespace(razaoSocial), Constante.ENTRADA_INVALIDA);
+        this.telefones = telefones;
     }
 
     /**
@@ -223,24 +212,26 @@ public class Empresa {
         this.endereco = endereco;
     }
 
-    /**
-     * Hash code.
-     *
-     * @return the int
-     */
     @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(cnpj);
     }
 
     @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Empresa other = (Empresa) obj;
+        return new EqualsBuilder().append(cnpj, other.cnpj).isEquals();
     }
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return reflectionToString(this, JSON_STYLE);
     }
 
 }

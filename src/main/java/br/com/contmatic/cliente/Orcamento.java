@@ -4,6 +4,8 @@ import static br.com.contmatic.constante.Constante.ENTRADA_INVALIDA;
 import static br.com.contmatic.constante.Constante.ENTRADA_NULA;
 import static br.com.contmatic.constante.Constante.SERIAL;
 import static br.com.contmatic.constante.Constante.SOMENTE_ALFA;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -12,7 +14,6 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.joda.time.DateTime;
 
 /**
@@ -21,21 +22,22 @@ import org.joda.time.DateTime;
 public class Orcamento {
 
     /** The marca. */
-    @NotNull(message = ENTRADA_NULA)
     @Pattern(regexp = SOMENTE_ALFA)
+    @NotNull(message = ENTRADA_NULA)
     private String marca;
 
     /** The serial. */
-    @NotBlank(message = ENTRADA_NULA)
     @Pattern(regexp = SERIAL)
+    @NotBlank(message = ENTRADA_NULA)
     private String serial;
 
     /** The defeito. */
-    @Size(min = 10, max = 200, message = ENTRADA_INVALIDA)
     @NotNull(message = ENTRADA_NULA)
+    @Size(min = 10, max = 200, message = ENTRADA_INVALIDA)
     private String defeito;
 
     /** The data. */
+    @NotNull(message = ENTRADA_NULA)
     private DateTime data;
 
     /**
@@ -149,7 +151,7 @@ public class Orcamento {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return reflectionToString(this, JSON_STYLE);
     }
 
 }

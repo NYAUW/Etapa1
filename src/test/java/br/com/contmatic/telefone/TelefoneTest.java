@@ -58,7 +58,7 @@ public class TelefoneTest {
     @Test
     public void deve_setar_telefone_manualmente_simulando_entrada_de_dados_usuario() {
         Telefone telefone = Fixture.from(Telefone.class).gimme("telefone");
-        telefone.setNumero("11931509167");
+        telefone.setNumero("22931509167");
         valid = new ValidateAnnotations<>();
         System.out.println(valid.returnAnnotationMsgError(telefone));
     }

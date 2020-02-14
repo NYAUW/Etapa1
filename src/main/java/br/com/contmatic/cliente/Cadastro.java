@@ -3,6 +3,8 @@ package br.com.contmatic.cliente;
 import static br.com.contmatic.constante.Constante.ENTRADA_INVALIDA;
 import static br.com.contmatic.constante.Constante.ENTRADA_NULA;
 import static br.com.contmatic.constante.Constante.RG;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -11,6 +13,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -20,9 +24,9 @@ import org.hibernate.validator.constraints.br.CPF;
 public class Cadastro {
 
     /** The nome. */
+    @NotNull(message = ENTRADA_NULA)
     @NotBlank(message = ENTRADA_NULA)
     @NotEmpty(message = ENTRADA_NULA)
-    @NotNull(message = ENTRADA_NULA)
     @Length(min = 5, message = "Nome Incompleto")
     @Size(max = 50, message = "Quantidade de caracteres excedida")
     private String nome;
@@ -32,8 +36,8 @@ public class Cadastro {
     private String email;
 
     /** The senha. */
-    @NotEmpty(message = ENTRADA_NULA)
     @NotNull(message = ENTRADA_NULA)
+    @NotEmpty(message = ENTRADA_NULA)
     private String senha;
 
     /** The cpf. */
@@ -159,35 +163,11 @@ public class Cadastro {
         this.rg = rg;
     }
 
-    /**
-     * Verifica dominio email.
-     *
-     * @param email the email
-     */
-
-    /**
-     * Hash code.
-     *
-     * @return the int
-     */
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
-        result = prime * result + ((email == null) ? 0 : email.hashCode());
-        result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-        result = prime * result + ((rg == null) ? 0 : rg.hashCode());
-        result = prime * result + ((senha == null) ? 0 : senha.hashCode());
-        return result;
+        return HashCodeBuilder.reflectionHashCode(cpf);
     }
 
-    /**
-     * Equals.
-     *
-     * @param obj the obj
-     * @return true, if successful
-     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -197,31 +177,11 @@ public class Cadastro {
         if (getClass() != obj.getClass())
             return false;
         Cadastro other = (Cadastro) obj;
-        if (cpf == null) {
-            if (other.cpf != null)
-                return false;
-        } else if (!cpf.equals(other.cpf))
-            return false;
-        if (email == null) {
-            if (other.email != null)
-                return false;
-        } else if (!email.equals(other.email))
-            return false;
-        if (nome == null) {
-            if (other.nome != null)
-                return false;
-        } else if (!nome.equals(other.nome))
-            return false;
-        if (rg == null) {
-            if (other.rg != null)
-                return false;
-        } else if (!rg.equals(other.rg))
-            return false;
-        if (senha == null) {
-            if (other.senha != null)
-                return false;
-        } else if (!senha.equals(other.senha))
-            return false;
-        return true;
+        return new EqualsBuilder().append(cpf, other.cpf).isEquals();
+    }
+
+    @Override
+    public String toString() {
+        return reflectionToString(this, JSON_STYLE);
     }
 }

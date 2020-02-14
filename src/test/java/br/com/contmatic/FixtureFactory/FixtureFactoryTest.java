@@ -1,10 +1,10 @@
 package br.com.contmatic.FixtureFactory;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 
+import org.joda.time.DateTime;
 import org.junit.Test;
 
 import br.com.contmatic.cliente.Cadastro;
@@ -21,8 +21,10 @@ import br.com.six2six.fixturefactory.loader.TemplateLoader;
 
 /**
  * The Class FixtureFactoryTest.
+ * 
+ * @param <E>
  */
-public class FixtureFactoryTest implements TemplateLoader {
+public class FixtureFactoryTest<E> implements TemplateLoader {
 
     /**
      * Load.
@@ -34,8 +36,8 @@ public class FixtureFactoryTest implements TemplateLoader {
             {
                 add("nome", name());
                 add("email", regex("[a-z]{8}@gmail.com"));
-                add("senha", regex("[a-zA-Z0-9]{6}"));
-                add("cpf", GeraCpf());
+                add("senha", regex("[a-zA-Z0-9]{5}"));
+                add("cpf", GeraCpf.GeraCpf());
                 add("rg", regex("[0-9]{1}.[0-9]{3}.[0-9]{3}-[0-9]{2}"));
             }
         });
@@ -51,7 +53,7 @@ public class FixtureFactoryTest implements TemplateLoader {
 
         Fixture.of(Endereco.class).addTemplate("endereco", new Rule() {
             {
-                add("rua", random("Rua Manoel Padre Satanista", "Rua Tuiti", "Av Estados"));
+                add("rua", name());
                 add("bairro", random("Mascarenhas de Morais", "Sao Matheus", "Santa Adélia"));
                 add("numero", new Random().nextInt(9999));
                 add("regiao", random("Zona Leste", "Zona Sul", "Zona Norte", "Sudeste"));
@@ -65,6 +67,7 @@ public class FixtureFactoryTest implements TemplateLoader {
                 add("marca", random("Sony", "Phillips", "Nitendo"));
                 add("serial", regex("[A-Z]{3}[0-9]{3}"));
                 add("defeito", regex("[a-z]{10} [a-z]{10}"));
+                add("data", new DateTime());
             }
         });
 
@@ -83,51 +86,10 @@ public class FixtureFactoryTest implements TemplateLoader {
             {
                 add("nome", name());
                 add("cargo", random("Atendente", "Tecnico", "Auxiliar"));
-                add("codigo", random(9999));
+                add("codigo", random(Integer.class, range(100, 500)));
                 add("salario", random(BigDecimal.class, range(1045, 5000)));
             }
         });
 
-    }
-
-    /**
-     * Gera cpf.
-     *
-     * @return the string
-     */
-    private String GeraCpf() {
-        Random random = new Random();
-        int numeros[] = new int[9];
-        for(int i = 0 ; i < numeros.length ; i++) {
-            numeros[i] = random.nextInt(9);
-        }
-        int calculoDigito1 = (((numeros[0] * 10) + (numeros[1] * 9) + (numeros[2] * 8) + (numeros[3] * 7) + (numeros[4] * 6) + (numeros[5] * 5) + (numeros[6] * 4) + (numeros[7] * 3) +
-            (numeros[8] * 2)));
-        int divisaoDigito1 = calculoDigito1 / 11;
-        int multiplicacaoDigito1 = 11 * divisaoDigito1;
-        int subtracaoDigito1 = calculoDigito1 - multiplicacaoDigito1;
-        int Digito1 = 11 - subtracaoDigito1;
-        String aux = Integer.toString(Digito1);
-
-        if (Digito1 >= 11) {
-            Digito1 += -Digito1;
-        } else if (aux.length() >= 2) {
-            Digito1 += -10;
-        }
-        int calculoDigito2 = (((numeros[0] * 11) + (numeros[1] * 10) + (numeros[2] * 9) + (numeros[3] * 8) + (numeros[4] * 7) + (numeros[5] * 6) + (numeros[6] * 5) + (numeros[7] * 4) +
-            (numeros[8] * 3) + (Digito1 * 2)));
-        int divisaoDigito2 = calculoDigito2 / 11;
-        int multiplicacaoDigito2 = 11 * divisaoDigito2;
-        int subtracaoDigito2 = calculoDigito2 - multiplicacaoDigito2;
-        int Digito2 = 11 - subtracaoDigito2;
-        String aux2 = Integer.toString(Digito2);
-
-        if (Digito2 >= 11) {
-            Digito2 += -Digito2;
-        } else if (aux2.length() >= 2) {
-            Digito2 += -10;
-        }
-
-        return Arrays.toString(numeros).replace("[", "").replace(",", "").replace("]", "").replace(" ", "") + Digito1 + Digito2;
     }
 }

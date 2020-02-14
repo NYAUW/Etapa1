@@ -22,13 +22,4 @@ public enum TipoTelefone {
     private TipoTelefone(String tipo) {
         this.tipo = tipo;
     }
-
-    /**
-     * Gets the tipo.
-     *
-     * @return the tipo
-     */
-    public String getTipo() {
-        return tipo;
-    }
 }

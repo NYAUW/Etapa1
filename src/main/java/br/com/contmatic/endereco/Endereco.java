@@ -3,6 +3,8 @@ package br.com.contmatic.endereco;
 import static br.com.contmatic.constante.Constante.ENTRADA_INVALIDA;
 import static br.com.contmatic.constante.Constante.ENTRADA_NULA;
 import static br.com.contmatic.constante.Constante.SOMENTE_ALFA;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -12,7 +14,6 @@ import javax.validation.constraints.Pattern;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.Length;
 
 /**
@@ -26,25 +27,25 @@ public class Endereco {
     private String rua;
 
     /** The bairro. */
-    @NotEmpty(message = ENTRADA_NULA)
     @NotNull(message = ENTRADA_NULA)
+    @NotEmpty(message = ENTRADA_NULA)
     @Pattern(regexp = SOMENTE_ALFA, message = "Test")
     private String bairro;
 
     /** The numero. */
     @Min(value = 1)
-    int numero;
+    private int numero;
 
     /** The regiao. */
-    @NotEmpty(message = ENTRADA_NULA)
     @NotNull(message = ENTRADA_NULA)
+    @NotEmpty(message = ENTRADA_NULA)
     @Pattern(regexp = SOMENTE_ALFA, message = ENTRADA_INVALIDA)
     private String regiao;
 
     /** The cep. */
-    @NotBlank(message = ENTRADA_INVALIDA)
-    @NotEmpty(message = ENTRADA_NULA)
     @NotNull(message = ENTRADA_NULA)
+    @NotEmpty(message = ENTRADA_NULA)
+    @NotBlank(message = ENTRADA_INVALIDA)
     @Length(max = 8, min = 8, message = ENTRADA_INVALIDA)
     @Pattern(regexp = "[0-9]{8}", message = ENTRADA_INVALIDA)
     private String cep;
@@ -199,7 +200,7 @@ public class Endereco {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return reflectionToString(this, JSON_STYLE);
     }
 
 }

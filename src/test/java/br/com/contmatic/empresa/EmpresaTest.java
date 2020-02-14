@@ -1,8 +1,13 @@
 package br.com.contmatic.empresa;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Before;
@@ -12,7 +17,6 @@ import org.junit.Test;
 import br.com.contmatic.annotation.ValidateAnnotations;
 import br.com.contmatic.endereco.Endereco;
 import br.com.contmatic.telefone.Telefone;
-import br.com.contmatic.telefone.TipoTelefone;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
@@ -22,7 +26,7 @@ import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 public class EmpresaTest {
 
     /** The empresa. */
-    Empresa empresa;
+    static Empresa empresa;
 
     /** The valid. */
     ValidateAnnotations<Object> valid;
@@ -33,6 +37,13 @@ public class EmpresaTest {
     @BeforeClass
     public static void setUp() {
         FixtureFactoryLoader.loadTemplates("br.com.contmatic.FixtureFactory");
+    }
+
+    @Before
+    public void deve_verificar_construtor_com_dados_iguais() {
+        Empresa empresa1 = Fixture.from(Empresa.class).gimme("empresa");
+        Empresa empresa = new Empresa("44268730000143", "Sim Tv Assistencia", "Servir nossos clientes de forma excepcional", "Luis Carlos Ribeiro", empresa1.getTelefones(), empresa1.getEndereco());
+        assertEquals(empresa, empresa);
     }
 
     /**
@@ -46,15 +57,29 @@ public class EmpresaTest {
         assertNotEquals(empresa1, empresa2);
     }
 
+    @Before
+    public void deve_verificar_construtor_da_classe_com_os_mesmos_dados() {
+        Telefone telefone = Fixture.from(Telefone.class).gimme("telefone");
+        Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
+        Empresa empresa = new Empresa("29685787000154", "Games Developer", "Razao Social Inserida Aqui", "Christian Schneider", telefone, endereco);
+        assertEquals(empresa, empresa);
+    }
+
+    @BeforeClass
+    public static void deve_atribuir_valor_é_model_empresa_a_partir_do_fixture() {
+        empresa = Fixture.from(Empresa.class).gimme("empresa");
+    }
+
     /**
      * Deve comparar as classes iguais.
      */
+
     @Before
-    public void deve_comparar_as_classes_iguais() {
-        Empresa empresa1 = new Empresa();
-        Empresa empresa2 = new Empresa();
-        assertEquals(empresa1.hashCode(), empresa2.hashCode());
-        assertEquals(empresa1, empresa2);
+    public void tetsteToString() {
+        Empresa empresaValidator = Fixture.from(Empresa.class).gimme("empresa");
+        Set<Telefone> telefone = new HashSet<>();
+        telefone.add(Fixture.from(Telefone.class).gimme("telefone"));
+        empresaValidator.setTelefones(telefone);
     }
 
     /**
@@ -63,17 +88,34 @@ public class EmpresaTest {
     @After
     public void deve_comparar_as_classes_e_construtores() {
         Empresa empresa = Fixture.from(Empresa.class).gimme("empresa");
-        Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
-        Empresa empresa1 = new Empresa("44268730000143", "Sim Tv Assistencia", "Servir nossos clientes de forma excepcional", "Luis Carlos Ribeiro", empresa.getTelefones(), empresa.getEndereco());
-        Empresa empresa2 = new Empresa("44268730000143", "Sim Tv Assistencia", "Servir nossos clientes de forma excepcional", "Luis Carlos Ribeiro", empresa.getTelefones(), empresa.getEndereco());
-        Empresa empresa3 = new Empresa("44268730000143", "Sim Tv Assistencia", "Servir nossos clientes de forma excepcional", "Luis Carlos Ribeiro",
-            new Telefone("1144012901", "837", TipoTelefone.FIXO), endereco);
-        Empresa empresa4 = new Empresa("44268730000143", "Sim Tv Assistencia", "Servir nossos clientes de forma excepcional", "Luis Carlos Ribeiro",
-            new Telefone("1144012901", "837", TipoTelefone.FIXO), endereco);
+        Set<Telefone> telefone = new HashSet<>();
+        Set<Endereco> endereco = new HashSet<>();
+        telefone.add(Fixture.from(Telefone.class).gimme("telefone"));
+        endereco.add(Fixture.from(Endereco.class).gimme("endereco"));
+        empresa.setTelefones(telefone);
+        empresa.setEndereco(endereco);
+        System.out.println(empresa);
 
-        assertEquals(empresa1, empresa2);
-        assertEquals(empresa4, empresa3);
+    }
 
+    @Test
+    public void deve_validar_cnpj_iguais() {
+        Empresa empresa1 = Fixture.from(Empresa.class).gimme("empresa");
+        empresa.setCnpj(empresa1.getCnpj());
+
+        assertTrue(empresa1.equals(empresa1));
+    }
+
+    @Test
+    public void deve_verificar_se_empresa_contem_dados_nulos() {
+        Empresa empresa = Fixture.from(Empresa.class).gimme("empresa");
+        assertFalse(empresa.equals(null));
+    }
+
+    @Test
+    public void deve_verificar_classes_igua() {
+        Empresa empresa1 = Fixture.from(Empresa.class).gimme("empresa");
+        assertFalse(empresa1.equals(new Object()));
     }
 
     /**
@@ -94,6 +136,7 @@ public class EmpresaTest {
     public void deve_verificar_cnpj_valido_gerado_pelo_objeto_fake() {
         Empresa empresaValidator = Fixture.from(Empresa.class).gimme("empresa");
         empresaValidator.getCnpj();
+        System.out.println(empresaValidator.getTelefones());
         valid = new ValidateAnnotations<>();
         System.out.println(valid.returnAnnotationMsgError(empresaValidator));
 
@@ -118,6 +161,14 @@ public class EmpresaTest {
     public void deve_armazenar_entrada_nome_empresa_com_objeto_fake() {
         Empresa empresaValidator = Fixture.from(Empresa.class).gimme("empresa");
         empresaValidator.getNome();
+        valid = new ValidateAnnotations<>();
+        System.out.println(valid.returnAnnotationMsgError(empresaValidator));
+    }
+
+    @Test
+    public void deve_setar_entrada_nome_empresa_simulando_entrada_do_usuario() {
+        Empresa empresaValidator = Fixture.from(Empresa.class).gimme("empresa");
+        empresaValidator.setNome("Jogos HD Gratis Torrent");
         valid = new ValidateAnnotations<>();
         System.out.println(valid.returnAnnotationMsgError(empresaValidator));
     }

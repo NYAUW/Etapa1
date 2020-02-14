@@ -64,6 +64,7 @@ public class OrcamentoTest {
     @Test
     public void deve_verificvar_marca_not_null() {
         Orcamento orcamento = Fixture.from(Orcamento.class).gimme("orcamento");
+        System.out.println(orcamento);
         assertNotNull(orcamento.getMarca());
         orcamento.setMarca(orcamento.getMarca());
         valid = new ValidateAnnotations<>();
@@ -77,6 +78,15 @@ public class OrcamentoTest {
     public void deve_verificar_marca_numerica() {
         Orcamento orcamento = Fixture.from(Orcamento.class).gimme("orcamento");
         assertTrue(StringUtils.isAlpha(orcamento.getMarca()));
+        valid = new ValidateAnnotations<>();
+        System.out.println(valid.returnAnnotationMsgError(orcamento));
+    }
+
+    @Test
+    public void deve_armazenar_data_numerica() {
+        Orcamento orcamento = Fixture.from(Orcamento.class).gimme("orcamento");
+        orcamento.setData(orcamento.getData());
+        System.out.println(orcamento.getData());
         valid = new ValidateAnnotations<>();
         System.out.println(valid.returnAnnotationMsgError(orcamento));
     }
