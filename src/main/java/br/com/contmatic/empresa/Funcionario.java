@@ -1,39 +1,67 @@
 package br.com.contmatic.empresa;
 
+import static br.com.contmatic.constante.Constante.ENTRADA_INVALIDA;
+import static br.com.contmatic.constante.Constante.ENTRADA_NULA;
+import static br.com.contmatic.constante.ConstanteRegex.SOMENTE_ALFA;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
+
+import java.math.BigDecimal;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.validator.constraints.Length;
 
-import br.com.contmatic.constante.Constante;
-
+/**
+ * The Class Funcionario.
+ */
 public class Funcionario {
 
-    @NotNull(message = Constante.ENTRADA_NULA)
-    @NotBlank(message = Constante.ENTRADA_INVALIDA)
-    @Pattern(regexp = Constante.SOMENTE_ALFA, message = Constante.ENTRADA_INVALIDA)
+    /** The nome. */
+    @NotNull(message = ENTRADA_NULA)
+    @NotBlank(message = ENTRADA_INVALIDA)
+    @Pattern(regexp = SOMENTE_ALFA, message = ENTRADA_INVALIDA)
+    @Length(min = 2, max = 50, message = ENTRADA_INVALIDA)
     private String nome;
 
-    @NotNull(message = Constante.ENTRADA_NULA)
-    @Pattern(regexp = Constante.SOMENTE_ALFA, message = Constante.ENTRADA_INVALIDA)
+    /** The cargo. */
+    @NotEmpty(message = ENTRADA_NULA)
+    @Pattern(regexp = SOMENTE_ALFA, message = ENTRADA_INVALIDA)
     private String cargo;
 
-    @NotNull(message = Constante.ENTRADA_NULA)
+    /** The codigo. */
+    @NotNull(message = ENTRADA_NULA)
     @Min(value = 1)
     @Max(value = 9999)
     private int codigo;
 
-    @NotNull(message = Constante.ENTRADA_NULA)
-    private int salario;
+    /** The salario. */
+    @NotNull(message = ENTRADA_NULA)
+    private BigDecimal salario;
 
+    /**
+     * Instantiates a new funcionario.
+     */
     public Funcionario() {
 
     }
 
-    public Funcionario(String nome, String cargo, int codigo, int salario) {
+    /**
+     * Instantiates a new funcionario.
+     *
+     * @param nome the nome
+     * @param cargo the cargo
+     * @param codigo the codigo
+     * @param salario the salario
+     */
+    public Funcionario(String nome, String cargo, int codigo, BigDecimal salario) {
         super();
         this.nome = nome;
         this.cargo = cargo;
@@ -41,54 +69,92 @@ public class Funcionario {
         this.salario = salario;
     }
 
+    /**
+     * Gets the nome.
+     *
+     * @return the nome
+     */
     public String getNome() {
         return nome;
     }
 
+    /**
+     * Gets the cargo.
+     *
+     * @return the cargo
+     */
     public String getCargo() {
         return cargo;
     }
 
+    /**
+     * Gets the codigo.
+     *
+     * @return the codigo
+     */
     public int getCodigo() {
         return codigo;
     }
 
-    public double getSalario() {
+    /**
+     * Gets the salario.
+     *
+     * @return the salario
+     */
+    public BigDecimal getSalario() {
         return salario;
     }
 
+    /**
+     * Sets the nome.
+     *
+     * @param nome the new nome
+     */
     public void setNome(String nome) {
         this.nome = nome;
     }
 
+    /**
+     * Sets the cargo.
+     *
+     * @param cargo the new cargo
+     */
     public void setCargo(String cargo) {
-        verificaSelecaoCargo(cargo);
         this.cargo = cargo;
     }
 
+    /**
+     * Sets the codigo.
+     *
+     * @param codigo the new codigo
+     */
     public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 
-    public void setSalario(int salario) {
+    /**
+     * Sets the salario.
+     *
+     * @param salario the new salario
+     */
+    public void setSalario(BigDecimal salario) {
         this.salario = salario;
     }
 
-    private void verificaSelecaoCargo(String cargo) {
-        Preconditions.checkArgument(cargo.equals("Atendente") || (cargo.equals("Tecnico") || (cargo.equals("Auxiliar"))), Constante.ENTRADA_INVALIDA);
+    /**
+     * Hash code.
+     *
+     * @return the int
+     */
+
+    @Override
+    public String toString() {
+        return reflectionToString(this, JSON_STYLE);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((cargo == null) ? 0 : cargo.hashCode());
-        result = prime * result + codigo;
-        result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-        long temp;
-        temp = Double.doubleToLongBits(salario);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        return result;
+        return HashCodeBuilder.reflectionHashCode(codigo);
     }
 
     @Override
@@ -100,20 +166,6 @@ public class Funcionario {
         if (getClass() != obj.getClass())
             return false;
         Funcionario other = (Funcionario) obj;
-        if (cargo == null) {
-            if (other.cargo != null)
-                return false;
-        } else if (!cargo.equals(other.cargo))
-            return false;
-        if (codigo != other.codigo)
-            return false;
-        if (nome == null) {
-            if (other.nome != null)
-                return false;
-        } else if (!nome.equals(other.nome))
-            return false;
-        if (Double.doubleToLongBits(salario) != Double.doubleToLongBits(other.salario))
-            return false;
-        return true;
+        return new EqualsBuilder().append(codigo, other.codigo).isEquals();
     }
 }

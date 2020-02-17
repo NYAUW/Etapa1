@@ -1,20 +1,24 @@
 package br.com.contmatic.constante;
 
+/**
+ * The Class Constante.
+ */
 public final class Constante {
 
+    /** The Constant NUMEROS. */
     public static final String NUMEROS = "Numeros Encontrados";
 
+    /** The Constant ENTRADA_INVALIDA. */
     public static final String ENTRADA_INVALIDA = "Entrada inválida";
 
+    /** The Constant CARACTERE_INVALIDO. */
     public static final String CARACTERE_INVALIDO = "Caracteres Inválidos";
 
+    /** The Constant ENTRADA_NULA. */
     public static final String ENTRADA_NULA = "A entrada não pode ficar nula";
 
-    public static final String SOMENTE_ALFA = "^[a-z A-Z.áàâãéèêíïóôõöúçñ]*$";
+    private Constante() {
 
-    public static final String SOMENTE_NUMEROS = "^[0-9]$*";
+    }
 
-    public static final String RG = "[0-9]{1}.[0-9]{3}.[0-9]{3}-[0-9]{2}";
-
-    public static final String SERIAL = "[A-Z]{3}[0-9]{3}";
 }

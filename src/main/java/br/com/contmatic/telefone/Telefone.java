@@ -1,96 +1,136 @@
 package br.com.contmatic.telefone;
 
+import static br.com.contmatic.constante.Constante.ENTRADA_INVALIDA;
+import static br.com.contmatic.constante.Constante.ENTRADA_NULA;
+import static br.com.contmatic.constante.ConstanteRegex.NUMERO_TELEFONE;
+import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
+import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import br.com.contmatic.constante.Constante;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+/**
+ * The Class Telefone.
+ */
 public class Telefone {
 
-    @NotEmpty(message = Constante.ENTRADA_NULA)
-    @NotNull(message = Constante.ENTRADA_NULA)
-    @Pattern(regexp = "(([1][1-9])|([2][1-2])|([2][4-8])|([3][1-5])|([3][7-8])|([4][1-9])|([5][1])|([5][3-5])|([6][1-9])|([7][1])|([7][3-5])|([7][7])|([7][9])|([8][1-9]))(([0-9]{8})|([0-9]{9}))", message = "Numero Inválido")
-    String numero;
+    @NotNull(message = ENTRADA_NULA)
+    private DddsTelefone ddd;
 
-    @NotEmpty(message = Constante.ENTRADA_NULA)
-    @NotNull(message = Constante.ENTRADA_NULA)
-    @Pattern(regexp = "^[0-9]{3}$*", message = Constante.ENTRADA_INVALIDA)
-    String ramal;
+    /** The numero. */
+    @NotEmpty(message = ENTRADA_NULA)
+    @Pattern(regexp = NUMERO_TELEFONE, message = "Numero Inválido")
+    private String numero;
 
-    @NotNull(message = Constante.ENTRADA_NULA)
-    TipoTelefone tipo;
+    /** The ramal. */
+    @NotEmpty(message = ENTRADA_NULA)
+    @Pattern(regexp = "^[0-9]{3}$*", message = ENTRADA_INVALIDA)
+    private String ramal;
 
+    /** The tipo. */
+    @NotNull(message = ENTRADA_NULA)
+    private TipoTelefone tipo;
+
+    /**
+     * Instantiates a new telefone.
+     */
     public Telefone() {
 
     }
 
-    public Telefone(String numero, String ramal, TipoTelefone tipo) {
-        super();
+    /**
+     * Instantiates a new telefone.
+     *
+     * @param numero the numero
+     * @param ramal the ramal
+     * @param tipo the tipo
+     */
+    public Telefone(DddsTelefone ddd, String numero, String ramal, TipoTelefone tipo) {
+        this.ddd = ddd;
         this.numero = numero;
         this.ramal = ramal;
         this.tipo = tipo;
     }
 
+    public DddsTelefone getDdd() {
+        return ddd;
+    }
+
+    /**
+     * Gets the numero.
+     *
+     * @return the numero
+     */
     public String getNumero() {
         return numero;
     }
 
+    /**
+     * Gets the ramal.
+     *
+     * @return the ramal
+     */
     public String getRamal() {
         return ramal;
     }
 
+    /**
+     * Gets the tipo.
+     *
+     * @return the tipo
+     */
     public TipoTelefone getTipo() {
         return tipo;
     }
 
+    public void setDdd(DddsTelefone ddd) {
+        this.ddd = ddd;
+    }
+
+    /**
+     * Sets the numero.
+     *
+     * @param numero the new numero
+     */
     public void setNumero(String numero) {
         this.numero = numero;
     }
 
+    /**
+     * Sets the ramal.
+     *
+     * @param ramal the new ramal
+     */
     public void setRamal(String ramal) {
         this.ramal = ramal;
     }
 
+    /**
+     * Sets the tipo.
+     *
+     * @param tipo the new tipo
+     */
     public void setTipo(TipoTelefone tipo) {
         this.tipo = tipo;
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((numero == null) ? 0 : numero.hashCode());
-        result = prime * result + ((ramal == null) ? 0 : ramal.hashCode());
-        result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
-        return result;
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Telefone other = (Telefone) obj;
-        if (numero == null) {
-            if (other.numero != null)
-                return false;
-        } else if (!numero.equals(other.numero))
-            return false;
-        if (ramal == null) {
-            if (other.ramal != null)
-                return false;
-        } else if (!ramal.equals(other.ramal))
-            return false;
-        if (tipo == null) {
-            if (other.tipo != null)
-                return false;
-        } else if (!tipo.equals(other.tipo))
-            return false;
-        return true;
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public String toString() {
+        return reflectionToString(this, JSON_STYLE);
     }
 
 }
