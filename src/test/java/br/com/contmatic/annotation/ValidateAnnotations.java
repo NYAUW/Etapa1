@@ -13,7 +13,11 @@ import javax.validation.Validator;
  *
  * @param <T> the generic type
  */
-public class ValidateAnnotations<T> {
+public final class ValidateAnnotations {
+
+    private ValidateAnnotations() {
+
+    }
 
     /**
      * Return annotation msg error.
@@ -21,12 +25,12 @@ public class ValidateAnnotations<T> {
      * @param t the t
      * @return the string
      */
-    public boolean returnAnnotationMsgError(T t) {
+    public static boolean returnAnnotationMsgError(Object objetoValidate) {
 
         Validator validador = Validation.buildDefaultValidatorFactory().getValidator();
-        Set<ConstraintViolation<T>> erros = validador.validate(t);
+        Set<ConstraintViolation<Object>> erros = validador.validate(objetoValidate);
         List<String> errosMsg = new ArrayList<>();
-        for(ConstraintViolation<T> teste : erros) {
+        for(ConstraintViolation<Object> teste : erros) {
             errosMsg.add(teste.getMessage());
         }
         String verificaErros = errosMsg.toString();

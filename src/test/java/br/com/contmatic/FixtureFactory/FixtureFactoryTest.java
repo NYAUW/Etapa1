@@ -52,8 +52,8 @@ public class FixtureFactoryTest<E> implements TemplateLoader {
 
         Fixture.of(Endereco.class).addTemplate("endereco", new Rule() {
             {
-                add("rua", name());
-                add("bairro", random("Mascarenhas de Morais", "Sao Matheus", "Santa Adélia"));
+                add("rua", random("Av Brasil", "Rua Soldado Luis", "Rua Padre Estebão"));
+                add("bairro", random("Mascarenhas de Morais", "Sao Matheus", "Santa Adelia"));
                 add("numero", new Random().nextInt(9999));
                 add("regiao", random("Zona Leste", "Zona Sul", "Zona Norte", "Sudeste"));
                 add("cep", regex("[0-9]{8}"));
@@ -64,8 +64,9 @@ public class FixtureFactoryTest<E> implements TemplateLoader {
         Fixture.of(Empresa.class).addTemplate("empresa", new Rule() {
             {
                 add("cnpj", cnpj());
-                add("nome", name());
-                add("razaoSocial", regex("[a-z]{7} [a-z]{15}"));
+                add("nome", firstName());
+                add("razaoSocial", random("Itau Unibanco Banco Múltiplo", "CocaCola Industrias Ltda", "Telefonica Brasil", "ContaAzul Software Ltda", "Magnetis Consultoria de Investimentos Ltda",
+                    "MSS Panificadora Ltda EPP"));
                 add("proprietarios", name());
                 add("telefones", new HashSet<>());
                 add("endereco", new HashSet<>());

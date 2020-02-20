@@ -11,6 +11,7 @@ import br.com.contmatic.annotation.ValidateAnnotations;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class EnderecoTest.
  */
@@ -18,9 +19,6 @@ public class EnderecoTest {
 
     /** The endereco. */
     Endereco endereco;
-
-    /** The valid. */
-    ValidateAnnotations<Object> valid;
 
     /**
      * Set up.
@@ -57,8 +55,8 @@ public class EnderecoTest {
     public void deve_armazenar_rua_gerada_aleatoriamente_com_os_objetos_fake() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.getRua();
-        valid = new ValidateAnnotations<>();
-        assertFalse(valid.returnAnnotationMsgError(endereco));
+
+        assertFalse(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
     /**
@@ -68,32 +66,41 @@ public class EnderecoTest {
     public void deve_armazenar_rua_simulando_entrada_de_dados_do_usuario() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.setRua("Rua Padre Estebao");
-        valid = new ValidateAnnotations<>();
-        assertFalse(valid.returnAnnotationMsgError(endereco));
+
+        assertFalse(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
+    /**
+     * Deve verificar rua nula.
+     */
     @Test
     public void deve_verificar_rua_nula() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.setRua(null);
-        valid = new ValidateAnnotations<>();
-        assertTrue(valid.returnAnnotationMsgError(endereco));
+
+        assertTrue(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
+    /**
+     * Deve verificar rua numerica.
+     */
     @Test
     public void deve_verificar_rua_numerica() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.setRua("Ru4 Tu1ti");
-        valid = new ValidateAnnotations<>();
-        assertTrue(valid.returnAnnotationMsgError(endereco));
+
+        assertTrue(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
+    /**
+     * Deve verificar rua vazia.
+     */
     @Test
     public void deve_verificar_rua_vazia() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.setRua("");
-        valid = new ValidateAnnotations<>();
-        assertTrue(valid.returnAnnotationMsgError(endereco));
+
+        assertTrue(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
     /**
@@ -103,8 +110,8 @@ public class EnderecoTest {
     public void deve_armazenar_bairro_gerado_com_objetos_fake() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.getBairro();
-        valid = new ValidateAnnotations<>();
-        assertFalse(valid.returnAnnotationMsgError(endereco));
+
+        assertFalse(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
     /**
@@ -114,32 +121,41 @@ public class EnderecoTest {
     public void deve_armazenar_bairro_simulando_entrada_de_dados_do_usuario() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.setBairro("Vila Ema");
-        valid = new ValidateAnnotations<>();
-        assertFalse(valid.returnAnnotationMsgError(endereco));
+
+        assertFalse(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
+    /**
+     * Deve verificar bairro nulo.
+     */
     @Test
     public void deve_verificar_bairro_nulo() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.setBairro(null);
-        valid = new ValidateAnnotations<>();
-        assertTrue(valid.returnAnnotationMsgError(endereco));
+
+        assertTrue(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
+    /**
+     * Deve verificar bairro vazio.
+     */
     @Test
     public void deve_verificar_bairro_vazio() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.setBairro("");
-        valid = new ValidateAnnotations<>();
-        assertTrue(valid.returnAnnotationMsgError(endereco));
+
+        assertTrue(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
+    /**
+     * Deve verificar bairro numerico.
+     */
     @Test
     public void deve_verificar_bairro_numerico() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.setBairro("Vila Ema 333");
-        valid = new ValidateAnnotations<>();
-        assertTrue(valid.returnAnnotationMsgError(endereco));
+
+        assertTrue(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
     /**
@@ -149,16 +165,19 @@ public class EnderecoTest {
     public void deve_setar_numero_simulando_entrada_de_dados_do_usuario() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.setNumero(666);
-        valid = new ValidateAnnotations<>();
-        assertFalse(valid.returnAnnotationMsgError(endereco));
+
+        assertFalse(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
+    /**
+     * Deve verificar numero maior que um.
+     */
     @Test
     public void deve_verificar_numero_maior_que_um() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.setNumero(0);
-        valid = new ValidateAnnotations<>();
-        assertTrue(valid.returnAnnotationMsgError(endereco));
+
+        assertTrue(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
     /**
@@ -168,8 +187,8 @@ public class EnderecoTest {
     public void deve_armazenar_numero_gerado_aleatoriamente_com_objetos_fake() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.getNumero();
-        valid = new ValidateAnnotations<>();
-        assertFalse(valid.returnAnnotationMsgError(endereco));
+
+        assertFalse(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
     /**
@@ -179,8 +198,8 @@ public class EnderecoTest {
     public void deve_verificar_regiao_simulando_entrada_de_dados_usuario() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.setRegiao("Zona Leste");
-        valid = new ValidateAnnotations<>();
-        assertFalse(valid.returnAnnotationMsgError(endereco));
+
+        assertFalse(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
     /**
@@ -190,31 +209,40 @@ public class EnderecoTest {
     public void deve_armazenar_regiao_gerado_com_objetos_fake() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.getRegiao();
-        valid = new ValidateAnnotations<>();
+
     }
 
+    /**
+     * Deve verificar regiao nulo.
+     */
     @Test
     public void deve_verificar_regiao_nulo() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.setRegiao(null);
-        valid = new ValidateAnnotations<>();
-        assertTrue(valid.returnAnnotationMsgError(endereco));
+
+        assertTrue(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
+    /**
+     * Deve verificar regiao vazio.
+     */
     @Test
     public void deve_verificar_regiao_vazio() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.setRegiao("");
-        valid = new ValidateAnnotations<>();
-        assertTrue(valid.returnAnnotationMsgError(endereco));
+
+        assertTrue(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
+    /**
+     * Deve verificar regiao numerico.
+     */
     @Test
     public void deve_verificar_regiao_numerico() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.setRegiao("Abc3");
-        valid = new ValidateAnnotations<>();
-        assertTrue(valid.returnAnnotationMsgError(endereco));
+
+        assertTrue(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
     /**
@@ -224,8 +252,8 @@ public class EnderecoTest {
     public void deve_armazenar_cep_gerado_automaricamente_com_objetos_fake() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.getCep();
-        valid = new ValidateAnnotations<>();
-        assertFalse(valid.returnAnnotationMsgError(endereco));
+
+        assertFalse(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
     /**
@@ -235,40 +263,52 @@ public class EnderecoTest {
     public void deve_setar_cep_simulando_entrada_de_dados_do_usuario() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.setCep("03977120");
-        valid = new ValidateAnnotations<>();
-        assertFalse(valid.returnAnnotationMsgError(endereco));
+
+        assertFalse(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
+    /**
+     * Deve verificar cep nulo.
+     */
     @Test
     public void deve_verificar_cep_nulo() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.setCep(null);
-        valid = new ValidateAnnotations<>();
-        assertTrue(valid.returnAnnotationMsgError(endereco));
+
+        assertTrue(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
+    /**
+     * Deve verificar cep vazio.
+     */
     @Test
     public void deve_verificar_cep_vazio() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.setCep("");
-        valid = new ValidateAnnotations<>();
-        assertTrue(valid.returnAnnotationMsgError(endereco));
+
+        assertTrue(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
+    /**
+     * Deve verificar cep incompleto.
+     */
     @Test
     public void deve_verificar_cep_incompleto() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.setCep("03977");
-        valid = new ValidateAnnotations<>();
-        assertTrue(valid.returnAnnotationMsgError(endereco));
+
+        assertTrue(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
+    /**
+     * Deve verificar cep com letras.
+     */
     @Test
     public void deve_verificar_cep_com_letras() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.setCep("039sete7120");
-        valid = new ValidateAnnotations<>();
-        assertTrue(valid.returnAnnotationMsgError(endereco));
+
+        assertTrue(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
     /**
@@ -278,8 +318,8 @@ public class EnderecoTest {
     public void deve_armazenar_tipo_gerado_sorteado_com_objetos_fake() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.getTipo();
-        valid = new ValidateAnnotations<>();
-        assertFalse(valid.returnAnnotationMsgError(endereco));
+
+        assertFalse(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
     /**
@@ -289,15 +329,18 @@ public class EnderecoTest {
     public void deve_armazenar_tipo_setado_diretamente_simulando_entrada_de_dados_do_usuario() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.setTipo(TipoEndereco.CASA);
-        valid = new ValidateAnnotations<>();
-        assertFalse(valid.returnAnnotationMsgError(endereco));
+
+        assertFalse(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 
+    /**
+     * Deve verificar tipo nulo.
+     */
     @Test
     public void deve_verificar_tipo_nulo() {
         Endereco endereco = Fixture.from(Endereco.class).gimme("endereco");
         endereco.setTipo(null);
-        valid = new ValidateAnnotations<>();
-        assertTrue(valid.returnAnnotationMsgError(endereco));
+
+        assertTrue(ValidateAnnotations.returnAnnotationMsgError(endereco));
     }
 }
