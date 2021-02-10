@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import br.com.contmatic.model.Cadastro;
+
 public class CadastroTest {
     Cadastro cadastro = new Cadastro("Jose Garcia", "jose.garcia@gmail.com", "sapinho123", "46720276539", "657849875", "Rua Fada Selvagem 234", "20156787");
     Cadastro cadastro2 = new Cadastro("Jose Garcia", "jose.garcia@gmail.com", "sapinho123", "46720276539", "657849875", "Rua Fada Selvagem 234", "20156787");

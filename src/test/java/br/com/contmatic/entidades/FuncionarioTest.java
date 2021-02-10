@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import br.com.contmatic.model.Funcionario;
+
 public class FuncionarioTest {
     Funcionario funcionario = new Funcionario("Marcela Oliveira", "Atendente", 0, 1500);
     Funcionario funcionario2 = new Funcionario("Marcela Oliveira", "Atendente", 0, 1500);

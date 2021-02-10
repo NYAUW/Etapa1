@@ -1,4 +1,4 @@
-package br.com.contmatic.empresa;
+package br.com.contmatic.model;
 
 import javax.management.InvalidAttributeValueException;
 import javax.naming.InsufficientResourcesException;
@@ -19,13 +19,13 @@ public class Empresa {
 
     private String telefone;
 
-    private String endereco;
+    private Endereco endereco;
 
     private String razaoSocial;
 
     private String proprietarios;
 
-    public Empresa(String cnpj, String nome, String telefone, String endereco, String razaoSocial, String proprietarios) {
+    public Empresa(String cnpj, String nome, String telefone, Endereco endereco, String razaoSocial, String proprietarios) {
 
         super();
         this.cnpj = cnpj;
@@ -48,7 +48,7 @@ public class Empresa {
         return telefone;
     }
 
-    public String getEndereco() {
+    public Endereco getEndereco() {
         return endereco;
     }
 
@@ -115,7 +115,7 @@ public class Empresa {
         this.telefone = telefone;
     }
 
-    public void setEndereco(String endereco) {
+    public void setEndereco(Endereco endereco) {
         try {
             verificaEntradaDadosEndereco(endereco);
         } catch (Exception e) {
@@ -195,10 +195,10 @@ public class Empresa {
         }
     }
 
-    private void verificaEntradaDadosEndereco(String endereco) {
-        if (endereco.length() < 5 && !endereco.contains(" ")) {
-            throw new IllegalArgumentException(ENTRADAINVALIDA);
-        }
+    private void verificaEntradaDadosEndereco(Endereco endereco) {
+//        if (endereco.length() < 5 && !endereco.contains(" ")) {
+//            throw new IllegalArgumentException(ENTRADAINVALIDA);
+//        }
     }
 
     private void verificaDadosRazaoSocial(String razaoSocial) throws InsufficientResourcesException {

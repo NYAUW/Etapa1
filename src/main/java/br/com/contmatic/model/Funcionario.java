@@ -1,4 +1,4 @@
-package br.com.contmatic.entidades;
+package br.com.contmatic.model;
 
 import java.util.MissingFormatArgumentException;
 

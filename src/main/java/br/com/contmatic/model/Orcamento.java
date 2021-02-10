@@ -1,4 +1,4 @@
-package br.com.contmatic.features;
+package br.com.contmatic.model;
 
 import javax.naming.InsufficientResourcesException;
 

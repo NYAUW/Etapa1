@@ -10,9 +10,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import br.com.contmatic.model.Empresa;
+import br.com.contmatic.model.Endereco;
+
 public class EmpresaTest {
-    private static Empresa empresa = new Empresa("95128290000160", "Sim Tv Assistencia", "44012901", "Av Eduardo Prado 385", "Trabalhar pelo bem comum", "Luis Carlos Ribeiro");
-    private static Empresa empresa2 = new Empresa("95128290000160", "Sim Tv Assistencia", "44012901", "Av Eduardo Prado 385", "Trabalhar pelo bem comum", "Luis Carlos Ribeiro");
+    private static Empresa empresa = new Empresa("95128290000160", "Sim Tv Assistencia", "44012901", new Endereco(), "Trabalhar pelo bem comum", "Luis Carlos Ribeiro");
+    private static Empresa empresa2 = new Empresa("95128290000160", "Sim Tv Assistencia", "44012901", new Endereco(), "Trabalhar pelo bem comum", "Luis Carlos Ribeiro");
 
     @BeforeClass
     public static void devera_verificar_cnpj() throws Exception {
@@ -66,7 +69,7 @@ public class EmpresaTest {
 
     @Test
     public void nao_deve_verificar_endereco() throws Exception {
-        empresa2.setEndereco("Av Itamarati 345");
+        empresa2.setEndereco(new Endereco());
         assertNotEquals(empresa2.getEndereco(), empresa.getEndereco());
     }
 

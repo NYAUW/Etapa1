@@ -7,6 +7,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import br.com.contmatic.model.Orcamento;
+
 public class OrcamentoTest {
 
     @Test
