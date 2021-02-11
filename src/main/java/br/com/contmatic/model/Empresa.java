@@ -3,15 +3,9 @@ package br.com.contmatic.model;
 import javax.management.InvalidAttributeValueException;
 import javax.naming.InsufficientResourcesException;
 
+import br.com.contmatic.constants.ErrorsMessages;
+
 public class Empresa {
-
-    private static final String NUMEROS = "Numeros Encontrados";
-
-    private static final String ENTRADAINVALIDA = "Entrada inválida";
-
-    private static final String ENTRADANULA = "A entrada não pode ficar nula";
-
-    private static final String CARACTEREINVALIDO = "Caracteres Inválidos";
 
     private String cnpj;
 
@@ -140,35 +134,35 @@ public class Empresa {
 
     private void verificaTamanhoNome(String proprietarios) throws InsufficientResourcesException {
         if (proprietarios.length() < 8) {
-            throw new InsufficientResourcesException(ENTRADAINVALIDA);
+            throw new InsufficientResourcesException(ErrorsMessages.ENTRADA_INVALIDA);
         }
     }
 
     private void verificaSeTemSobrenome() throws InsufficientResourcesException {
         if (!proprietarios.contains(" "))
-            throw new InsufficientResourcesException(ENTRADAINVALIDA);
+            throw new InsufficientResourcesException(ErrorsMessages.ENTRADA_INVALIDA);
     }
 
     private void verificaNomeNumerico(String nome) {
         for(int i = 0 ; nome.length() > i ; i++) {
             if (Character.isDigit(nome.charAt(i))) {
-                throw new IllegalArgumentException(NUMEROS);
+                throw new IllegalArgumentException(ErrorsMessages.NUMEROS);
             }
         }
     }
 
     private void verificaNulleTamanhoCnpj(String cnpj) {
         if (cnpj == null) {
-            throw new IllegalArgumentException(ENTRADANULA);
+            throw new IllegalArgumentException(ErrorsMessages.ENTRADA_NULA);
         }
         if (cnpj.length() != 14) {
-            throw new IllegalArgumentException(ENTRADANULA);
+            throw new IllegalArgumentException(ErrorsMessages.ENTRADA_NULA);
         }
     }
 
     private void verificaCnpjCaracteres(String cnpj) {
         if (cnpj.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*")) {
-            throw new IllegalArgumentException(CARACTEREINVALIDO);
+            throw new IllegalArgumentException(ErrorsMessages.CARACTERE_INVALIDO);
         }
     }
 
@@ -176,34 +170,34 @@ public class Empresa {
         if (cnpj.contains("!") || cnpj.contains("@") || cnpj.contains("#") || cnpj.contains("$") || cnpj.contains("%") || cnpj.contains("¨") || cnpj.contains("&") || cnpj.contains("*") ||
             cnpj.contains("(") || cnpj.contains(")") || cnpj.contains("-") || cnpj.contains("+") || cnpj.contains("/") || cnpj.contains(".") || cnpj.contains(",") || cnpj.contains("?") ||
             cnpj.contains(";") || cnpj.contains(":") || cnpj.contains(">") || cnpj.contains("<") || cnpj.contains("\\") || cnpj.contains("'")) {
-            throw new IllegalArgumentException(CARACTEREINVALIDO);
+            throw new IllegalArgumentException(ErrorsMessages.CARACTERE_INVALIDO);
         }
     }
 
     private void verificaNullEoTamanhoTelefone(String telefone) throws InsufficientResourcesException, InvalidAttributeValueException {
         if (telefone == null) {
-            throw new InsufficientResourcesException(ENTRADANULA);
+            throw new InsufficientResourcesException(ErrorsMessages.ENTRADA_NULA);
         }
         if (telefone.length() != 8) {
-            throw new InvalidAttributeValueException(ENTRADAINVALIDA);
+            throw new InvalidAttributeValueException(ErrorsMessages.ENTRADA_INVALIDA);
         }
     }
 
     private void verificaTelefoneCaracteres(String telefone) {
         if (telefone.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*")) {
-            throw new IllegalArgumentException(ENTRADAINVALIDA);
+            throw new IllegalArgumentException(ErrorsMessages.ENTRADA_INVALIDA);
         }
     }
 
     private void verificaEntradaDadosEndereco(Endereco endereco) {
 //        if (endereco.length() < 5 && !endereco.contains(" ")) {
-//            throw new IllegalArgumentException(ENTRADAINVALIDA);
+//            throw new IllegalArgumentException(ErrorsMessages.ENTRADA_INVALIDA);
 //        }
     }
 
     private void verificaDadosRazaoSocial(String razaoSocial) throws InsufficientResourcesException {
         if (razaoSocial.length() < 10 && !razaoSocial.contains(" ")) {
-            throw new InsufficientResourcesException(ENTRADAINVALIDA);
+            throw new InsufficientResourcesException(ErrorsMessages.ENTRADA_INVALIDA);
         }
     }
 }

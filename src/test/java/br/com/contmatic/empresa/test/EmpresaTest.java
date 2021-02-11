@@ -1,4 +1,4 @@
-package br.com.contmatic.empresa;
+package br.com.contmatic.empresa.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -12,16 +12,17 @@ import org.junit.Test;
 
 import br.com.contmatic.model.Empresa;
 import br.com.contmatic.model.Endereco;
+import br.com.contmatic.utils.EnderecoUtil;
 
 public class EmpresaTest {
-    private static Empresa empresa = new Empresa("95128290000160", "Sim Tv Assistencia", "44012901", new Endereco(), "Trabalhar pelo bem comum", "Luis Carlos Ribeiro");
-    private static Empresa empresa2 = new Empresa("95128290000160", "Sim Tv Assistencia", "44012901", new Endereco(), "Trabalhar pelo bem comum", "Luis Carlos Ribeiro");
+	
+	private static final Endereco ENDERECO = EnderecoUtil.enderecoStatic();
+	
+    private static Empresa empresa = new Empresa("95128290000160", "Sim Tv Assistencia", "44012901", ENDERECO, "Trabalhar pelo bem comum", "Luis Carlos Ribeiro");
 
     @BeforeClass
     public static void devera_verificar_cnpj() throws Exception {
-        String cnpj = "95128290000160";
-        empresa.setCnpj(cnpj);
-        assertTrue(empresa.getCnpj().equals(cnpj));
+        assertTrue(empresa.getCnpj().equals("95128290000160"));
     }
 
     @Before
@@ -36,7 +37,7 @@ public class EmpresaTest {
 
     @Test
     public void devera_verificar_endereco() {
-        assertTrue(empresa.getEndereco().equals("Av Eduardo Prado 385"));
+        assertTrue(empresa.getEndereco().equals(ENDERECO));
     }
 
     @Test
@@ -51,38 +52,31 @@ public class EmpresaTest {
 
     @Test
     public void nao_deve_verificar_cnpj() throws Exception {
-        empresa2.setCnpj("95128290000170");
-        assertNotEquals(empresa2.getCnpj(), empresa.getCnpj());
+        assertNotEquals(empresa.getCnpj(), "95128290000170");
     }
 
     @Test
     public void nao_deve_verificar_nome_empresa() {
-        empresa2.setNome("Pastel Do Marcelão");
-        assertNotEquals(empresa2.getNome(), empresa.getNome());
+        assertNotEquals(empresa.getNome(), "Pastel Do Marcelão");
     }
 
     @Test
     public void nao_deve_verificar_tel() throws Exception {
-        empresa2.setTelefone("20117414");
-        assertNotEquals(empresa2.getTelefone(), empresa.getTelefone());
+        assertNotEquals(empresa.getTelefone(), "12345678");
     }
 
     @Test
     public void nao_deve_verificar_endereco() throws Exception {
-        empresa2.setEndereco(new Endereco());
-        assertNotEquals(empresa2.getEndereco(), empresa.getEndereco());
+        assertNotEquals(empresa.getEndereco(), EnderecoUtil.enderecoRandom());
     }
 
     @After
     public void nao_deve_verificar_razao_social() throws Exception {
-        empresa2.setRazaoSocial("Deixar nossos clientes satisfeitos com nossos serviços");
-        ;
-        assertNotEquals(empresa2.getRazaoSocial(), empresa.getRazaoSocial());
+        assertNotEquals(empresa.getRazaoSocial(), "Deixar nossos clientes satisfeitos com nossos serviços");
     }
     
     @AfterClass
     public static void nao_deve_verificar_proprietario() throws Exception {
-        empresa2.setProprietarios("Luis Carlos");
-        assertNotEquals(empresa2.getProprietarios(), empresa.getProprietarios());
+        assertNotEquals(empresa.getProprietarios(), "Teste Proprietario");
     }
 }

@@ -4,13 +4,9 @@ import java.util.MissingFormatArgumentException;
 
 import javax.naming.InvalidNameException;
 
+import br.com.contmatic.constants.ErrorsMessages;
+
 public class Funcionario {
-
-    private static final String NUMEROS = "Numeros Encontrados";
-
-    private static final String ENTRADAINVALIDA = "Entrada inválida";
-
-    private static final String ENTRADANULA = "A entrada não pode ficar nula";
 
     private String nome;
 
@@ -110,33 +106,33 @@ public class Funcionario {
 
     private void verificaNomeFuncionario(String nome) {
         if (nome == null) {
-            throw new IllegalArgumentException(ENTRADANULA);
+            throw new IllegalArgumentException(ErrorsMessages.ENTRADA_INVALIDA);
         }
     }
 
     private void verificaNomeNumero(String nome) {
         for(int i = 0 ; nome.length() > i ; i++) {
             if (Character.isDigit(nome.charAt(i))) {
-                throw new IllegalArgumentException(NUMEROS);
+                throw new IllegalArgumentException(ErrorsMessages.NUMEROS);
             }
         }
     }
 
     private void verificaNomeCompleto(String nome) throws InvalidNameException {
         if (nome.trim().isEmpty()) {
-            throw new InvalidNameException(ENTRADANULA);
+            throw new InvalidNameException(ErrorsMessages.ENTRADA_INVALIDA);
         }
     }
 
     private void verificaSelecaoCargo(String cargoNome) {
         if ((cargoNome.equals("Atendente")) || (cargoNome.equals("Tecnico")) || (cargoNome.equals("Auxiliar"))) {
-            throw new IllegalArgumentException(ENTRADAINVALIDA);
+            throw new IllegalArgumentException(ErrorsMessages.ENTRADA_INVALIDA);
         }
     }
 
     private void verificaNullSalario(double salario) {
         if (salario == 0) {
-            throw new MissingFormatArgumentException(ENTRADANULA);
+            throw new MissingFormatArgumentException(ErrorsMessages.ENTRADA_INVALIDA);
         }
     }
 

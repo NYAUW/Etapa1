@@ -2,13 +2,9 @@ package br.com.contmatic.model;
 
 import javax.naming.InsufficientResourcesException;
 
-public class Cadastro {
+import br.com.contmatic.constants.ErrorsMessages;
 
-    private static final String NUMEROS = "Numeros Encontrados";
-
-    private static final String ENTRADAINVALIDA = "Entrada inválida";
-
-    private static final String CARACTEREINVALIDO = "Caracteres Inválidos";
+public class Usuario {
 
     private String nome;
 
@@ -20,11 +16,11 @@ public class Cadastro {
 
     private String rg;
 
-    private String endereco;
+    private Endereco endereco;
 
     private String telefone;
 
-    public Cadastro(String nome, String email, String senha, String cpf, String rg, String endereco, String telefone) {
+    public Usuario(String nome, String email, String senha, String cpf, String rg, Endereco endereco, String telefone) {
         super();
         this.nome = nome;
         this.email = email;
@@ -55,7 +51,7 @@ public class Cadastro {
         return rg;
     }
 
-    public String getEndereco() {
+    public Endereco getEndereco() {
         return endereco;
     }
 
@@ -95,9 +91,7 @@ public class Cadastro {
         this.rg = rg;
     }
 
-    public void setEndereco(String endereco) {
-        verificaCaracteresEndereco(endereco);
-        verificaNumericoEndereco(endereco);
+    public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
 
@@ -109,73 +103,57 @@ public class Cadastro {
     private void verificaEspeciaisNome(String nome) {
         if (nome.contains("@") || nome.contains("-") || nome.contains("#") || nome.contains("$") || nome.contains("%") || nome.contains("¨") || nome.contains("&") || nome.contains("*") ||
             nome.contains("(") || nome.contains(")") || nome.contains("=") || nome.contains("+") || nome.contains("/")) {
-            throw new IllegalArgumentException(CARACTEREINVALIDO);
+            throw new IllegalArgumentException(ErrorsMessages.CARACTERE_INVALIDO);
         }
     }
 
     private void verificaNumeroNome(String nome) {
         for(int i = 0 ; nome.length() > i ; i++) {
             if (Character.isDigit(nome.charAt(i))) {
-                throw new IllegalArgumentException(NUMEROS);
+                throw new IllegalArgumentException(ErrorsMessages.NUMEROS);
             }
         }
     }
     private void verificaTamanhoNome() {
         if(nome.length() < 5 && nome.length() > 50) {
-            throw new IllegalArgumentException(ENTRADAINVALIDA);
+            throw new IllegalArgumentException(ErrorsMessages.ENTRADA_INVALIDA);
         }
     }
     private void verificaDominioEmail(String email) {
         if (email.contains("@") && email.contains(".com") && email.contains("gmail") || email.contains("hotmail") || email.contains("yahoo") || email.contains("contmatic") ||
             email.contains("outlook") || email.contains("ig") || email.contains("email") || email.contains("uol") || email.contains("globo")) {
-            throw new IllegalAccessError(ENTRADAINVALIDA);
+            throw new IllegalAccessError(ErrorsMessages.ENTRADA_INVALIDA);
         }
     }
 
     private void verificaEntradaDadosCpf(String cpf) {
         if (cpf.contains(".") || cpf.contains(" ") || cpf.contains("/")) {
-            throw new IllegalArgumentException(CARACTEREINVALIDO);
+            throw new IllegalArgumentException(ErrorsMessages.CARACTERE_INVALIDO);
         }
     }
 
     private void verificaEntradaDadosRg(String rg) {
         if (rg.length() != 9 && rg.contains(".") || rg.contains(" ") || rg.contains("/")) {
-            throw new IllegalArgumentException(CARACTEREINVALIDO);
+            throw new IllegalArgumentException(ErrorsMessages.CARACTERE_INVALIDO);
         }
     }
 
     private void verificaTamanhoCpf(String cpf) throws InsufficientResourcesException {
         if (cpf.length() != 11) {
-            throw new InsufficientResourcesException(ENTRADAINVALIDA);
+            throw new InsufficientResourcesException(ErrorsMessages.ENTRADA_INVALIDA);
         }
     }
 
-    private void verificaCaracteresEndereco(String endereco) {
-        if (endereco.contains("!") || endereco.contains("@") || endereco.contains("#") || endereco.contains("$") || endereco.contains("%") || endereco.contains("¨") || endereco.contains("&") ||
-            endereco.contains("*") || endereco.contains("(") || endereco.contains(")") || endereco.contains("-") || endereco.contains("+") || endereco.contains("/") || endereco.contains(".") ||
-            endereco.contains(",") || endereco.contains("?") || endereco.contains(";") || endereco.contains(":") || endereco.contains(">") || endereco.contains("<") || endereco.contains("\\") ||
-            endereco.contains("'")) {
-            throw new IllegalArgumentException(CARACTEREINVALIDO);
-        }
-    }
-
-    private void verificaNumericoEndereco(String endereco) {
-        for(int i = 0 ; endereco.length() > i ; i++) {
-            if (Character.isDigit(endereco.charAt(i))) {
-                throw new IllegalArgumentException(NUMEROS);
-            }
-        }
-    }
 
     private void verificDadosEntradaTelefone(String tel) {
         if (tel.length() != 10 && tel.contains(".") || tel.contains(" ") || tel.contains("/")) {
-            throw new IllegalArgumentException(ENTRADAINVALIDA);
+            throw new IllegalArgumentException(ErrorsMessages.ENTRADA_INVALIDA);
         }
     }
 
     private void verificaTamanhoSenha(String senha) {
         if (!(senha.length() <= 5) && !(senha.length() >= 8)) {
-            throw new IllegalArgumentException(ENTRADAINVALIDA);
+            throw new IllegalArgumentException(ErrorsMessages.ENTRADA_INVALIDA);
         }
     }
 }

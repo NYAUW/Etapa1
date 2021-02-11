@@ -5,8 +5,6 @@ import br.contmatic.type.PaisType;
 
 public class Endereco {
 	
-	private String rua;
-	
 	private String bairro;
 	
 	private PaisType pais;
@@ -18,14 +16,6 @@ public class Endereco {
 	private String complemento;
 	
 	private int numero;
-
-	public String getRua() {
-		return rua;
-	}
-
-	public void setRua(String rua) {
-		this.rua = rua;
-	}
 
 	public String getBairro() {
 		return bairro;

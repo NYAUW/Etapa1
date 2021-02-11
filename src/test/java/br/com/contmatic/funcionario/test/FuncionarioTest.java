@@ -1,4 +1,4 @@
-package br.com.contmatic.entidades;
+package br.com.contmatic.funcionario.test;
 
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
