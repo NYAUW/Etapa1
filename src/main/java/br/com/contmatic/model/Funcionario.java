@@ -17,7 +17,6 @@ public class Funcionario {
     private double salario;
 
     public Funcionario(String nome, String cargoNome, int codigo, double salario) {
-        super();
         this.nome = nome;
         this.cargoNome = cargoNome;
         this.codigo = codigo;

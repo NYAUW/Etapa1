@@ -1,9 +1,9 @@
 package br.com.contmatic.model;
 
-import javax.management.InvalidAttributeValueException;
 import javax.naming.InsufficientResourcesException;
 
 import br.com.contmatic.constants.ErrorsMessages;
+import br.contmatic.type.RamoAtividadeType;
 
 public class Empresa {
 
@@ -11,15 +11,17 @@ public class Empresa {
 
     private String nome;
 
-    private String telefone;
+    private Telefone telefone;
 
     private Endereco endereco;
 
     private String razaoSocial;
+    
+    private RamoAtividadeType ramoAtividade;
 
     private String proprietarios;
 
-    public Empresa(String cnpj, String nome, String telefone, Endereco endereco, String razaoSocial, String proprietarios) {
+    public Empresa(String cnpj, String nome, Telefone telefone, Endereco endereco, String razaoSocial,RamoAtividadeType ramo, String proprietarios) {
 
         super();
         this.cnpj = cnpj;
@@ -27,6 +29,7 @@ public class Empresa {
         this.telefone = telefone;
         this.endereco = endereco;
         this.razaoSocial = razaoSocial;
+        this.ramoAtividade = ramo;
         this.proprietarios = proprietarios;
     }
 
@@ -36,10 +39,6 @@ public class Empresa {
 
     public String getNome() {
         return nome;
-    }
-
-    public String getTelefone() {
-        return telefone;
     }
 
     public Endereco getEndereco() {
@@ -93,29 +92,15 @@ public class Empresa {
         this.nome = nome;
     }
 
-    public void setTelefone(String telefone) {
-        try {
-            verificaNullEoTamanhoTelefone(telefone);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public Telefone getTelefone() {
+		return telefone;
+	}
 
-        try {
-            verificaTelefoneCaracteres(telefone);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+	public void setTelefone(Telefone telefone) {
         this.telefone = telefone;
     }
 
     public void setEndereco(Endereco endereco) {
-        try {
-            verificaEntradaDadosEndereco(endereco);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         this.endereco = endereco;
     }
 
@@ -127,8 +112,16 @@ public class Empresa {
         }
         this.razaoSocial = razaoSocial;
     }
+    
+    public RamoAtividadeType getRamoAtividade() {
+		return ramoAtividade;
+	}
 
-    public void setProprietarios(String proprietarios) {
+	public void setRamoAtividade(RamoAtividadeType ramoAtividade) {
+		this.ramoAtividade = ramoAtividade;
+	}
+
+	public void setProprietarios(String proprietarios) {
         this.proprietarios = proprietarios;
     }
 
@@ -172,27 +165,6 @@ public class Empresa {
             cnpj.contains(";") || cnpj.contains(":") || cnpj.contains(">") || cnpj.contains("<") || cnpj.contains("\\") || cnpj.contains("'")) {
             throw new IllegalArgumentException(ErrorsMessages.CARACTERE_INVALIDO);
         }
-    }
-
-    private void verificaNullEoTamanhoTelefone(String telefone) throws InsufficientResourcesException, InvalidAttributeValueException {
-        if (telefone == null) {
-            throw new InsufficientResourcesException(ErrorsMessages.ENTRADA_NULA);
-        }
-        if (telefone.length() != 8) {
-            throw new InvalidAttributeValueException(ErrorsMessages.ENTRADA_INVALIDA);
-        }
-    }
-
-    private void verificaTelefoneCaracteres(String telefone) {
-        if (telefone.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*")) {
-            throw new IllegalArgumentException(ErrorsMessages.ENTRADA_INVALIDA);
-        }
-    }
-
-    private void verificaEntradaDadosEndereco(Endereco endereco) {
-//        if (endereco.length() < 5 && !endereco.contains(" ")) {
-//            throw new IllegalArgumentException(ErrorsMessages.ENTRADA_INVALIDA);
-//        }
     }
 
     private void verificaDadosRazaoSocial(String razaoSocial) throws InsufficientResourcesException {
