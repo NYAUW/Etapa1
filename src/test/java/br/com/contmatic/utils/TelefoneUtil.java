@@ -2,12 +2,17 @@ package br.com.contmatic.utils;
 
 import com.github.javafaker.Faker;
 
+import br.com.contmatic.constants.Messages;
 import br.com.contmatic.model.Telefone;
 import br.contmatic.type.DddType;
 import br.contmatic.type.DominioTelefoneType;
 import br.contmatic.type.TelefoneType;
 
 public class TelefoneUtil {
+	
+	public TelefoneUtil() {
+		throw new IllegalStateException(Messages.NAO_INSTANCIAVEL);
+	}
 
 	public static Telefone telefoneStatic() {
 		Telefone telefone = new Telefone();

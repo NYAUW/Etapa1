@@ -2,7 +2,7 @@ package br.com.contmatic.model;
 
 import javax.naming.InsufficientResourcesException;
 
-import br.com.contmatic.constants.ErrorsMessages;
+import br.com.contmatic.constants.Messages;
 import br.contmatic.type.RamoAtividadeType;
 
 public class Empresa {
@@ -128,35 +128,35 @@ public class Empresa {
 
 	private void verificaTamanhoNome(String proprietarios) throws InsufficientResourcesException {
 		if (proprietarios.length() < 8) {
-			throw new InsufficientResourcesException(ErrorsMessages.ENTRADA_INVALIDA);
+			throw new InsufficientResourcesException(Messages.ENTRADA_INVALIDA);
 		}
 	}
 
 	private void verificaSeTemSobrenome() throws InsufficientResourcesException {
 		if (!proprietarios.contains(" "))
-			throw new InsufficientResourcesException(ErrorsMessages.ENTRADA_INVALIDA);
+			throw new InsufficientResourcesException(Messages.ENTRADA_INVALIDA);
 	}
 
 	private void verificaNomeNumerico(String nome) {
 		for (int i = 0; nome.length() > i; i++) {
 			if (Character.isDigit(nome.charAt(i))) {
-				throw new IllegalArgumentException(ErrorsMessages.NUMEROS);
+				throw new IllegalArgumentException(Messages.NUMEROS);
 			}
 		}
 	}
 
 	private void verificaNulleTamanhoCnpj(String cnpj) {
 		if (cnpj == null) {
-			throw new IllegalArgumentException(ErrorsMessages.ENTRADA_NULA);
+			throw new IllegalArgumentException(Messages.ENTRADA_NULA);
 		}
 		if (cnpj.length() != 14) {
-			throw new IllegalArgumentException(ErrorsMessages.ENTRADA_NULA);
+			throw new IllegalArgumentException(Messages.ENTRADA_NULA);
 		}
 	}
 
 	private void verificaCnpjCaracteres(String cnpj) {
 		if (cnpj.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*")) {
-			throw new IllegalArgumentException(ErrorsMessages.CARACTERE_INVALIDO);
+			throw new IllegalArgumentException(Messages.CARACTERE_INVALIDO);
 		}
 	}
 
@@ -167,13 +167,13 @@ public class Empresa {
 				|| cnpj.contains(".") || cnpj.contains(",") || cnpj.contains("?") || cnpj.contains(";")
 				|| cnpj.contains(":") || cnpj.contains(">") || cnpj.contains("<") || cnpj.contains("\\")
 				|| cnpj.contains("'")) {
-			throw new IllegalArgumentException(ErrorsMessages.CARACTERE_INVALIDO);
+			throw new IllegalArgumentException(Messages.CARACTERE_INVALIDO);
 		}
 	}
 
 	private void verificaDadosRazaoSocial(String razaoSocial) throws InsufficientResourcesException {
 		if (razaoSocial.length() < 10 && !razaoSocial.contains(" ")) {
-			throw new InsufficientResourcesException(ErrorsMessages.ENTRADA_INVALIDA);
+			throw new InsufficientResourcesException(Messages.ENTRADA_INVALIDA);
 		}
 	}
 }

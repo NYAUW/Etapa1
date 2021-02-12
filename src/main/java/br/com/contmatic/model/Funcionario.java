@@ -4,7 +4,7 @@ import java.util.MissingFormatArgumentException;
 
 import javax.naming.InvalidNameException;
 
-import br.com.contmatic.constants.ErrorsMessages;
+import br.com.contmatic.constants.Messages;
 
 public class Funcionario {
 
@@ -105,33 +105,33 @@ public class Funcionario {
 
     private void verificaNomeFuncionario(String nome) {
         if (nome == null) {
-            throw new IllegalArgumentException(ErrorsMessages.ENTRADA_INVALIDA);
+            throw new IllegalArgumentException(Messages.ENTRADA_INVALIDA);
         }
     }
 
     private void verificaNomeNumero(String nome) {
         for(int i = 0 ; nome.length() > i ; i++) {
             if (Character.isDigit(nome.charAt(i))) {
-                throw new IllegalArgumentException(ErrorsMessages.NUMEROS);
+                throw new IllegalArgumentException(Messages.NUMEROS);
             }
         }
     }
 
     private void verificaNomeCompleto(String nome) throws InvalidNameException {
         if (nome.trim().isEmpty()) {
-            throw new InvalidNameException(ErrorsMessages.ENTRADA_INVALIDA);
+            throw new InvalidNameException(Messages.ENTRADA_INVALIDA);
         }
     }
 
     private void verificaSelecaoCargo(String cargoNome) {
         if ((cargoNome.equals("Atendente")) || (cargoNome.equals("Tecnico")) || (cargoNome.equals("Auxiliar"))) {
-            throw new IllegalArgumentException(ErrorsMessages.ENTRADA_INVALIDA);
+            throw new IllegalArgumentException(Messages.ENTRADA_INVALIDA);
         }
     }
 
     private void verificaNullSalario(double salario) {
         if (salario == 0) {
-            throw new MissingFormatArgumentException(ErrorsMessages.ENTRADA_INVALIDA);
+            throw new MissingFormatArgumentException(Messages.ENTRADA_INVALIDA);
         }
     }
 

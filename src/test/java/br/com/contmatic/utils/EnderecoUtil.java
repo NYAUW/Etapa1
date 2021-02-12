@@ -2,12 +2,17 @@ package br.com.contmatic.utils;
 
 import com.github.javafaker.Faker;
 
+import br.com.contmatic.constants.Messages;
 import br.com.contmatic.model.Endereco;
 import br.contmatic.type.EstadosType;
 import br.contmatic.type.PaisType;
 
 public class EnderecoUtil {
 	
+	public EnderecoUtil() {
+		throw new IllegalStateException(Messages.NAO_INSTANCIAVEL);
+	}
+
 	public static Endereco enderecoStatic() {
 		Endereco endereco = new Endereco();
 		endereco.setBairro("Bairro teste");
