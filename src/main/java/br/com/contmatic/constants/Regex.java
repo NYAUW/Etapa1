@@ -6,13 +6,15 @@ public class Regex {
 		throw new IllegalStateException(Messages.NAO_INSTANCIAVEL);
 	}
 	
-	public static final String ALFA = "[a-zA-Z a-zA-Z.áàâãéèêíïóôõöúçñ]";
+	public static final String ALFA = "[a-zA-Z a-zA-Z.áàâãéèêíïóôõöúçñ]*";
 	
 	public static final String ESPECIAIS = "[?=.*[}{,.^?~=+\\-_\\/*\\-+.\\|])(?=.]";
 	
 	public static final String ACENTOS = "[áàâãéèêíïóôõöúçñ]";
 	
-	public static final String NUMEROS = "^[0-9]$*";
+	public static final String PONTOS_TRACOS = "[.-]";
+	
+	public static final String NUMEROS = "^[0-9]{0,}";
 	
 	public static final String RG_PATTERN = "^[0-9]{2}.[0-9]{3}.[0-9]{3}-[0-9]{1}$*";
 	

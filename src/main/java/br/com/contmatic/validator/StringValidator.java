@@ -47,6 +47,7 @@ public class StringValidator {
 	}
 
 	public static boolean isCpf(String value) {
+		value = CpfValidator.isCpfValido(value);
 		return value.matches(Regex.CPF);
 	}
 
@@ -62,44 +63,88 @@ public class StringValidator {
 		return value.matches(Regex.ACENTOS);
 	}
 
+	public static boolean isEmail(String value) {
+		return value.matches(Regex.EMAIL);
+	}
+
 	public static String validaCnpj(String value) {
 		if (isCnpj(value)) {
 			return value;
-		}else if(value.length() != 14) {
+		} else if (value.length() != 14) {
 			throw new IllegalArgumentException(Messages.QUANTIDADE_CARACTERES_INVALIDA + (" (" + value + ")"));
 		} else {
-			if(!isNumero(value)) {
+			if (!isNumero(value)) {
 				throw new IllegalArgumentException(Messages.CARACTERE_INVALIDO);
 			}
 		}
-		return value.substring(0, 2) + "." + 
-				value.substring(2, 5) + "." + 
-				value.substring(5, 8) + "/" +
-				value.substring(8, 12) + "." + 
-				value.substring(12, 14);
+		String cnpj = value.substring(0, 2) + "." + value.substring(2, 5) + "." + value.substring(5, 8) + "/"
+				+ value.substring(8, 12) + "." + value.substring(12, 14);
+
+		if (isCnpj(cnpj)) {
+			return cnpj;
+		}
+		throw new IllegalArgumentException(Messages.ENTRADA_INVALIDA);
+	}
+
+	public static String validaFormataCpf(String value) {
+		value = CpfValidator.isCpfValido(value.replace(".", "").replace("-", ""));
+		return value.substring(0, 3) + "." + value.substring(3, 6) + "." + value.substring(6, 9) + "-"
+				+ value.substring(9, 11);
 	}
 	
+	public static String validaFormataRG(String value) {
+		if(isRG(value)) {
+			return value;
+		}
+		value = value.replace(".", "").replace("-", "");
+		if(!isNumero(value) || value.length() != 9) {
+			throw new IllegalArgumentException(Messages.ENTRADA_INVALIDA);
+		}
+		return value.substring(0, 2) + "." + value.substring(2, 5) + "." + value.substring(5, 8) + "-"
+		+ value.substring(8, 9);
+			
+	}
+
+	public static String validaEmail(String value) {
+		if (!isEmail(value) && value.trim().length() > 4) {
+			throw new IllegalArgumentException(Messages.ENTRADA_INVALIDA);
+		}
+		return value;
+	}
+
+	public static String validaQuantidadeCaracteres(String value, int quantidadeMinima) {
+		if (value == null) {
+			throw new NullPointerException();
+		}
+		if (value.length() <= quantidadeMinima) {
+			throw new IllegalArgumentException(
+					Messages.QUANTIDADE_CARACTERES_INVALIDA + " A quantidade minima é de " + quantidadeMinima);
+		}
+		return value;
+	}
+
 	public static String validaNome(String value) {
-		if(isSomenteCaractere(value) && value.length() >= 5) {
+		if (isSomenteCaractere(value) && value.trim().length() >= 5) {
 			return value;
 		} else {
 			throw new IllegalArgumentException(Messages.ENTRADA_INVALIDA + " Insira um nome completo válido");
 		}
 	}
-	
+
 	public static String vaidaNumero(String numero, TelefoneType type) {
 		if (type == null) {
 			throw new IllegalArgumentException("Não é possivel atribuir o numero sem um tipo de telefone");
 		}
-		if(type == TelefoneType.CELULAR) {
-			if(!isCelular(numero)) {
+		if (type == TelefoneType.CELULAR) {
+			if (!isCelular(numero)) {
 				throw new IllegalArgumentException(Messages.ENTRADA_INVALIDA);
 			}
 			return numero;
 		}
-		if(!isFixo(numero)) {
+		if (!isFixo(numero)) {
 			throw new IllegalArgumentException(Messages.ENTRADA_INVALIDA);
 		}
 		return numero;
 	}
+
 }

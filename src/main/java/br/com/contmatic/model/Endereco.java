@@ -1,5 +1,7 @@
 package br.com.contmatic.model;
 
+import br.com.contmatic.validator.StringValidator;
+import br.com.contmatic.validator.Validator;
 import br.contmatic.type.EstadosType;
 import br.contmatic.type.PaisType;
 
@@ -46,7 +48,7 @@ public class Endereco {
 	}
 
 	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
+		this.logradouro = StringValidator.validaQuantidadeCaracteres(logradouro, 5);
 	}
 
 	public String getComplemento() {
@@ -54,7 +56,7 @@ public class Endereco {
 	}
 
 	public void setComplemento(String complemento) {
-		this.complemento = complemento;
+		this.complemento = StringValidator.validaQuantidadeCaracteres(complemento, 2);
 	}
 
 	public int getNumero() {
@@ -62,7 +64,7 @@ public class Endereco {
 	}
 
 	public void setNumero(int numero) {
-		this.numero = numero;
+		this.numero = Validator.isNumeroMaiorQueZero(numero);
 	}
 	
 	

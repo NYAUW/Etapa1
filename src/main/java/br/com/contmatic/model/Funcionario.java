@@ -1,10 +1,7 @@
 package br.com.contmatic.model;
 
-import java.util.MissingFormatArgumentException;
-
-import javax.naming.InvalidNameException;
-
-import br.com.contmatic.constants.Messages;
+import br.com.contmatic.validator.StringValidator;
+import br.com.contmatic.validator.Validator;
 
 public class Funcionario {
 
@@ -40,28 +37,19 @@ public class Funcionario {
     }
 
     public void setNome(String nome) {
-        verificaNomeFuncionario(nome);
-        verificaNomeNumero(nome);
-        try {
-            verificaNomeCompleto(nome);
-        } catch (InvalidNameException e) {
-            e.printStackTrace();
-        }
-        this.nome = nome;
+        this.nome = StringValidator.validaNome(nome);
     }
 
     public void setCargoNome(String cargoNome) {
-        verificaSelecaoCargo(cargoNome);
-        this.cargoNome = cargoNome;
+        this.cargoNome = (String) Validator.isNotNull(cargoNome);
     }
 
     public void setCodigo(int codigo) {
-        this.codigo = codigo;
+        this.codigo = (Integer) Validator.isNotNull(codigo);
     }
 
     public void setSalario(int salario) {
-        verificaNullSalario(salario);
-        this.salario = salario;
+        this.salario = (Double) Validator.isNotNull(salario);
     }
 
     @Override
@@ -101,38 +89,6 @@ public class Funcionario {
         if (Double.doubleToLongBits(salario) != Double.doubleToLongBits(other.salario))
             return false;
         return true;
-    }
-
-    private void verificaNomeFuncionario(String nome) {
-        if (nome == null) {
-            throw new IllegalArgumentException(Messages.ENTRADA_INVALIDA);
-        }
-    }
-
-    private void verificaNomeNumero(String nome) {
-        for(int i = 0 ; nome.length() > i ; i++) {
-            if (Character.isDigit(nome.charAt(i))) {
-                throw new IllegalArgumentException(Messages.NUMEROS);
-            }
-        }
-    }
-
-    private void verificaNomeCompleto(String nome) throws InvalidNameException {
-        if (nome.trim().isEmpty()) {
-            throw new InvalidNameException(Messages.ENTRADA_INVALIDA);
-        }
-    }
-
-    private void verificaSelecaoCargo(String cargoNome) {
-        if ((cargoNome.equals("Atendente")) || (cargoNome.equals("Tecnico")) || (cargoNome.equals("Auxiliar"))) {
-            throw new IllegalArgumentException(Messages.ENTRADA_INVALIDA);
-        }
-    }
-
-    private void verificaNullSalario(double salario) {
-        if (salario == 0) {
-            throw new MissingFormatArgumentException(Messages.ENTRADA_INVALIDA);
-        }
     }
 
 }

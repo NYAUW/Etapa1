@@ -7,9 +7,10 @@ import org.junit.Test;
 
 import br.com.contmatic.model.Usuario;
 import br.com.contmatic.utils.EnderecoUtil;
+import br.com.contmatic.utils.TelefoneUtil;
 
 public class UsuarioTest {
-    Usuario usuario = new Usuario("Jose Garcia", "jose.garcia@gmail.com", "sapinho123", "46720276539", "657849875", EnderecoUtil.enderecoStatic(), "20156787");
+    Usuario usuario = new Usuario("Jose Garcia", "jose.garcia@gmail.com", "sapinho123", "46720276539", "657849875", EnderecoUtil.enderecoStatic(), TelefoneUtil.telefoneStatic());
 
     @Test
     public void deve_verificar_nome() {
@@ -43,7 +44,7 @@ public class UsuarioTest {
 
     @Test
     public void deve_verificar_telefone() {
-        assertTrue(usuario.getTel().equals("20156787"));
+        assertTrue(usuario.getTelefone().equals(TelefoneUtil.telefoneStatic()));
     }
     
     @Test
@@ -78,6 +79,6 @@ public class UsuarioTest {
 
     @Test
     public void nao_deve_verificar_telefone() {
-        assertNotEquals(usuario.getTel(), "23414576");
+        assertNotEquals(usuario.getTelefone(), TelefoneUtil.telefoneRandom());
     }
 }
