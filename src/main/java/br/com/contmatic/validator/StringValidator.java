@@ -131,15 +131,24 @@ public class StringValidator {
 		}
 	}
 
-	public static String vaidaNumero(String numero, TelefoneType type) {
+	public static String validaNumeroTelefone(String numero, TelefoneType type) {
 		if (type == null) {
 			throw new IllegalArgumentException("Não é possivel atribuir o numero sem um tipo de telefone");
 		}
 		if (type == TelefoneType.CELULAR) {
+			if(!numero.contains("-")) {
+				numero = numero.substring(0, 1) + "-" + 
+						numero.substring(1, 5) + "-" +
+						numero.substring(5);
+			}
 			if (!isCelular(numero)) {
 				throw new IllegalArgumentException(Messages.ENTRADA_INVALIDA);
 			}
 			return numero;
+		}
+		if(!numero.contains("-")) {
+			numero = numero.substring(0, 4) + "-" + 
+					numero.substring(4);
 		}
 		if (!isFixo(numero)) {
 			throw new IllegalArgumentException(Messages.ENTRADA_INVALIDA);

@@ -25,12 +25,12 @@ public class EmpresaTest {
 
 	@BeforeClass
 	public static void devera_verificar_cnpj() throws Exception {
-		assertTrue(empresa.getCnpj().equals("95128290000160"));
+		assertTrue(empresa.getCnpj() == "95128290000160");
 	}
 
 	@Before
 	public void devera_verificar_nome_empresa() {
-		assertTrue(empresa.getNome().equals("Sim Tv Assistencia"));
+		assertTrue(empresa.getNome() == "Sim Tv Assistencia");
 	}
 
 	@Test

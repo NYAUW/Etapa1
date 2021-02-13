@@ -44,7 +44,7 @@ public class Telefone {
 	}
 
 	public void setNumero(String numero) {
-		this.numero = StringValidator.vaidaNumero(numero, tipoTelefone);
+		this.numero = StringValidator.validaNumeroTelefone(numero, tipoTelefone);
 	}
 
 	@Override
