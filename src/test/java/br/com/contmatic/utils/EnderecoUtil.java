@@ -29,7 +29,7 @@ public class EnderecoUtil {
 		Faker faker = new Faker();
 		endereco.setBairro(faker.address().cityName());
 		endereco.setComplemento(faker.address().streetAddress());
-		endereco.setEstado((EstadosType.values()[Double.valueOf(Math.random() * EstadosType.values().length).intValue()]));
+		endereco.setEstado((EstadosType) EnumUtil.getRandomValue(EstadosType.values()));
 		endereco.setLogradouro(faker.address().streetName());
 		endereco.setNumero(faker.number().numberBetween(1, 9999));
 		endereco.setPais(PaisType.BRASIL);

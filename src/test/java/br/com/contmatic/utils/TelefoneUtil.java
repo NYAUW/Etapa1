@@ -26,11 +26,9 @@ public class TelefoneUtil {
 	public static Telefone telefoneRandom() {
 		Faker faker = new Faker();
 		Telefone telefone = new Telefone();
-		telefone.setDdd((DddType.values()[Double.valueOf(Math.random() * DddType.values().length).intValue()]));
-		telefone.setDominio((DominioTelefoneType.values()[Double
-				.valueOf(Math.random() * DominioTelefoneType.values().length).intValue()]));
-		telefone.setTipoTelefone(
-				(TelefoneType.values()[Double.valueOf(Math.random() * TelefoneType.values().length).intValue()]));
+		telefone.setDdd((DddType) EnumUtil.getRandomValue(DddType.values()));
+		telefone.setDominio((DominioTelefoneType) EnumUtil.getRandomValue(DominioTelefoneType.values()));
+		telefone.setTipoTelefone((TelefoneType) EnumUtil.getRandomValue(TelefoneType.values()));
 		telefone.setNumero(telefone.getTipoTelefone() != TelefoneType.CELULAR ? faker.regexify("[0-9]{8}")
 				: faker.regexify("9[0-9]{8}"));
 		return telefone;

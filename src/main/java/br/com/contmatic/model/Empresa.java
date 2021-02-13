@@ -1,8 +1,6 @@
 package br.com.contmatic.model;
 
-import javax.naming.InsufficientResourcesException;
-
-import br.com.contmatic.constants.Messages;
+import br.com.contmatic.validator.StringValidator;
 import br.contmatic.type.RamoAtividadeType;
 
 public class Empresa {
@@ -55,42 +53,11 @@ public class Empresa {
 	}
 
 	public void setCnpj(String cnpj) {
-		try {
-			verificaNulleTamanhoCnpj(cnpj);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		try {
-			verificaCnpjCaracteres(cnpj);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		try {
-			verificaCnpjEspecial(cnpj);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		this.cnpj = cnpj;
+		this.cnpj = StringValidator.validaCnpj(cnpj);
 	}
 
 	public void setNome(String nome) {
-		verificaNomeNumerico(nome);
-		try {
-			verificaSeTemSobrenome();
-		} catch (InsufficientResourcesException e) {
-
-			e.printStackTrace();
-		}
-		try {
-			verificaTamanhoNome(nome);
-		} catch (InsufficientResourcesException e) {
-
-			e.printStackTrace();
-		}
-		this.nome = nome;
+		this.nome = StringValidator.validaNome(nome);
 	}
 
 	public Telefone getTelefone() {
@@ -106,11 +73,6 @@ public class Empresa {
 	}
 
 	public void setRazaoSocial(String razaoSocial) {
-		try {
-			verificaDadosRazaoSocial(razaoSocial);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		this.razaoSocial = razaoSocial;
 	}
 
@@ -124,56 +86,5 @@ public class Empresa {
 
 	public void setProprietario(String proprietarios) {
 		this.proprietario = proprietarios;
-	}
-
-	private void verificaTamanhoNome(String proprietarios) throws InsufficientResourcesException {
-		if (proprietarios.length() < 8) {
-			throw new InsufficientResourcesException(Messages.ENTRADA_INVALIDA);
-		}
-	}
-
-	private void verificaSeTemSobrenome() throws InsufficientResourcesException {
-		if (!proprietario.contains(" "))
-			throw new InsufficientResourcesException(Messages.ENTRADA_INVALIDA);
-	}
-
-	private void verificaNomeNumerico(String nome) {
-		for (int i = 0; nome.length() > i; i++) {
-			if (Character.isDigit(nome.charAt(i))) {
-				throw new IllegalArgumentException(Messages.NUMEROS);
-			}
-		}
-	}
-
-	private void verificaNulleTamanhoCnpj(String cnpj) {
-		if (cnpj == null) {
-			throw new IllegalArgumentException(Messages.ENTRADA_NULA);
-		}
-		if (cnpj.length() != 14) {
-			throw new IllegalArgumentException(Messages.ENTRADA_NULA);
-		}
-	}
-
-	private void verificaCnpjCaracteres(String cnpj) {
-		if (cnpj.matches("^[a-zA-ZÁÂÃÀÇÉÊÍÓÔÕÚÜáâãàçéêíóôõúü]*")) {
-			throw new IllegalArgumentException(Messages.CARACTERE_INVALIDO);
-		}
-	}
-
-	private void verificaCnpjEspecial(String cnpj) {
-		if (cnpj.contains("!") || cnpj.contains("@") || cnpj.contains("#") || cnpj.contains("$") || cnpj.contains("%")
-				|| cnpj.contains("¨") || cnpj.contains("&") || cnpj.contains("*") || cnpj.contains("(")
-				|| cnpj.contains(")") || cnpj.contains("-") || cnpj.contains("+") || cnpj.contains("/")
-				|| cnpj.contains(".") || cnpj.contains(",") || cnpj.contains("?") || cnpj.contains(";")
-				|| cnpj.contains(":") || cnpj.contains(">") || cnpj.contains("<") || cnpj.contains("\\")
-				|| cnpj.contains("'")) {
-			throw new IllegalArgumentException(Messages.CARACTERE_INVALIDO);
-		}
-	}
-
-	private void verificaDadosRazaoSocial(String razaoSocial) throws InsufficientResourcesException {
-		if (razaoSocial.length() < 10 && !razaoSocial.contains(" ")) {
-			throw new InsufficientResourcesException(Messages.ENTRADA_INVALIDA);
-		}
 	}
 }
