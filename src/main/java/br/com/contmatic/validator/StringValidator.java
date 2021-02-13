@@ -46,7 +46,11 @@ public class StringValidator {
 	}
 	
 	public static boolean isCpf(String value) {
-		return value.matches(Regex.DDD + " " + Regex.NUMERO_FIXO);
+		return value.matches(Regex.CPF);
+	}
+	
+	public static boolean isCnpj(String value) {
+		return value.matches(Regex.CNPJ);
 	}
 	
 	public static boolean contemEspecial(String value) {

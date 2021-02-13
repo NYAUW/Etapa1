@@ -18,6 +18,8 @@ public class Regex {
 	
 	public static final String CPF = "^[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}$*";
 	
+	public static final String CNPJ = "^[0-9]{2}.[0-9]{3}.[0-9]{3}/[0-9]{4}-[0-9]{2}$";
+	
 	public static final String NUMERO_CELULAR = "^9-[0-9]{4}-[0-9]{4}$*";
 	
 	public static final String DDD = "(^[0-9]{2}$*)";
