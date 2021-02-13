@@ -31,7 +31,7 @@ public class TelefoneUtil {
 				.valueOf(Math.random() * DominioTelefoneType.values().length).intValue()]));
 		telefone.setTipoTelefone(
 				(TelefoneType.values()[Double.valueOf(Math.random() * TelefoneType.values().length).intValue()]));
-		telefone.setNumero(telefone.getTipoTelefone() == TelefoneType.CELULAR ? faker.regexify("[0-9]{8}")
+		telefone.setNumero(telefone.getTipoTelefone() != TelefoneType.CELULAR ? faker.regexify("[0-9]{8}")
 				: faker.regexify("9[0-9]{8}"));
 		return telefone;
 	}

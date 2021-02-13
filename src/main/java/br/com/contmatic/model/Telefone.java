@@ -45,5 +45,11 @@ public class Telefone {
 	public void setNumero(String numero) {
 		this.numero = numero;
 	}
+
+	@Override
+	public String toString() {
+		return "Telefone [tipoTelefone=" + tipoTelefone + ", ddd=" + ddd + ", dominio=" + dominio + ", numero=" + numero
+				+ "]";
+	}
 	
 }

@@ -19,10 +19,10 @@ public class Empresa {
 
 	private RamoAtividadeType ramoAtividade;
 
-	private String proprietarios;
+	private String proprietario;
 
 	public Empresa(String cnpj, String nome, Telefone telefone, Endereco endereco, String razaoSocial,
-			RamoAtividadeType ramo, String proprietarios) {
+			RamoAtividadeType ramo, String proprietario) {
 
 		super();
 		this.cnpj = cnpj;
@@ -31,7 +31,7 @@ public class Empresa {
 		this.endereco = endereco;
 		this.razaoSocial = razaoSocial;
 		this.ramoAtividade = ramo;
-		this.proprietarios = proprietarios;
+		this.proprietario = proprietario;
 	}
 
 	public String getCnpj() {
@@ -50,8 +50,8 @@ public class Empresa {
 		return razaoSocial;
 	}
 
-	public String getProprietarios() {
-		return proprietarios;
+	public String getProprietario() {
+		return proprietario;
 	}
 
 	public void setCnpj(String cnpj) {
@@ -122,8 +122,8 @@ public class Empresa {
 		this.ramoAtividade = ramoAtividade;
 	}
 
-	public void setProprietarios(String proprietarios) {
-		this.proprietarios = proprietarios;
+	public void setProprietario(String proprietarios) {
+		this.proprietario = proprietarios;
 	}
 
 	private void verificaTamanhoNome(String proprietarios) throws InsufficientResourcesException {
@@ -133,7 +133,7 @@ public class Empresa {
 	}
 
 	private void verificaSeTemSobrenome() throws InsufficientResourcesException {
-		if (!proprietarios.contains(" "))
+		if (!proprietario.contains(" "))
 			throw new InsufficientResourcesException(Messages.ENTRADA_INVALIDA);
 	}
 

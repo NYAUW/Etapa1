@@ -50,7 +50,7 @@ public class EmpresaTest {
 
 	@Test
 	public void devera_verificar_proprietario() {
-		assertTrue(empresa.getProprietarios().equals("Luis Carlos Ribeiro"));
+		assertTrue(empresa.getProprietario().equals("Luis Carlos Ribeiro"));
 	}
 
 	@Test
@@ -80,6 +80,6 @@ public class EmpresaTest {
 
 	@AfterClass
 	public static void nao_deve_verificar_proprietario() throws Exception {
-		assertNotEquals(empresa.getProprietarios(), "Teste Proprietario");
+		assertNotEquals(empresa.getProprietario(), "Teste Proprietario");
 	}
 }

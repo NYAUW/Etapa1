@@ -1,10 +1,18 @@
 package br.com.contmatic.constants;
 
 public final class Messages {
+	
+	/********************************************************
+	 *                  CONSTRUTORES                        *
+	 ********************************************************/
 
 	private Messages() {
 	  throw new IllegalStateException(NAO_INSTANCIAVEL);
 	}
+	
+	/********************************************************
+	 *                      ERROS                           *
+	 ********************************************************/
 
 	public static final String NUMEROS = "Numeros Encontrados";
 
