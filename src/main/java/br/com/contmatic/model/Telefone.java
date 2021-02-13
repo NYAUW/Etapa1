@@ -1,5 +1,6 @@
 package br.com.contmatic.model;
 
+import br.com.contmatic.validator.StringValidator;
 import br.contmatic.type.DddType;
 import br.contmatic.type.DominioTelefoneType;
 import br.contmatic.type.TelefoneType;
@@ -43,7 +44,7 @@ public class Telefone {
 	}
 
 	public void setNumero(String numero) {
-		this.numero = numero;
+		this.numero = StringValidator.vaidaNumero(numero, tipoTelefone);
 	}
 
 	@Override

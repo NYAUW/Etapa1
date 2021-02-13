@@ -2,6 +2,7 @@ package br.com.contmatic.validator;
 
 import br.com.contmatic.constants.Messages;
 import br.com.contmatic.constants.Regex;
+import br.contmatic.type.TelefoneType;
 
 public class StringValidator {
 
@@ -84,5 +85,21 @@ public class StringValidator {
 		} else {
 			throw new IllegalArgumentException(Messages.ENTRADA_INVALIDA + " Insira um nome completo válido");
 		}
+	}
+	
+	public static String vaidaNumero(String numero, TelefoneType type) {
+		if (type == null) {
+			throw new IllegalArgumentException("Não é possivel atribuir o numero sem um tipo de telefone");
+		}
+		if(type == TelefoneType.CELULAR) {
+			if(!isCelular(numero)) {
+				throw new IllegalArgumentException(Messages.ENTRADA_INVALIDA);
+			}
+			return numero;
+		}
+		if(!isFixo(numero)) {
+			throw new IllegalArgumentException(Messages.ENTRADA_INVALIDA);
+		}
+		return numero;
 	}
 }
