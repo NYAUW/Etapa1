@@ -1,5 +1,8 @@
 package br.com.contmatic.validator;
 
+import static br.com.contmatic.constants.Messages.ENTRADA_INVALIDA;
+import static br.contmatic.type.TelefoneType.CELULAR;
+
 import br.com.contmatic.constants.Messages;
 import br.com.contmatic.constants.Regex;
 import br.contmatic.type.TelefoneType;
@@ -79,7 +82,6 @@ public class StringValidator {
 		}
 		String cnpj = value.substring(0, 2) + "." + value.substring(2, 5) + "." + value.substring(5, 8) + "/"
 				+ value.substring(8, 12) + "." + value.substring(12, 14);
-
 		if (isCnpj(cnpj)) {
 			return cnpj;
 		}
@@ -127,7 +129,7 @@ public class StringValidator {
 		if (isSomenteCaractere(value) && value.trim().length() >= 5) {
 			return value;
 		} else {
-			throw new IllegalArgumentException(Messages.ENTRADA_INVALIDA + " Insira um nome completo válido");
+			throw new IllegalArgumentException(ENTRADA_INVALIDA + " Insira um nome completo válido");
 		}
 	}
 
@@ -135,14 +137,13 @@ public class StringValidator {
 		if (type == null) {
 			throw new IllegalArgumentException("Não é possivel atribuir o numero sem um tipo de telefone");
 		}
-		if (type == TelefoneType.CELULAR) {
+		if (type == CELULAR) {
 			if(!numero.contains("-")) {
-				numero = numero.substring(0, 1) + "-" + 
-						numero.substring(1, 5) + "-" +
+				numero = numero.substring(0, 5) + "-" +
 						numero.substring(5);
 			}
 			if (!isCelular(numero)) {
-				throw new IllegalArgumentException(Messages.ENTRADA_INVALIDA);
+				throw new IllegalArgumentException(ENTRADA_INVALIDA);
 			}
 			return numero;
 		}
@@ -151,7 +152,7 @@ public class StringValidator {
 					numero.substring(4);
 		}
 		if (!isFixo(numero)) {
-			throw new IllegalArgumentException(Messages.ENTRADA_INVALIDA);
+			throw new IllegalArgumentException(ENTRADA_INVALIDA);
 		}
 		return numero;
 	}

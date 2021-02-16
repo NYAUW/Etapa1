@@ -19,19 +19,6 @@ public class Empresa {
 
 	private String proprietario;
 
-	public Empresa(String cnpj, String nome, Telefone telefone, Endereco endereco, String razaoSocial,
-			RamoAtividadeType ramo, String proprietario) {
-
-		super();
-		this.cnpj = cnpj;
-		this.nome = nome;
-		this.telefone = telefone;
-		this.endereco = endereco;
-		this.razaoSocial = razaoSocial;
-		this.ramoAtividade = ramo;
-		this.proprietario = proprietario;
-	}
-
 	public String getCnpj() {
 		return cnpj;
 	}

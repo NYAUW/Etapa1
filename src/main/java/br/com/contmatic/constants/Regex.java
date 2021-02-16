@@ -18,15 +18,15 @@ public class Regex {
 	
 	public static final String RG_PATTERN = "^[0-9]{2}.[0-9]{3}.[0-9]{3}-[0-9]{1}$*";
 	
-	public static final String CPF = "^[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}$*";
+	public static final String CPF = "(\\d{3}).(\\d{3}).(\\d{3})-(\\d{2})";
 	
-	public static final String CNPJ = "^[0-9]{2}.[0-9]{3}.[0-9]{3}/[0-9]{4}-[0-9]{2}$";
+	public static final String CNPJ =  "(\\d{2}).(\\d{3}).(\\d{3})/(\\d{4}).(\\d{2})";
 	
-	public static final String NUMERO_CELULAR = "^9-[0-9]{4}-[0-9]{4}$*";
+	public static final String NUMERO_CELULAR = "(\\d{5})-(\\d{4})";
 	
 	public static final String DDD = "(^[0-9]{2}$*)";
 	
-	public static final String NUMERO_FIXO = "^[0-9]{4}-[0-9]{4}$*";
+	public static final String NUMERO_FIXO = "(\\d{4})-(\\d{4})";
 	
 	public static final String EMAIL = "^[_a-z0-9-\\+]+(\\.[_a-z0-9-]+)*@[a-z]{2,}+(\\.[a-z]{1,5}+)*(\\.[a-z]{2,})$";
 

@@ -1,6 +1,6 @@
 package br.com.contmatic.utils;
 
-import br.com.contmatic.constants.Messages;
+import static br.com.contmatic.constants.Messages.NAO_INSTANCIAVEL;
 
 public class EnumUtil {
 	
@@ -9,7 +9,7 @@ public class EnumUtil {
 	 ********************************************************/
 
 	private EnumUtil() {
-	  throw new IllegalStateException(Messages.NAO_INSTANCIAVEL);
+	  throw new IllegalStateException(NAO_INSTANCIAVEL);
 	}
 	
 	public static Object getRandomValue(Object[] values) {

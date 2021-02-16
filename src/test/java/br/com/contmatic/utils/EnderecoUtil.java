@@ -1,26 +1,28 @@
 package br.com.contmatic.utils;
 
+import static br.com.contmatic.constants.Messages.NAO_INSTANCIAVEL;
+import static br.contmatic.type.EstadosType.SP;
+import static br.contmatic.type.PaisType.BRASIL;
+
 import com.github.javafaker.Faker;
 
-import br.com.contmatic.constants.Messages;
 import br.com.contmatic.model.Endereco;
 import br.contmatic.type.EstadosType;
-import br.contmatic.type.PaisType;
 
 public class EnderecoUtil {
 	
 	public EnderecoUtil() {
-		throw new IllegalStateException(Messages.NAO_INSTANCIAVEL);
+		throw new IllegalStateException(NAO_INSTANCIAVEL);
 	}
 
 	public static Endereco enderecoStatic() {
 		Endereco endereco = new Endereco();
 		endereco.setBairro("Bairro teste");
 		endereco.setComplemento("Complemento 2");
-		endereco.setEstado(EstadosType.SP);
+		endereco.setEstado(SP);
 		endereco.setLogradouro("Rua Teste");
 		endereco.setNumero(123);
-		endereco.setPais(PaisType.BRASIL);
+		endereco.setPais(BRASIL);
 		return endereco;
 	}
 	
@@ -32,7 +34,7 @@ public class EnderecoUtil {
 		endereco.setEstado((EstadosType) EnumUtil.getRandomValue(EstadosType.values()));
 		endereco.setLogradouro(faker.address().streetName());
 		endereco.setNumero(faker.number().numberBetween(1, 9999));
-		endereco.setPais(PaisType.BRASIL);
+		endereco.setPais(BRASIL);
 		return endereco;
 	}
 
