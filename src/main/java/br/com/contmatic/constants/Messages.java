@@ -19,6 +19,8 @@ public final class Messages {
 	public static final String ENTRADA_INVALIDA = "Entrada inválida, o formato em que o dado foi inserido não é válido";
 	
 	public static final String QUANTIDADE_CARACTERES_INVALIDA = "A quantidade de caracteres inseridos não é válida";
+	
+	public static final String QUANTIDADE_INVALIDA = "A quantidade inserida não é válida";
 
 	public static final String ENTRADA_NULA = "A entrada não pode ficar nula";
 	

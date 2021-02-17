@@ -28,6 +28,10 @@ public class StringValidator {
 	public static boolean isNumero(String value) {
 		return value.matches(Regex.NUMEROS);
 	}
+	
+	public static boolean isNomeValido(String value) {
+		return value.matches(Regex.ALFA) && value.trim().length() > 5;
+	}
 
 	public static boolean isRG(String value) {
 		return value.matches(Regex.RG_PATTERN);
