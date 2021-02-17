@@ -1,6 +1,9 @@
 package br.com.contmatic.validator;
 
+import static br.com.contmatic.constants.Messages.CARACTERE_INVALIDO;
 import static br.com.contmatic.constants.Messages.ENTRADA_INVALIDA;
+import static br.com.contmatic.constants.Messages.QUANTIDADE_CARACTERES_INVALIDA;
+import static br.com.contmatic.validator.Validator.isNotNull;
 import static br.contmatic.type.TelefoneType.CELULAR;
 
 import br.com.contmatic.constants.Messages;
@@ -31,6 +34,14 @@ public class StringValidator {
 	
 	public static boolean isNomeValido(String value) {
 		return value.matches(Regex.ALFA) && value.trim().length() > 5;
+	}
+	
+	public static boolean isEmailValido(String value) {
+		return isEmail(value) && value.trim().length() > 4;
+	}
+	
+	public static boolean isSenhaValida(String value) {
+		return value.trim().length() > 4;
 	}
 
 	public static boolean isRG(String value) {
@@ -73,15 +84,22 @@ public class StringValidator {
 	public static boolean isEmail(String value) {
 		return value.matches(Regex.EMAIL);
 	}
+	
+	public static String validaSenha(String value) {
+		if(((String) isNotNull(value)).trim().length() > 5) {
+			return value;
+		}
+		throw new IllegalArgumentException(QUANTIDADE_CARACTERES_INVALIDA);
+	}
 
 	public static String validaCnpj(String value) {
 		if (isCnpj(value)) {
 			return value;
 		} else if (value.length() != 14) {
-			throw new IllegalArgumentException(Messages.QUANTIDADE_CARACTERES_INVALIDA + (" (" + value + ")"));
+			throw new IllegalArgumentException(QUANTIDADE_CARACTERES_INVALIDA + (" (" + value + ")"));
 		} else {
 			if (!isNumero(value)) {
-				throw new IllegalArgumentException(Messages.CARACTERE_INVALIDO);
+				throw new IllegalArgumentException(CARACTERE_INVALIDO);
 			}
 		}
 		String cnpj = value.substring(0, 2) + "." + value.substring(2, 5) + "." + value.substring(5, 8) + "/"

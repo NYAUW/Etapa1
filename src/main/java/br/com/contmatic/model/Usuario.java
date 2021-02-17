@@ -1,6 +1,10 @@
 package br.com.contmatic.model;
 
-import br.com.contmatic.validator.StringValidator;
+import static br.com.contmatic.validator.StringValidator.validaEmail;
+import static br.com.contmatic.validator.StringValidator.validaFormataCpf;
+import static br.com.contmatic.validator.StringValidator.validaFormataRG;
+import static br.com.contmatic.validator.StringValidator.validaNome;
+import static br.com.contmatic.validator.StringValidator.validaSenha;
 
 public class Usuario {
 
@@ -18,15 +22,7 @@ public class Usuario {
 
     private Telefone telefone;
 
-    public Usuario(String nome, String email, String senha, String cpf, String rg, Endereco endereco, Telefone telefone) {
-        super();
-        this.nome = nome;
-        this.email = email;
-        this.senha = senha;
-        this.cpf = cpf;
-        this.rg = rg;
-        this.endereco = endereco;
-        this.telefone = telefone;
+    public Usuario() {
     }
 
     public String getNome() {
@@ -58,23 +54,23 @@ public class Usuario {
     }
 
     public void setNome(String nome) {
-        this.nome = StringValidator.validaNome(nome);
+        this.nome = validaNome(nome);
     }
 
     public void setEmail(String email) {
-        this.email = StringValidator.validaEmail(email);
+        this.email = validaEmail(email);
     }
 
     public void setSenha(String senha) {
-        this.senha = StringValidator.validaQuantidadeCaracteres(senha, 4);
+        this.senha = validaSenha(senha);
     }
 
     public void setCpf(String cpf) {
-        this.cpf = StringValidator.validaFormataCpf(cpf);
+        this.cpf = validaFormataCpf(cpf);
     }
 
     public void setRg(String rg) {
-        this.rg = StringValidator.validaFormataRG(rg);
+        this.rg = validaFormataRG(rg);
     }
 
     public void setEndereco(Endereco endereco) {

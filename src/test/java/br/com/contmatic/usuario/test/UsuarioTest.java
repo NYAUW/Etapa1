@@ -1,8 +1,23 @@
 package br.com.contmatic.usuario.test;
 
+import static br.com.contmatic.constants.Regex.ALFA;
+import static br.com.contmatic.utils.EnderecoUtil.enderecoStatic;
+import static br.com.contmatic.utils.TelefoneUtil.getTelefoneRegex;
+import static br.com.contmatic.utils.TelefoneUtil.telefoneStatic;
+import static br.com.contmatic.validator.StringValidator.isCpf;
+import static br.com.contmatic.validator.StringValidator.isEmailValido;
+import static br.com.contmatic.validator.StringValidator.isNomeValido;
+import static br.com.contmatic.validator.StringValidator.isRG;
+import static br.com.contmatic.validator.StringValidator.isSenhaValida;
+import static br.com.contmatic.validator.StringValidator.validaFormataCpf;
+import static br.com.contmatic.validator.StringValidator.validaSenha;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.com.contmatic.model.Usuario;
@@ -10,43 +25,104 @@ import br.com.contmatic.utils.EnderecoUtil;
 import br.com.contmatic.utils.TelefoneUtil;
 
 public class UsuarioTest {
-    Usuario usuario = new Usuario("Jose Garcia", "jose.garcia@gmail.com", "sapinho123", "46720276539", "657849875", EnderecoUtil.enderecoStatic(), TelefoneUtil.telefoneStatic());
-
+    private static Usuario usuario;
+    
+    @BeforeClass
+    public static void deve_instanciar() {
+    	usuario = new Usuario();
+    	usuario.setCpf("46720276539");
+    	usuario.setEmail("jose.garcia@gmail.com");
+    	usuario.setNome("Jose Garcia");
+    	usuario.setEndereco(enderecoStatic());
+    	usuario.setRg("657849875");
+    	usuario.setSenha("sapinho123");
+    	usuario.setTelefone(telefoneStatic());
+    }
+    
+    
     @Test
     public void deve_verificar_nome() {
-        assertTrue(usuario.getNome().equals("Jose Garcia"));
+        assertNotNull(usuario.getNome());
     }
-
+    
+    @Test
+    public void deve_verificar_nome_valido() {
+        assertNotNull(isNomeValido(usuario.getNome()));
+    }
+    
     @Test
     public void deve_verificar_email() {
-        assertTrue(usuario.getEmail() == "jose.garcia@gmail.com");
+        assertNotNull(usuario.getEmail());
     }
 
     @Test
+    public void deve_verificar_email_valido() {
+        assertTrue(isEmailValido(usuario.getEmail()));
+    }
+    
+    @Test
     public void deve_verificar_senha() {
-        assertTrue(usuario.getSenha().equals("sapinho123"));
+        assertNotNull(validaSenha(usuario.getSenha()));
+    }
+
+    @Test
+    public void deve_verificar_senha_valida() {
+        assertTrue(isSenhaValida(usuario.getSenha()));
     }
 
     @Test
     public void deve_verificar_cpf() {
-        assertTrue(usuario.getCpf().equals("46720276539"));
-    }
-
-    @Test
-    public void deve_verificar_rg() {
-        assertTrue(usuario.getRg().equals("657849875"));
-    }
-
-    @Test
-    public void deve_verificar_endereco() {
-        assertTrue(usuario.getEndereco().equals("Rua Fada Selvagem 234"));
-    }
-
-    @Test
-    public void deve_verificar_telefone() {
-        assertTrue(usuario.getTelefone().equals(TelefoneUtil.telefoneStatic()));
+        assertTrue(isCpf(usuario.getCpf()));
     }
     
+    @Test
+    public void deve_verificar_cpf_formatado() {
+        assertNull(validaFormataCpf(usuario.getCpf()));
+    }
+
+    @Test
+    public void deve_verificar_rg_valido() {
+        assertTrue(isRG(usuario.getRg()));
+    }
+    
+    @Test
+    public void deve_verificar_rg() {
+        assertNotNull(usuario.getRg());
+    }
+
+    @Test
+	public void devera_verificar_endereco_null() {
+		assertTrue(usuario.getEndereco() != null);
+	}
+
+
+	@Test
+	public void devera_verificar_endereco() {
+		assertTrue(usuario.getEndereco().equals(enderecoStatic()));
+	}
+	
+	@Test
+	public void devera_verificar_endereco_rua_padrao() {
+		assertTrue(usuario.getEndereco().getLogradouro().matches(ALFA));
+	}
+	
+	@Test
+	public void devera_verificar_endereco_bairro_padrao() {
+		assertTrue(usuario.getEndereco().getBairro().matches(ALFA));
+	}
+	
+
+	@Test
+	public void devera_verificar_igualdade_telefone() {
+		assertEquals(telefoneStatic().getNumero(), usuario.getTelefone().getNumero());
+	}
+	
+	@Test
+	public void devera_verificar_igualdade_telefone_padrao() {
+		assertTrue(usuario.getTelefone().getNumero()
+				.matches(getTelefoneRegex(usuario.getTelefone())));
+	}
+	
     @Test
     public void nao_deve_verificar_nome() throws Exception {
         assertNotEquals(usuario.getNome(), "Marcelao");
