@@ -14,7 +14,6 @@ import static br.com.contmatic.validator.StringValidator.validaSenha;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.BeforeClass;
@@ -30,7 +29,7 @@ public class UsuarioTest {
     @BeforeClass
     public static void deve_instanciar() {
     	usuario = new Usuario();
-    	usuario.setCpf("46720276539");
+    	usuario.setCpf("53064982052");
     	usuario.setEmail("jose.garcia@gmail.com");
     	usuario.setNome("Jose Garcia");
     	usuario.setEndereco(enderecoStatic());
@@ -77,7 +76,7 @@ public class UsuarioTest {
     
     @Test
     public void deve_verificar_cpf_formatado() {
-        assertNull(validaFormataCpf(usuario.getCpf()));
+        assertNotNull(validaFormataCpf(usuario.getCpf()));
     }
 
     @Test
@@ -92,13 +91,7 @@ public class UsuarioTest {
 
     @Test
 	public void devera_verificar_endereco_null() {
-		assertTrue(usuario.getEndereco() != null);
-	}
-
-
-	@Test
-	public void devera_verificar_endereco() {
-		assertTrue(usuario.getEndereco().equals(enderecoStatic()));
+		assertNotNull(usuario.getEndereco());
 	}
 	
 	@Test
@@ -110,7 +103,6 @@ public class UsuarioTest {
 	public void devera_verificar_endereco_bairro_padrao() {
 		assertTrue(usuario.getEndereco().getBairro().matches(ALFA));
 	}
-	
 
 	@Test
 	public void devera_verificar_igualdade_telefone() {
