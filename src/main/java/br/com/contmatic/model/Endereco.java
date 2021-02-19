@@ -15,6 +15,8 @@ public class Endereco {
 	
 	private String logradouro;
 	
+	private String cep;
+	
 	private String complemento;
 	
 	private int numero;
@@ -65,6 +67,14 @@ public class Endereco {
 
 	public void setNumero(int numero) {
 		this.numero = Validator.isNumeroMaiorQueZero(numero);
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 	
 	
