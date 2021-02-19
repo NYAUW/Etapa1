@@ -3,6 +3,7 @@ package br.com.contmatic.validator;
 import static br.com.contmatic.constants.Messages.CARACTERE_INVALIDO;
 import static br.com.contmatic.constants.Messages.ENTRADA_INVALIDA;
 import static br.com.contmatic.constants.Messages.QUANTIDADE_CARACTERES_INVALIDA;
+import static br.com.contmatic.constants.Regex.NOME;
 import static br.com.contmatic.validator.Validator.isNotNull;
 import static br.contmatic.type.TelefoneType.CELULAR;
 
@@ -148,7 +149,7 @@ public class StringValidator {
 	}
 
 	public static String validaNome(String value) {
-		if (isSomenteCaractere(value) && value.trim().length() >= 5) {
+		if (isSomenteCaractere(value) && value.matches(NOME)) {
 			return value;
 		} else {
 			throw new IllegalArgumentException(ENTRADA_INVALIDA + " Insira um nome completo válido");

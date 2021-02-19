@@ -8,6 +8,8 @@ public class Regex {
 	
 	public static final String ALFA = "[a-zA-Z a-zA-Z.áàâãéèêíïóôõöúçñ]*";
 	
+	public static final String NOME = "[[A-Za-zÀ-ú\\'\\.]?((\\s([A-Za-zÀ-ú\\'\\.])))*]{2,60}";
+	
 	public static final String ESPECIAIS = "[?=.*[}{,.^?~=+\\-_\\/*\\-+.\\|])(?=.]";
 	
 	public static final String ACENTOS = "[áàâãéèêíïóôõöúçñ]";
