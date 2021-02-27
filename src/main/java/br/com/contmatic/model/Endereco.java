@@ -1,5 +1,7 @@
 package br.com.contmatic.model;
 
+import static br.com.contmatic.validator.Validator.isNotNull;
+
 import br.com.contmatic.validator.StringValidator;
 import br.com.contmatic.validator.Validator;
 import br.contmatic.type.EstadosType;
@@ -26,6 +28,8 @@ public class Endereco {
 	}
 
 	public void setBairro(String bairro) {
+		isNotNull(bairro, "bairro");
+		StringValidator.isMinChararacters(bairro, 2);
 		this.bairro = bairro;
 	}
 
@@ -34,6 +38,7 @@ public class Endereco {
 	}
 
 	public void setPais(PaisType pais) {
+		isNotNull(pais, "país");
 		this.pais = pais;
 	}
 
@@ -42,6 +47,7 @@ public class Endereco {
 	}
 
 	public void setEstado(EstadosType estado) {
+		isNotNull(estado, "estado");
 		this.estado = estado;
 	}
 
@@ -50,7 +56,9 @@ public class Endereco {
 	}
 
 	public void setLogradouro(String logradouro) {
-		this.logradouro = StringValidator.validaQuantidadeCaracteres(logradouro, 5);
+		isNotNull(logradouro, "logradouro");
+		StringValidator.isMinChararacters(logradouro, 3);
+		this.logradouro = logradouro;
 	}
 
 	public String getComplemento() {
@@ -58,7 +66,9 @@ public class Endereco {
 	}
 
 	public void setComplemento(String complemento) {
-		this.complemento = StringValidator.validaQuantidadeCaracteres(complemento, 2);
+		isNotNull(complemento, "complemento");
+		StringValidator.isMinChararacters(complemento, 3);
+		this.complemento = complemento;
 	}
 
 	public int getNumero() {
@@ -66,7 +76,8 @@ public class Endereco {
 	}
 
 	public void setNumero(int numero) {
-		this.numero = Validator.isNumeroMaiorQueZero(numero);
+		Validator.isGreaterThanZero(numero);
+		this.numero = numero;
 	}
 
 	public String getCep() {
@@ -77,6 +88,32 @@ public class Endereco {
 		this.cep = cep;
 	}
 	
-	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cep == null) ? 0 : cep.hashCode());
+		result = prime * result + numero;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Endereco other = (Endereco) obj;
+		if (cep == null) {
+			if (other.cep != null)
+				return false;
+		} else if (!cep.equals(other.cep))
+			return false;
+		if (numero != other.numero)
+			return false;
+		return true;
+	}
 
 }

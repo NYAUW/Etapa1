@@ -1,11 +1,12 @@
 package br.com.contmatic.validator;
 
-import static br.com.contmatic.constants.Messages.CARACTERE_INVALIDO;
 import static br.com.contmatic.constants.Messages.ENTRADA_INVALIDA;
-import static br.com.contmatic.constants.Messages.QUANTIDADE_CARACTERES_INVALIDA;
 import static br.com.contmatic.constants.Regex.NOME;
-import static br.com.contmatic.validator.Validator.isNotNull;
+import static br.com.contmatic.utils.FormatMessagesUtils.getInvalidExceptionMessage;
+import static br.com.contmatic.utils.FormatMessagesUtils.getMinCharacterExceptionMessage;
+import static br.com.contmatic.utils.FormatMessagesUtils.getNumberExceptionMessage;
 import static br.contmatic.type.TelefoneType.CELULAR;
+import static br.contmatic.type.TelefoneType.FIXO;
 
 import br.com.contmatic.constants.Messages;
 import br.com.contmatic.constants.Regex;
@@ -25,28 +26,10 @@ public class StringValidator {
 	 * VALIDADORES STRING *
 	 ********************************************************/
 
-	public static boolean isSomenteCaractere(String value) {
-		return value.matches(Regex.ALFA);
-	}
-
-	public static boolean isNumero(String value) {
-		return value.matches(Regex.NUMEROS);
-	}
-	
-	public static boolean isNomeValido(String value) {
-		return value.matches(Regex.ALFA) && value.trim().length() > 5;
-	}
-	
-	public static boolean isEmailValido(String value) {
-		return isEmail(value) && value.trim().length() > 4;
-	}
-	
-	public static boolean isSenhaValida(String value) {
-		return value.trim().length() > 4;
-	}
-
-	public static boolean isRG(String value) {
-		return value.matches(Regex.RG_PATTERN);
+	public static void isRGPattern(String value) {
+		if(!value.matches(Regex.RG_PATTERN)) {
+			throw new IllegalArgumentException(getInvalidExceptionMessage("rg"));
+		}
 	}
 
 	public static boolean isCelular(String value) {
@@ -65,119 +48,54 @@ public class StringValidator {
 		return value.matches(Regex.DDD + " " + Regex.NUMERO_FIXO);
 	}
 
-	public static boolean isCpf(String value) {
-		value = CpfValidator.isCpfValido(value);
-		return value.matches(Regex.CPF);
+	public static void isCpfPattern(String value) {
+		if(!value.matches(Regex.CPF)) {
+			throw new IllegalArgumentException(getInvalidExceptionMessage("cpf"));
+		}
 	}
 
-	public static boolean isCnpj(String value) {
-		return value.matches(Regex.CNPJ);
+	public static void isCnpjPattern(String value) {
+		if(!value.matches(Regex.CNPJ)) {
+			throw new IllegalArgumentException(getInvalidExceptionMessage("cnpj"));
+		}
 	}
 
-	public static boolean contemEspecial(String value) {
-		return value.matches(Regex.ESPECIAIS);
+	public static void hasEspecialCharacter(String value, String fieldname) {
+		if(value.matches(Regex.ESPECIAIS)) {
+			throw new IllegalArgumentException(getInvalidExceptionMessage(fieldname));
+		}
 	}
 
-	public static boolean contemAcento(String value) {
-		return value.matches(Regex.ACENTOS);
+	public static void isEmailPattern(String value) {
+		if(!value.matches(Regex.EMAIL)) {
+			throw new IllegalArgumentException(getInvalidExceptionMessage("email"));
+		}
 	}
 
-	public static boolean isEmail(String value) {
-		return value.matches(Regex.EMAIL);
+	public static void isOnlyNumber(String value, String fieldName) {
+		if (!value.matches(Regex.NUMEROS)) {
+			throw new IllegalArgumentException(getNumberExceptionMessage(fieldName));
+		}
 	}
 	
-	public static String validaSenha(String value) {
-		if(((String) isNotNull(value)).trim().length() > 5) {
-			return value;
+	public static void isNumberTelPattern(String value, TelefoneType type) {
+		if(type == CELULAR && !value.matches(Regex.NUMERO_CELULAR)) {
+			throw new IllegalArgumentException("O numero de celular não está válido");
 		}
-		throw new IllegalArgumentException(QUANTIDADE_CARACTERES_INVALIDA);
+		if(type == FIXO && !value.matches(Regex.NUMERO_FIXO)) {
+			throw new IllegalArgumentException("O numero fixo não está válido");
+		}
 	}
 
-	public static String validaCnpj(String value) {
-		if (isCnpj(value)) {
-			return value;
-		} else if (value.length() != 14) {
-			throw new IllegalArgumentException(QUANTIDADE_CARACTERES_INVALIDA + (" (" + value + ")"));
-		} else {
-			if (!isNumero(value)) {
-				throw new IllegalArgumentException(CARACTERE_INVALIDO);
-			}
-		}
-		String cnpj = value.substring(0, 2) + "." + value.substring(2, 5) + "." + value.substring(5, 8) + "/"
-				+ value.substring(8, 12) + "." + value.substring(12, 14);
-		if (isCnpj(cnpj)) {
-			return cnpj;
-		}
-		throw new IllegalArgumentException(Messages.ENTRADA_INVALIDA);
-	}
-
-	public static String validaFormataCpf(String value) {
-		value = CpfValidator.isCpfValido(value.replace(".", "").replace("-", ""));
-		return value.substring(0, 3) + "." + value.substring(3, 6) + "." + value.substring(6, 9) + "-"
-				+ value.substring(9, 11);
-	}
-	
-	public static String validaFormataRG(String value) {
-		if(isRG(value)) {
-			return value;
-		}
-		value = value.replace(".", "").replace("-", "");
-		if(!isNumero(value) || value.length() != 9) {
-			throw new IllegalArgumentException(Messages.ENTRADA_INVALIDA);
-		}
-		return value.substring(0, 2) + "." + value.substring(2, 5) + "." + value.substring(5, 8) + "-"
-		+ value.substring(8, 9);
-			
-	}
-
-	public static String validaEmail(String value) {
-		if (!isEmail(value) && value.trim().length() > 4) {
-			throw new IllegalArgumentException(Messages.ENTRADA_INVALIDA);
-		}
-		return value;
-	}
-
-	public static String validaQuantidadeCaracteres(String value, int quantidadeMinima) {
-		if (value == null) {
-			throw new NullPointerException();
-		}
+	public static void isMinChararacters(String value, int quantidadeMinima) {
 		if (value.length() <= quantidadeMinima) {
-			throw new IllegalArgumentException(
-					Messages.QUANTIDADE_CARACTERES_INVALIDA + " A quantidade minima é de " + quantidadeMinima);
+			throw new IllegalArgumentException(getMinCharacterExceptionMessage(quantidadeMinima));
 		}
-		return value;
 	}
 
-	public static String validaNome(String value) {
-		if (isSomenteCaractere(value) && value.matches(NOME)) {
-			return value;
-		} else {
+	public static void isNomePattern(String value) {
+		if (!value.matches(NOME)) {
 			throw new IllegalArgumentException(ENTRADA_INVALIDA + " Insira um nome completo válido");
 		}
 	}
-
-	public static String validaNumeroTelefone(String numero, TelefoneType type) {
-		if (type == null) {
-			throw new IllegalArgumentException("Não é possivel atribuir o numero sem um tipo de telefone");
-		}
-		if (type == CELULAR) {
-			if(!numero.contains("-")) {
-				numero = numero.substring(0, 5) + "-" +
-						numero.substring(5);
-			}
-			if (!isCelular(numero)) {
-				throw new IllegalArgumentException(ENTRADA_INVALIDA);
-			}
-			return numero;
-		}
-		if(!numero.contains("-")) {
-			numero = numero.substring(0, 4) + "-" + 
-					numero.substring(4);
-		}
-		if (!isFixo(numero)) {
-			throw new IllegalArgumentException(ENTRADA_INVALIDA);
-		}
-		return numero;
-	}
-
 }

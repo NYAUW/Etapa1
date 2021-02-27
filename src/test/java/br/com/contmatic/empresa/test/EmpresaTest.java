@@ -33,7 +33,7 @@ public class EmpresaTest {
 		empresa = new Empresa();
 		empresa.setCnpj("38739416000107");
 		empresa.setEndereco(enderecoStatic);
-		empresa.setNome("Sim Tv Assistencia");
+		empresa.setNomeFantasia("Sim Tv Assistencia");
 		empresa.setProprietario("Proprietario EmpresaTest");
 		empresa.setRamoAtividade(SERVICOS_ASSISTENCIA_TECNICA_INSTALACOES);
 		empresa.setRazaoSocial("Trabalhar pelo bem comum");
@@ -57,17 +57,17 @@ public class EmpresaTest {
 	
 	@Test
 	public void devera_verificar_nome_empresa_null() {
-		assertTrue(empresa.getNome() != null);
+		assertTrue(empresa.getNomeFantasia() != null);
 	}
 
 	@Test
 	public void devera_verificar_nome_empresa() {
-		assertTrue(empresa.getNome() == "Sim Tv Assistencia");
+		assertTrue(empresa.getNomeFantasia() == "Sim Tv Assistencia");
 	}
 	
 	@Test
 	public void devera_verificar_nome_empresa_valido() {
-		assertTrue(empresa.getNome().matches(ALFA));
+		assertTrue(empresa.getNomeFantasia().matches(ALFA));
 	}
 
 	@Test
@@ -129,12 +129,12 @@ public class EmpresaTest {
 
 	@Test
 	public void nao_deve_validar_igualdade_nome_empresa() {
-		assertNotEquals(empresa.getNome(), "Pastel Do Marcelão");
+		assertNotEquals(empresa.getNomeFantasia(), "Pastel Do Marcelão");
 	}
 	
 	@Test
 	public void nao_deve_validar_nome_empresa_null() {
-		assertFalse(empresa.getNome() == null);
+		assertFalse(empresa.getNomeFantasia() == null);
 	}
 
 	@Test

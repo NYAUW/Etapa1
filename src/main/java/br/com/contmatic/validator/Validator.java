@@ -1,8 +1,11 @@
 package br.com.contmatic.validator;
 
-import static br.com.contmatic.constants.Messages.QUANTIDADE_INVALIDA;
+import static br.com.contmatic.constants.Messages.MENOR_IGUAL_ZERO;
+import static br.com.contmatic.utils.FormatMessagesUtils.getBetweenNumberExceptionMessage;
+import static br.com.contmatic.utils.FormatMessagesUtils.getNullExceptionMessage;
 
 import br.com.contmatic.constants.Messages;
+import br.contmatic.type.TelefoneType;
 
 public class Validator {
 
@@ -17,36 +20,29 @@ public class Validator {
 	/********************************************************
 	 * VALIDADORES *
 	 ********************************************************/
-	public static Object isNotNull(Object value) {
+	public static Object isNotNull(Object value, String fieldName) {
 		if (value == null) {
-			throw new NullPointerException();
+			throw new NullPointerException(getNullExceptionMessage(fieldName));
 		}
 		return value;
 	}
 
-	public static Integer isNumeroMaiorQueZero(Integer numero) {
-		return (Integer) (numero > 0 ? numero
-				: throwException(new IllegalArgumentException(Messages.ENTRADA_INVALIDA)));
-	}
-
-	public static Integer isNumeroMaiorQue(Integer numero, int valor) {
-		return (Integer) (numero > valor ? numero
-				: throwException(new IllegalArgumentException(
-						"O número informado não corresponde a quantidade mínima de " + valor + " caracteres")));
-	}
-
-	public static Integer isNumeroEntre(Integer numero, int numeroMinimo, int numeroMaximo) {
-		return (Integer) ((Integer) isNotNull(numero) > numeroMinimo && numero < numeroMaximo ? numero
-				: throwException(new IllegalAccessException(QUANTIDADE_INVALIDA)));
-	}
-
-	public static Object throwException(Exception e) {
-		try {
-			throw e;
-		} catch (Exception ex) {
-			ex.printStackTrace();
+	public static void isTipoTelefoneNotNull(TelefoneType value) {
+		if (value == null) {
+			throw new IllegalArgumentException("O tipo do telefone não foi informado");
 		}
-		return null;
+	}
+
+	public static void isGreaterThanZero(Integer numero) {
+		if (numero <= 0) {
+			new IllegalArgumentException(MENOR_IGUAL_ZERO);
+		}
+	}
+
+	public static void isNumberBetween(Integer numero, int numeroMinimo, int numeroMaximo, String fieldName) {
+		if (numero > numeroMinimo && numero < numeroMaximo) {
+			throw new IllegalArgumentException(getBetweenNumberExceptionMessage(fieldName, numeroMinimo, numeroMaximo));
+		}
 	}
 
 }
