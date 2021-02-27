@@ -4,7 +4,7 @@ import br.com.contmatic.validator.StringValidator;
 import br.com.contmatic.validator.Validator;
 import br.contmatic.type.RamoAtividadeType;
 
-public class Empresa {
+public class Empresa extends AbstractAuditable<Empresa>{
 
 	private String cnpj;
 
@@ -43,7 +43,7 @@ public class Empresa {
 	public void setCnpj(String cnpj) {
 		Validator.isNotNull(cnpj, "cnpj");
 		StringValidator.isOnlyNumber(cnpj, "cnpj");
-		StringValidator.isCnpjPattern(cnpj);
+		StringValidator.isCnpjPattern(cnpj.trim());
 		this.cnpj = cnpj;
 	}
 

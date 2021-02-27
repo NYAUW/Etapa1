@@ -4,7 +4,7 @@ import br.com.contmatic.validator.CpfValidator;
 import br.com.contmatic.validator.StringValidator;
 import br.com.contmatic.validator.Validator;
 
-public class Usuario {
+public class Usuario extends AbstractAuditable<Usuario>{
 
     private String nome;
 

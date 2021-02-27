@@ -7,7 +7,7 @@ import br.com.contmatic.validator.Validator;
 import br.contmatic.type.EstadosType;
 import br.contmatic.type.PaisType;
 
-public class Endereco {
+public class Endereco extends AbstractAuditable<Endereco> {
 	
 	private String bairro;
 	

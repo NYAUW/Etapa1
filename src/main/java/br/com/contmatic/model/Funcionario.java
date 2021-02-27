@@ -9,7 +9,7 @@ import br.com.contmatic.validator.StringValidator;
 import br.com.contmatic.validator.Validator;
 import br.contmatic.type.SexoType;
 
-public class Funcionario {
+public class Funcionario extends AbstractAuditable<Funcionario>{
 
 	private String nome;
 
@@ -86,6 +86,7 @@ public class Funcionario {
 	}
 
 	public void setDataNascimento(LocalDate dataNascimento) {
+		Validator.isNotNull(dataNascimento, "data de nascimento");
 		this.dataNascimento = dataNascimento;
 	}
 
@@ -94,6 +95,7 @@ public class Funcionario {
 	}
 
 	public void setDataAdmissao(LocalDate dataAdmissao) {
+		Validator.isNotNull(dataAdmissao, "data de admissao");
 		this.dataAdmissao = dataAdmissao;
 	}
 
@@ -102,6 +104,7 @@ public class Funcionario {
 	}
 
 	public void setDataDesligamento(LocalDate dataDesligamento) {
+		Validator.isNotNull(dataDesligamento, "data de desligamento");
 		this.dataDesligamento = dataDesligamento;
 	}
 

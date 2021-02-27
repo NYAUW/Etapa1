@@ -6,7 +6,7 @@ import br.contmatic.type.DddType;
 import br.contmatic.type.DominioTelefoneType;
 import br.contmatic.type.TelefoneType;
 
-public class Telefone {
+public class Telefone extends AbstractAuditable<Telefone>{
 
 	private TelefoneType tipoTelefone;
 
