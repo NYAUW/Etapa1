@@ -40,7 +40,7 @@ public class Validator {
 	}
 
 	public static void isNumberBetween(Integer numero, int numeroMinimo, int numeroMaximo, String fieldName) {
-		if (numero > numeroMinimo && numero < numeroMaximo) {
+		if (numero < numeroMinimo && numero > numeroMaximo) {
 			throw new IllegalArgumentException(getBetweenNumberExceptionMessage(fieldName, numeroMinimo, numeroMaximo));
 		}
 	}

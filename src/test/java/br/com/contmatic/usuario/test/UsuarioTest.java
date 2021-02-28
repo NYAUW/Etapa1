@@ -1,17 +1,14 @@
 package br.com.contmatic.usuario.test;
 
 import static br.com.contmatic.constants.Regex.ALFA;
+import static br.com.contmatic.constants.Regex.EMAIL;
+import static br.com.contmatic.constants.Regex.NOME;
+import static br.com.contmatic.constants.Regex.RG_PATTERN;
 import static br.com.contmatic.utils.EnderecoUtil.enderecoStatic;
 import static br.com.contmatic.utils.TelefoneUtil.getTelefoneRegex;
 import static br.com.contmatic.utils.TelefoneUtil.telefoneStatic;
-import static br.com.contmatic.validator.StringValidator.isCpf;
-import static br.com.contmatic.validator.StringValidator.isEmailValido;
-import static br.com.contmatic.validator.StringValidator.isNomeValido;
-import static br.com.contmatic.validator.StringValidator.isRG;
-import static br.com.contmatic.validator.StringValidator.isSenhaValida;
-import static br.com.contmatic.validator.StringValidator.validaFormataCpf;
-import static br.com.contmatic.validator.StringValidator.validaSenha;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -22,6 +19,7 @@ import org.junit.Test;
 import br.com.contmatic.model.Usuario;
 import br.com.contmatic.utils.EnderecoUtil;
 import br.com.contmatic.utils.TelefoneUtil;
+import br.com.contmatic.validator.CpfValidator;
 
 public class UsuarioTest {
     private static Usuario usuario;
@@ -34,58 +32,121 @@ public class UsuarioTest {
     	usuario.setNome("Jose Garcia");
     	usuario.setEndereco(enderecoStatic());
     	usuario.setRg("657849875");
-    	usuario.setSenha("sapinho123");
+    	usuario.setSenha("09999");
     	usuario.setTelefone(telefoneStatic());
     }
     
+    @Test
+	public void deve_verificar_usuario_equals() {
+		assertTrue(usuario.equals(usuario));
+	}
+	
+	@Test
+	public void deve_verificar_usuario_hashcode_cpf() {
+		assertNotNull(new Usuario().hashCode());
+	}
+	
+	@Test
+	public void deve_verificar_usuario_equals_null() {
+		assertFalse(usuario.equals(null));
+	}
+	
+	@Test
+	public void deve_verificar_usuario_equals_usuario_sem_data() {
+		assertFalse(usuario.equals(new Usuario()));
+	}
+	
+	@Test
+	public void deve_verificar_usuario_sem_data_equals_usuario_sem_data() {
+		assertTrue(new Usuario().equals(new Usuario()));
+	}
+	
+	@Test
+	public void deve_verificar_usuario_com_cpf_equals_usuario_sem_data() {
+		Usuario other = new Usuario();
+		other.setCpf("50740457896");
+		assertFalse(new Usuario().equals(other));
+	}
+	
+	@Test
+	public void deve_verificar_usuario_com_codigo_igual() {
+		Usuario other = new Usuario();
+		other.setCpf(usuario.getCpf());
+		assertTrue(other.equals(usuario));
+	}
+	
+	@Test
+	public void deve_verificar_usuario_com_cpf_iguais() {
+		Usuario other = new Usuario();
+		other.setCpf("50740457896");
+		Usuario another = new Usuario();
+		another.setCpf("50740457896");
+		assertTrue(another.equals(other));
+	}
+	
+	@Test
+	public void deve_verificar_usuario_com_cpf_diferente() {
+		Usuario other = new Usuario();
+		other.setCpf("50740457896");
+		Usuario another = new Usuario();
+		another.setCpf("56887329034");
+		assertFalse(another.equals(other));
+	}
+	
+	@Test
+	public void deve_verificar_usuario_hashcode() {
+		assertEquals(usuario.hashCode(), usuario.hashCode());
+	}
+	
+	@Test
+	public void deve_verificar_usuario_equals_outro_obj() {
+		assertFalse(usuario.equals(new Object()));
+	}
+
     
     @Test
-    public void deve_verificar_nome() {
+    public void deve_verificar_nome_pattern() {
+        assertTrue(usuario.getNome().matches(NOME));
+    }
+    
+    @Test
+    public void deve_verificar_nome_not_null() {
         assertNotNull(usuario.getNome());
     }
     
     @Test
-    public void deve_verificar_nome_valido() {
-        assertNotNull(isNomeValido(usuario.getNome()));
-    }
-    
-    @Test
-    public void deve_verificar_email() {
+    public void deve_verificar_email_not_null() {
         assertNotNull(usuario.getEmail());
     }
 
     @Test
-    public void deve_verificar_email_valido() {
-        assertTrue(isEmailValido(usuario.getEmail()));
+    public void deve_verificar_email_pattern() {
+        assertTrue(usuario.getEmail().matches(EMAIL));
     }
     
     @Test
-    public void deve_verificar_senha() {
-        assertNotNull(validaSenha(usuario.getSenha()));
+    public void deve_verificar_senha_not_null() {
+        assertNotNull(usuario.getSenha());
     }
 
     @Test
     public void deve_verificar_senha_valida() {
-        assertTrue(isSenhaValida(usuario.getSenha()));
+        assertTrue(usuario.getSenha().length() > 4);
     }
 
     @Test
     public void deve_verificar_cpf() {
-        assertTrue(isCpf(usuario.getCpf()));
-    }
-    
-    @Test
-    public void deve_verificar_cpf_formatado() {
-        assertNotNull(validaFormataCpf(usuario.getCpf()));
+    	CpfValidator.isCpfValid(usuario.getCpf());
+        assertTrue(true);
     }
 
     @Test
     public void deve_verificar_rg_valido() {
-        assertTrue(isRG(usuario.getRg()));
+        assertTrue(usuario.getRg().matches(RG_PATTERN));
     }
     
     @Test
-    public void deve_verificar_rg() {
+    public void deve_verificar_rg_not_null() {
         assertNotNull(usuario.getRg());
     }
 

@@ -104,7 +104,6 @@ public class Funcionario extends AbstractAuditable<Funcionario>{
 	}
 
 	public void setDataDesligamento(LocalDate dataDesligamento) {
-		Validator.isNotNull(dataDesligamento, "data de desligamento");
 		this.dataDesligamento = dataDesligamento;
 	}
 

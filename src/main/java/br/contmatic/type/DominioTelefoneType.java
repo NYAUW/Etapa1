@@ -12,10 +12,6 @@ public enum DominioTelefoneType {
 		return dominio;
 	}
 
-	public void setDominio(String dominio) {
-		this.dominio = dominio;
-	}
-
 	DominioTelefoneType(String dominio) {
 		this.dominio = dominio;
 	}

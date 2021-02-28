@@ -39,10 +39,6 @@ public enum EstadosType {
 		this.nome = nome;
 	}
 	
-	public String getCodigo() {
-		return Integer.toString(codigoIbge);
-	}
-	
 	public String getNome(){
 		return nome;
 	}

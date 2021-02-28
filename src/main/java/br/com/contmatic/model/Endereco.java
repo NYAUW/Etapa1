@@ -66,8 +66,9 @@ public class Endereco extends AbstractAuditable<Endereco> {
 	}
 
 	public void setComplemento(String complemento) {
-		isNotNull(complemento, "complemento");
-		StringValidator.isMinChararacters(complemento, 3);
+		if(complemento != null) {
+			StringValidator.isMinChararacters(complemento, 3);
+		}
 		this.complemento = complemento;
 	}
 
