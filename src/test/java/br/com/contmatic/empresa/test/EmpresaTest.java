@@ -24,7 +24,6 @@ import org.junit.Test;
 
 import br.com.contmatic.model.Empresa;
 import br.com.contmatic.model.Endereco;
-import br.com.contmatic.model.Funcionario;
 
 public class EmpresaTest {
 
