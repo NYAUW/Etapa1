@@ -130,9 +130,8 @@ public class EmpresaTest {
 	}
 	
 	@Test
-	@SuppressWarnings("unlikely-arg-type")
 	public void deve_verificar_empresa_equals_outro_obj() {
-		assertFalse(empresa.equals(new Funcionario()));
+		assertFalse(empresa.equals(new Object()));
 	}
 	
 	@Test
