@@ -2,7 +2,6 @@ package br.com.contmatic.utils;
 
 import static br.com.contmatic.constants.Messages.NAO_INSTANCIAVEL;
 import static br.contmatic.type.EstadosType.SP;
-import static br.contmatic.type.PaisType.BRASIL;
 
 import com.github.javafaker.Faker;
 
@@ -21,7 +20,6 @@ public class EnderecoUtil {
 		endereco.setComplemento("Complemento 2");
 		endereco.setEstado(SP);
 		endereco.setLogradouro("Rua Teste");
-		endereco.setPais(BRASIL);
 		return endereco;
 	}
 
@@ -32,7 +30,6 @@ public class EnderecoUtil {
 		endereco.setComplemento(faker.address().streetAddress());
 		endereco.setEstado((EstadosType) EnumUtil.getRandomValue(EstadosType.values()));
 		endereco.setLogradouro(faker.address().streetName());
-		endereco.setPais(BRASIL);
 		return endereco;
 	}
 

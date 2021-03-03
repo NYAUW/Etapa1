@@ -1,7 +1,6 @@
 package br.com.contmatic.endereco.test;
 
 import static br.contmatic.type.EstadosType.SP;
-import static br.contmatic.type.PaisType.BRASIL;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -25,7 +24,6 @@ public class EnderecoTest {
 		endereco.setComplemento(null);
 		endereco.setEstado(SP);
 		endereco.setLogradouro("Rua soldado Luis manoel Ferreira");
-		endereco.setPais(BRASIL);
 	}
 	
 	@Before
@@ -129,17 +127,7 @@ public class EnderecoTest {
 	
 	@Test
 	public void deve_verificar_pais_not_null( ) {
-		assertNotNull(endereco.getPais());
-	}
-	
-	@Test
-	public void deve_verificar_pais_codigo_not_null( ) {
-		assertNotNull(endereco.getPais().getCodigo());
-	}
-	
-	@Test
-	public void deve_verificar_pais_descricao_not_null( ) {
-		assertNotNull(endereco.getPais().getDescricao());
+		assertNotNull(endereco.getEstado().getPais());
 	}
 	
 	@Test

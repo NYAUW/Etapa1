@@ -8,13 +8,10 @@ import static br.com.contmatic.validator.Validator.isGreaterThanZero;
 import static br.com.contmatic.validator.Validator.isNotNull;
 
 import br.contmatic.type.EstadosType;
-import br.contmatic.type.PaisType;
 
 public class Endereco extends AbstractAuditable {
 
 	private String bairro;
-
-	private PaisType pais;
 
 	private EstadosType estado;
 
@@ -30,8 +27,6 @@ public class Endereco extends AbstractAuditable {
 	private String complemento;
 
 	private Integer numero;
-	
-	
 
 	public String getBairro() {
 		return bairro;
@@ -43,15 +38,6 @@ public class Endereco extends AbstractAuditable {
 		isMinChararacters(bairro, 2);
 		isMaxChararacters(bairro, 60);
 		this.bairro = bairro;
-	}
-
-	public PaisType getPais() {
-		return pais;
-	}
-
-	public void setPais(PaisType pais) {
-		isNotNull(pais, "país");
-		this.pais = pais;
 	}
 
 	public EstadosType getEstado() {
