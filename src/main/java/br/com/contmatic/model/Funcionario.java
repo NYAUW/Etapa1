@@ -1,27 +1,31 @@
 package br.com.contmatic.model;
 
+import static br.com.contmatic.validator.CpfValidator.isCpfValid;
+import static br.com.contmatic.validator.DateValidator.isDateGreatherThanToday;
+import static br.com.contmatic.validator.StringValidator.isCpfPattern;
+import static br.com.contmatic.validator.StringValidator.isMaxChararacters;
+import static br.com.contmatic.validator.StringValidator.isMinChararacters;
+import static br.com.contmatic.validator.StringValidator.isNotBlank;
+import static br.com.contmatic.validator.Validator.isNotNull;
+import static br.com.contmatic.validator.Validator.isNumberBetween;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import br.com.contmatic.utils.DateUtils;
-import br.com.contmatic.validator.CpfValidator;
-import br.com.contmatic.validator.StringValidator;
-import br.com.contmatic.validator.Validator;
 import br.contmatic.type.SexoType;
 
-public class Funcionario extends AbstractAuditable<Funcionario>{
+public class Funcionario extends AbstractAuditable {
 
 	private String nome;
 
 	private String cargo;
 
-	private int codigo;
+	private Integer codigo;
 
 	private BigDecimal salario;
 
 	private SexoType sexo;
-
-	private Integer idade;
 
 	private LocalDate dataNascimento;
 
@@ -31,39 +35,50 @@ public class Funcionario extends AbstractAuditable<Funcionario>{
 
 	private String cpf;
 
+	public Funcionario(String cpf) {
+		setCpf(cpf);
+	}
+
 	public String getNome() {
 		return nome;
+	}
+
+	public void setNome(String nome) {
+		isNotNull(nome, "nome");
+		isNotBlank(nome, "nome");
+		isMinChararacters(nome, 2);
+		isMaxChararacters(nome, 100);
+		this.nome = nome;
 	}
 
 	public String getCargo() {
 		return cargo;
 	}
 
-	public int getCodigo() {
+	public void setCargo(String cargo) {
+		isNotNull(cargo, "cargo");
+		isNotBlank(cargo, "cargo");
+		isMinChararacters(nome, 2);
+		isMaxChararacters(nome, 100);
+		this.cargo = cargo;
+	}
+
+	public Integer getCodigo() {
 		return codigo;
+	}
+
+	public void setCodigo(Integer codigo) {
+		isNotNull(codigo, "código");
+		isNumberBetween(codigo, 1000, 9999, "cargo");
+		this.codigo = codigo;
 	}
 
 	public BigDecimal getSalario() {
 		return salario;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public void setCargo(String cargoNome) {
-		Validator.isNotNull(cargoNome, "nome do cargo");
-		this.cargo = cargoNome;
-	}
-
-	public void setCodigo(int codigo) {
-		Validator.isNotNull(codigo, "código");
-		Validator.isNumberBetween(codigo, 1000, 9999, "código");
-		this.codigo = codigo;
-	}
-
 	public void setSalario(BigDecimal salario) {
-		Validator.isNotNull(salario, "salário");
+		isNotNull(salario, "salário");
 		this.salario = salario;
 	}
 
@@ -72,13 +87,12 @@ public class Funcionario extends AbstractAuditable<Funcionario>{
 	}
 
 	public void setSexo(SexoType sexo) {
-		Validator.isNotNull(sexo, "sexo");
+		isNotNull(sexo, "sexo");
 		this.sexo = sexo;
 	}
 
 	public Integer getIdade() {
-		idade = DateUtils.getIdade(dataNascimento);
-		return idade;
+		return DateUtils.getIdade(dataNascimento);
 	}
 
 	public LocalDate getDataNascimento() {
@@ -86,7 +100,8 @@ public class Funcionario extends AbstractAuditable<Funcionario>{
 	}
 
 	public void setDataNascimento(LocalDate dataNascimento) {
-		Validator.isNotNull(dataNascimento, "data de nascimento");
+		isNotNull(dataNascimento, "data de nascimento");
+		isDateGreatherThanToday(dataNascimento);
 		this.dataNascimento = dataNascimento;
 	}
 
@@ -95,7 +110,8 @@ public class Funcionario extends AbstractAuditable<Funcionario>{
 	}
 
 	public void setDataAdmissao(LocalDate dataAdmissao) {
-		Validator.isNotNull(dataAdmissao, "data de admissao");
+		isNotNull(dataAdmissao, "data de admisão");
+		isDateGreatherThanToday(dataAdmissao);
 		this.dataAdmissao = dataAdmissao;
 	}
 
@@ -104,6 +120,8 @@ public class Funcionario extends AbstractAuditable<Funcionario>{
 	}
 
 	public void setDataDesligamento(LocalDate dataDesligamento) {
+		isNotNull(dataDesligamento, "data de desligamento");
+		isDateGreatherThanToday(dataDesligamento);
 		this.dataDesligamento = dataDesligamento;
 	}
 
@@ -112,9 +130,10 @@ public class Funcionario extends AbstractAuditable<Funcionario>{
 	}
 
 	public void setCpf(String cpf) {
-		Validator.isNotNull(cpf, "cpf");
-		StringValidator.isCpfPattern(cpf);
-		CpfValidator.isCpfValid(cpf);
+		isNotNull(cpf, "cpf");
+		isNotBlank(cpf, "cpf");
+		isCpfPattern(cpf);
+		isCpfValid(cpf);
 		this.cpf = cpf;
 	}
 
@@ -122,7 +141,6 @@ public class Funcionario extends AbstractAuditable<Funcionario>{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + codigo;
 		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
 		return result;
 	}
@@ -136,8 +154,6 @@ public class Funcionario extends AbstractAuditable<Funcionario>{
 		if (getClass() != obj.getClass())
 			return false;
 		Funcionario other = (Funcionario) obj;
-		if (codigo != other.codigo)
-			return false;
 		if (cpf == null) {
 			if (other.cpf != null)
 				return false;
@@ -145,5 +161,7 @@ public class Funcionario extends AbstractAuditable<Funcionario>{
 			return false;
 		return true;
 	}
+
+	
 	
 }

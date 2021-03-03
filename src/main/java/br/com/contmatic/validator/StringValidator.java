@@ -3,10 +3,14 @@ package br.com.contmatic.validator;
 import static br.com.contmatic.constants.Messages.ENTRADA_INVALIDA;
 import static br.com.contmatic.constants.Regex.NOME;
 import static br.com.contmatic.utils.FormatMessagesUtils.getInvalidExceptionMessage;
+import static br.com.contmatic.utils.FormatMessagesUtils.getMaxCharacterExceptionMessage;
 import static br.com.contmatic.utils.FormatMessagesUtils.getMinCharacterExceptionMessage;
 import static br.com.contmatic.utils.FormatMessagesUtils.getNumberExceptionMessage;
+import static br.com.contmatic.utils.FormatMessagesUtils.getThisExactCharacterExceptionMessage;
 import static br.contmatic.type.TelefoneType.CELULAR;
 import static br.contmatic.type.TelefoneType.FIXO;
+
+import org.apache.commons.lang3.StringUtils;
 
 import br.com.contmatic.constants.Messages;
 import br.com.contmatic.constants.Regex;
@@ -29,6 +33,12 @@ public class StringValidator {
 	public static void isRGPattern(String value) {
 		if(!value.matches(Regex.RG_PATTERN)) {
 			throw new IllegalArgumentException(getInvalidExceptionMessage("rg"));
+		}
+	}
+	
+	public static void isNotBlank(String value, String fieldName) {
+		if(StringUtils.isBlank(value)) {
+			throw new IllegalArgumentException(getInvalidExceptionMessage(fieldName));
 		}
 	}
 
@@ -88,10 +98,23 @@ public class StringValidator {
 	}
 
 	public static void isMinChararacters(String value, int quantidadeMinima) {
-		if (value.length() <= quantidadeMinima) {
+		if (value.length() < quantidadeMinima) {
 			throw new IllegalArgumentException(getMinCharacterExceptionMessage(quantidadeMinima));
 		}
 	}
+	
+	public static void isMaxChararacters(String value, int quantidadeMaxima) {
+		if (value.length() > quantidadeMaxima) {
+			throw new IllegalArgumentException(getMaxCharacterExceptionMessage(quantidadeMaxima));
+		}
+	}
+	
+	public static void isThisExactChararacters(String value, int quantidadeExata) {
+		if (value.length() != quantidadeExata) {
+			throw new IllegalArgumentException(getThisExactCharacterExceptionMessage(quantidadeExata));
+		}
+	}
+
 
 	public static void isNomePattern(String value) {
 		if (!value.matches(NOME)) {

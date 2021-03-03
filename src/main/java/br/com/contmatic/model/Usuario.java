@@ -1,10 +1,17 @@
 package br.com.contmatic.model;
 
-import br.com.contmatic.validator.CpfValidator;
-import br.com.contmatic.validator.StringValidator;
-import br.com.contmatic.validator.Validator;
+import static br.com.contmatic.validator.CpfValidator.isCpfValid;
+import static br.com.contmatic.validator.StringValidator.isCpfPattern;
+import static br.com.contmatic.validator.StringValidator.isEmailPattern;
+import static br.com.contmatic.validator.StringValidator.isMaxChararacters;
+import static br.com.contmatic.validator.StringValidator.isMinChararacters;
+import static br.com.contmatic.validator.StringValidator.isNomePattern;
+import static br.com.contmatic.validator.StringValidator.isNotBlank;
+import static br.com.contmatic.validator.StringValidator.isRGPattern;
+import static br.com.contmatic.validator.Validator.isNotNull;
+import static br.com.contmatic.validator.Validator.isNumberBetween;
 
-public class Usuario extends AbstractAuditable<Usuario>{
+public class Usuario extends AbstractAuditable{
 
     private String nome;
 
@@ -20,10 +27,11 @@ public class Usuario extends AbstractAuditable<Usuario>{
 
     private Telefone telefone;
 
-    public Usuario() {
-    }
+    public Usuario(String cpf) {
+		setCpf(cpf);
+	}
 
-    public String getNome() {
+	public String getNome() {
         return nome;
     }
 
@@ -52,43 +60,50 @@ public class Usuario extends AbstractAuditable<Usuario>{
     }
 
     public void setNome(String nome) {
-    	Validator.isNotNull(nome, "nome");
-    	StringValidator.isNomePattern(nome);
+    	isNotNull(nome, "nome");
+    	isNotBlank(nome, "nome");
+    	isMinChararacters(nome, 2);
+    	isMaxChararacters(nome, 60);
+    	isNomePattern(nome);
         this.nome = nome;
     }
 
     public void setEmail(String email) {
-    	Validator.isNotNull(email, "email");
-    	StringValidator.isEmailPattern(email);
+    	isNotNull(email, "email");
+    	isNotBlank(email, "email");
+    	isEmailPattern(email);
         this.email = email;
     }
 
     public void setSenha(String senha) {
-    	Validator.isNotNull(senha, "senha");
-    	Validator.isNumberBetween(senha.length(), 4, 16, "senha");
+    	isNotNull(senha, "senha");
+    	isNotBlank(senha, "senha");
+    	isNumberBetween(senha.length(), 4, 16, "senha");
         this.senha = senha;
     }
 
     public void setCpf(String cpf) {
-    	Validator.isNotNull(cpf, "cpf");
-    	StringValidator.isCpfPattern(cpf);
-    	CpfValidator.isCpfValid(cpf);
+    	isNotNull(cpf, "cpf");
+    	isNotBlank(cpf, "cpf");
+    	isCpfPattern(cpf);
+    	isCpfValid(cpf);
         this.cpf = cpf;
     }
 
     public void setRg(String rg) {
-    	Validator.isNotNull(rg, "rg");
-    	StringValidator.isRGPattern(rg);
+    	isNotNull(rg, "rg");
+    	isNotBlank(rg, "rg");
+    	isRGPattern(rg);
         this.rg = rg;
     }
 
     public void setEndereco(Endereco endereco) {
-    	Validator.isNotNull(endereco, "endereço");
+    	isNotNull(endereco, "endereço");
         this.endereco = endereco;
     }
 
     public void setTelefone(Telefone telefone) {
-    	Validator.isNotNull(telefone, "telefone");
+    	isNotNull(telefone, "telefone");
         this.telefone = telefone;
     }
 

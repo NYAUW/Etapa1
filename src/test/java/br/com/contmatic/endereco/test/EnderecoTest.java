@@ -20,13 +20,11 @@ public class EnderecoTest {
 	
 	@BeforeClass
 	public static void deve_instanciar_endereco() {
-		endereco = new Endereco();
+		endereco = new Endereco("03977120", 2738);
 		endereco.setBairro("Mascarenhas de Morais");
-		endereco.setCep("03977120");
 		endereco.setComplemento(null);
 		endereco.setEstado(SP);
 		endereco.setLogradouro("Rua soldado Luis manoel Ferreira");
-		endereco.setNumero(2738);
 		endereco.setPais(BRASIL);
 	}
 	
@@ -43,7 +41,7 @@ public class EnderecoTest {
 	
 	@Test
 	public void deve_verificar_endereco_hashcode_cep() {
-		assertNotNull(new Endereco().hashCode());
+		assertNotNull(new Endereco("03977120", 2738).hashCode());
 	}
 	
 	@Test
@@ -53,51 +51,44 @@ public class EnderecoTest {
 	
 	@Test
 	public void deve_verificar_endereco_equals_endereco_sem_data() {
-		assertFalse(endereco.equals(new Endereco()));
+		assertFalse(endereco.equals(new Endereco("03977120", 2838)));
 	}
 	
 	@Test
 	public void deve_verificar_endereco_sem_data_equals_endereco_sem_data() {
-		assertTrue(new Endereco().equals(new Endereco()));
+		assertTrue(new Endereco("03977120", 2738).equals(new Endereco("03977120", 2738)));
 	}
 	
 	@Test
 	public void deve_verificar_endereco_com_cep_equals_endereco_sem_data() {
-		Endereco other = new Endereco();
-		other.setCep("03911720");
-		assertFalse(new Endereco().equals(other));
+		Endereco other = new Endereco("03977120", 2738);
+		other.setCep("03911740");
+		assertFalse(new Endereco("03977120", 2738).equals(other));
 	}
 	
 	@Test
 	public void deve_verificar_endereco_com_numero_igual() {
-		Endereco other = new Endereco();
-		other.setNumero(endereco.getNumero());
+		Endereco other = new Endereco("03977120", 2738);
 		assertFalse(other.equals(endereco));
 	}
 	
 	@Test
 	public void deve_verificar_endereco_com_numero_diferente() {
-		Endereco other = new Endereco();
-		other.setNumero(6666);
-		other.setCep("03977120");
+		Endereco other = new Endereco("03977120", 6666);
 		assertFalse(other.equals(endereco));
 	}
 	
 	@Test
 	public void deve_verificar_endereco_com_cep_iguais() {
-		Endereco other = new Endereco();
-		other.setCep("03977120");
-		Endereco another = new Endereco();
-		another.setCep("03977120");
+		Endereco other = new Endereco("03977120", 2738);
+		Endereco another = new Endereco("03977120", 2738);
 		assertTrue(another.equals(other));
 	}
 	
 	@Test
 	public void deve_verificar_endereco_com_cep_diferente() {
-		Endereco other = new Endereco();
-		other.setCep("03977120");
-		Endereco another = new Endereco();
-		another.setCep("08977120");
+		Endereco other = new Endereco("03977120", 2738);
+		Endereco another = new Endereco("08977120", 2738);
 		assertFalse(another.equals(other));
 	}
 	

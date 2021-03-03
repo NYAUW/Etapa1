@@ -26,8 +26,7 @@ public class UsuarioTest {
     
     @BeforeClass
     public static void deve_instanciar() {
-    	usuario = new Usuario();
-    	usuario.setCpf("53064982052");
+    	usuario = new Usuario("53064982052");
     	usuario.setEmail("jose.garcia@gmail.com");
     	usuario.setNome("Jose Garcia");
     	usuario.setEndereco(enderecoStatic());
@@ -43,7 +42,7 @@ public class UsuarioTest {
 	
 	@Test
 	public void deve_verificar_usuario_hashcode_cpf() {
-		assertNotNull(new Usuario().hashCode());
+		assertNotNull(new Usuario("53064982052").hashCode());
 	}
 	
 	@Test
@@ -53,42 +52,42 @@ public class UsuarioTest {
 	
 	@Test
 	public void deve_verificar_usuario_equals_usuario_sem_data() {
-		assertFalse(usuario.equals(new Usuario()));
+		assertFalse(usuario.equals(new Usuario("53064982052")));
 	}
 	
 	@Test
 	public void deve_verificar_usuario_sem_data_equals_usuario_sem_data() {
-		assertTrue(new Usuario().equals(new Usuario()));
+		assertTrue(new Usuario("53064982052").equals(new Usuario("53064982052")));
 	}
 	
 	@Test
 	public void deve_verificar_usuario_com_cpf_equals_usuario_sem_data() {
-		Usuario other = new Usuario();
+		Usuario other = new Usuario("53064982052");
 		other.setCpf("50740457896");
-		assertFalse(new Usuario().equals(other));
+		assertFalse(new Usuario("53064982052").equals(other));
 	}
 	
 	@Test
 	public void deve_verificar_usuario_com_codigo_igual() {
-		Usuario other = new Usuario();
+		Usuario other = new Usuario("53064982052");
 		other.setCpf(usuario.getCpf());
 		assertTrue(other.equals(usuario));
 	}
 	
 	@Test
 	public void deve_verificar_usuario_com_cpf_iguais() {
-		Usuario other = new Usuario();
+		Usuario other = new Usuario("53064982052");
 		other.setCpf("50740457896");
-		Usuario another = new Usuario();
+		Usuario another = new Usuario("53064982052");
 		another.setCpf("50740457896");
 		assertTrue(another.equals(other));
 	}
 	
 	@Test
 	public void deve_verificar_usuario_com_cpf_diferente() {
-		Usuario other = new Usuario();
+		Usuario other = new Usuario("53064982052");
 		other.setCpf("50740457896");
-		Usuario another = new Usuario();
+		Usuario another = new Usuario("53064982052");
 		another.setCpf("56887329034");
 		assertFalse(another.equals(other));
 	}

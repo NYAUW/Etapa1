@@ -23,6 +23,14 @@ public class FormatMessagesUtils {
 	public static String getMinCharacterExceptionMessage(int value) {
 		return "A quantidade minima é de " + value;
 	}
+	
+	public static String getMaxCharacterExceptionMessage(int value) {
+		return "A quantidade maxima é de " + value;
+	}
+	
+	public static String getThisExactCharacterExceptionMessage(int value) {
+		return "A o campo nao corresponde a quantidade de " + value + " caracteres";
+	}
 
 	public static String getBetweenNumberExceptionMessage(String fieldName, int min, int max) {
 		return "O(A) " + fieldName + " deve estar entre o numero " + min + " e " + max;

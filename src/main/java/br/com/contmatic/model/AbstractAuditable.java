@@ -2,21 +2,21 @@ package br.com.contmatic.model;
 
 import java.util.Date;
 
-public abstract class AbstractAuditable<U> {
+public abstract class AbstractAuditable {
 	
-	private U createdBy;
+	private Usuario createdBy;
 	
 	private Date createdDate;
 	
-	private U lastModifiedBy;
+	private Usuario lastModifiedBy;
 	
 	private Date lastModifiedDate;
 
-	public U getCreatedBy() {
+	public Usuario getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(U createdBy) {
+	public void setCreatedBy(Usuario createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -28,11 +28,11 @@ public abstract class AbstractAuditable<U> {
 		this.createdDate = createdDate;
 	}
 
-	public U getLastModifiedBy() {
+	public Usuario getLastModifiedBy() {
 		return lastModifiedBy;
 	}
 
-	public void setLastModifiedBy(U lastModifiedBy) {
+	public void setLastModifiedBy(Usuario lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
 
@@ -43,6 +43,5 @@ public abstract class AbstractAuditable<U> {
 	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
-	
 	
 }

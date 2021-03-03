@@ -24,6 +24,7 @@ import org.junit.Test;
 
 import br.com.contmatic.model.Empresa;
 import br.com.contmatic.model.Endereco;
+import br.com.contmatic.model.Usuario;
 
 public class EmpresaTest {
 
@@ -33,17 +34,16 @@ public class EmpresaTest {
 	
 	@BeforeClass
 	public static void deve_instanciar_empresa() {
-		empresa = new Empresa();
-		empresa.setCnpj("38739416000107");
+		empresa = new Empresa("38739416000107");
 		empresa.setEndereco(enderecoStatic);
 		empresa.setNomeFantasia("Sim Tv Assistencia");
 		empresa.setProprietario("Proprietario EmpresaTest");
 		empresa.setRamoAtividade(SERVICOS_ASSISTENCIA_TECNICA_INSTALACOES);
 		empresa.setRazaoSocial("Trabalhar pelo bem comum");
 		empresa.setTelefone(telefoneStatic());
-		empresa.setCreatedBy(empresa);
+		empresa.setCreatedBy(new Usuario("89111745053"));
 		empresa.setCreatedDate(new Date());
-		empresa.setLastModifiedBy(empresa);
+		empresa.setLastModifiedBy(new Usuario("89111745053"));
 		empresa.setLastModifiedDate(new Date());
 	}
 	
@@ -89,33 +89,26 @@ public class EmpresaTest {
 	
 	@Test
 	public void deve_verificar_empresa_equals_outra_empresa() {
-		assertFalse(empresa.equals(new Empresa()));
+		assertFalse(empresa.equals(new Empresa("38739416000107")));
 	}
 	
 	@Test
 	public void deve_verificar_empresa_sem_data_equals_empresa() {
-		assertFalse(new Empresa().equals(empresa));
-	}
-	
-	@Test
-	public void deve_verificar_empresa_com_cnpj_null() {
-		Empresa other = new Empresa();
-		other.setNomeFantasia("Testegsdeteg");
-		assertTrue(new Empresa().equals(other));
+		assertFalse(new Empresa("43293952000153").equals(empresa));
 	}
 	
 	@Test
 	public void deve_verificar_empresa_com_cnpj_iguais() {
-		Empresa other = new Empresa();
+		Empresa other = new Empresa("38739416000107");
 		other.setCnpj("38739416000107");
-		Empresa another = new Empresa();
+		Empresa another = new Empresa("38739416000107");
 		another.setCnpj("38739416000107");
 		assertTrue(another.equals(other));
 	}
 	
 	@Test
 	public void deve_verificar_empresa_hashcode() {
-		assertFalse(empresa.hashCode() == new Empresa().hashCode());
+		assertFalse(empresa.hashCode() == new Empresa("38739416000107").hashCode());
 	}
 	
 	@Test
@@ -125,7 +118,7 @@ public class EmpresaTest {
 	
 	@Test
 	public void deve_verificar_duas_empresas_sem_data() {
-		assertFalse(new Empresa().equals(empresa));
+		assertFalse(new Empresa("43293952000153").equals(empresa));
 	}
 	
 	@Test

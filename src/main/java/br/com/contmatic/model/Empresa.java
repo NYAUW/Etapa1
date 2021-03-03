@@ -1,10 +1,15 @@
 package br.com.contmatic.model;
 
-import br.com.contmatic.validator.StringValidator;
-import br.com.contmatic.validator.Validator;
+import static br.com.contmatic.validator.CnpjValidator.isCnpjValid;
+import static br.com.contmatic.validator.StringValidator.isMaxChararacters;
+import static br.com.contmatic.validator.StringValidator.isMinChararacters;
+import static br.com.contmatic.validator.StringValidator.isNotBlank;
+import static br.com.contmatic.validator.StringValidator.isOnlyNumber;
+import static br.com.contmatic.validator.Validator.isNotNull;
+
 import br.contmatic.type.RamoAtividadeType;
 
-public class Empresa extends AbstractAuditable<Empresa>{
+public class Empresa extends AbstractAuditable{
 
 	private String cnpj;
 
@@ -19,38 +24,33 @@ public class Empresa extends AbstractAuditable<Empresa>{
 	private RamoAtividadeType ramoAtividade;
 
 	private String proprietario;
-
+	
+	public Empresa(String cnpj) {
+		this.setCnpj(cnpj);
+	}
+	
 	public String getCnpj() {
 		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		isNotNull(cnpj, "cnpj");
+		isNotBlank(cnpj, "cnpj");
+		isOnlyNumber(cnpj, "cnpj");
+		isCnpjValid(cnpj);
+		this.cnpj = cnpj;
 	}
 
 	public String getNomeFantasia() {
 		return nomeFantasia;
 	}
 
-	public Endereco getEndereco() {
-		return endereco;
-	}
-
-	public String getRazaoSocial() {
-		return razaoSocial;
-	}
-
-	public String getProprietario() {
-		return proprietario;
-	}
-
-	public void setCnpj(String cnpj) {
-		Validator.isNotNull(cnpj, "cnpj");
-		StringValidator.isOnlyNumber(cnpj, "cnpj");
-		StringValidator.isCnpjPattern(cnpj.trim());
-		this.cnpj = cnpj;
-	}
-
-	public void setNomeFantasia(String nome) {
-		Validator.isNotNull(nome.trim(), "nome fantasia");
-		StringValidator.isNomePattern(nome);
-		this.nomeFantasia = nome;
+	public void setNomeFantasia(String nomeFantasia) {
+		isNotNull(nomeFantasia, "nome fantasia");
+		isNotBlank(nomeFantasia, "nome fantasia");
+		isMinChararacters(nomeFantasia, 2);
+		isMaxChararacters(nomeFantasia, 60);
+		this.nomeFantasia = nomeFantasia;
 	}
 
 	public Telefone getTelefone() {
@@ -58,17 +58,28 @@ public class Empresa extends AbstractAuditable<Empresa>{
 	}
 
 	public void setTelefone(Telefone telefone) {
-		Validator.isNotNull(telefone, "telefone");
+		isNotNull(telefone, "telefone");
 		this.telefone = telefone;
 	}
 
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
 	public void setEndereco(Endereco endereco) {
-		Validator.isNotNull(endereco, "endereço");
+		isNotNull(endereco, "endereço");
 		this.endereco = endereco;
 	}
 
+	public String getRazaoSocial() {
+		return razaoSocial;
+	}
+
 	public void setRazaoSocial(String razaoSocial) {
-		Validator.isNotNull(razaoSocial, "razão social");
+		isNotNull(razaoSocial, "razão social");
+		isNotBlank(razaoSocial, "razão social");
+		isMinChararacters(razaoSocial, 2);
+		isMaxChararacters(razaoSocial, 60);
 		this.razaoSocial = razaoSocial;
 	}
 
@@ -77,15 +88,22 @@ public class Empresa extends AbstractAuditable<Empresa>{
 	}
 
 	public void setRamoAtividade(RamoAtividadeType ramoAtividade) {
-		Validator.isNotNull(ramoAtividade, "ramo de atividade");
+		isNotNull(ramoAtividade, "ramo de Atividade");
 		this.ramoAtividade = ramoAtividade;
 	}
 
+	public String getProprietario() {
+		return proprietario;
+	}
+
 	public void setProprietario(String proprietario) {
-		Validator.isNotNull(proprietario, "nome do proprietário");
+		isNotNull(proprietario, "proprietário");
+		isNotBlank(proprietario, "proprietário");
+		isMinChararacters(proprietario, 2);
+		isMaxChararacters(proprietario, 60);
 		this.proprietario = proprietario;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -24,12 +24,11 @@ public class FuncionarioTest {
 
 	@BeforeClass
 	public static void deve_instanciar_funvionario() {
-		funcionario = new Funcionario();
+		funcionario = new Funcionario("83765370088");
 		funcionario.setCargo("Atendente");
 		funcionario.setCodigo(626);
 		funcionario.setNome("Juliette Ferreira");
 		funcionario.setSalario(new BigDecimal("2300.00"));
-		funcionario.setCpf("56887329034");
 		funcionario.setDataAdmissao(LocalDate.of(2018, 1, 6));
 		funcionario.setDataDesligamento(null);
 		funcionario.setDataNascimento(LocalDate.of(2001, 12, 11));
@@ -50,7 +49,7 @@ public class FuncionarioTest {
 	
 	@Test
 	public void deve_verificar_funcionario_hashcode_cpf() {
-		assertNotNull(new Funcionario().hashCode());
+		assertNotNull(new Funcionario("83765370088").hashCode());
 	}
 	
 	@Test
@@ -60,43 +59,43 @@ public class FuncionarioTest {
 	
 	@Test
 	public void deve_verificar_funcionario_equals_funcionario_sem_data() {
-		assertFalse(funcionario.equals(new Funcionario()));
+		assertFalse(funcionario.equals(new Funcionario("83765370088")));
 	}
 	
 	@Test
 	public void deve_verificar_funcionario_sem_data_equals_funcionario_sem_data() {
-		assertTrue(new Funcionario().equals(new Funcionario()));
+		assertTrue(new Funcionario("83765370088").equals(new Funcionario("83765370088")));
 	}
 	
 	@Test
 	public void deve_verificar_funcionario_com_cpf_equals_funcionario_sem_data() {
-		Funcionario other = new Funcionario();
+		Funcionario other = new Funcionario("83765370088");
 		other.setCpf("50740457896");
-		assertFalse(new Funcionario().equals(other));
+		assertFalse(new Funcionario("83765370088").equals(other));
 	}
 	
 	@Test
 	public void deve_verificar_funcionario_com_codigo_igual() {
-		Funcionario other = new Funcionario();
+		Funcionario other = new Funcionario("83765370088");
 		other.setCodigo(funcionario.getCodigo());
 		assertFalse(other.equals(funcionario));
 	}
 	
 	@Test
 	public void deve_verificar_funcionario_com_cpf_iguais() {
-		Funcionario other = new Funcionario();
+		Funcionario other = new Funcionario("83765370088");
 		other.setCpf("50740457896");
-		Funcionario another = new Funcionario();
+		Funcionario another = new Funcionario("83765370088");
 		another.setCpf("50740457896");
 		assertTrue(another.equals(other));
 	}
 	
 	@Test
 	public void deve_verificar_funcionario_com_cpf_diferente() {
-		Funcionario other = new Funcionario();
+		Funcionario other = new Funcionario("83765370088");
 		other.setCpf("50740457896");
-		Funcionario another = new Funcionario();
-		another.setCpf("56887329034");
+		Funcionario another = new Funcionario("83765370088");
+		another.setCpf("83765370088");
 		assertFalse(another.equals(other));
 	}
 	

@@ -1,27 +1,37 @@
 package br.com.contmatic.model;
 
+import static br.com.contmatic.validator.StringValidator.isMaxChararacters;
+import static br.com.contmatic.validator.StringValidator.isMinChararacters;
+import static br.com.contmatic.validator.StringValidator.isNotBlank;
+import static br.com.contmatic.validator.StringValidator.isThisExactChararacters;
+import static br.com.contmatic.validator.Validator.isGreaterThanZero;
 import static br.com.contmatic.validator.Validator.isNotNull;
 
-import br.com.contmatic.validator.StringValidator;
-import br.com.contmatic.validator.Validator;
 import br.contmatic.type.EstadosType;
 import br.contmatic.type.PaisType;
 
-public class Endereco extends AbstractAuditable<Endereco> {
-	
+public class Endereco extends AbstractAuditable {
+
 	private String bairro;
-	
+
 	private PaisType pais;
-	
+
 	private EstadosType estado;
-	
+
 	private String logradouro;
-	
+
+	public Endereco(String cep, Integer numero) {
+		setCep(cep);
+		setNumero(numero);
+	}
+
 	private String cep;
-	
+
 	private String complemento;
+
+	private Integer numero;
 	
-	private int numero;
+	
 
 	public String getBairro() {
 		return bairro;
@@ -29,7 +39,9 @@ public class Endereco extends AbstractAuditable<Endereco> {
 
 	public void setBairro(String bairro) {
 		isNotNull(bairro, "bairro");
-		StringValidator.isMinChararacters(bairro, 2);
+		isNotBlank(bairro, "bairro");
+		isMinChararacters(bairro, 2);
+		isMaxChararacters(bairro, 60);
 		this.bairro = bairro;
 	}
 
@@ -57,7 +69,9 @@ public class Endereco extends AbstractAuditable<Endereco> {
 
 	public void setLogradouro(String logradouro) {
 		isNotNull(logradouro, "logradouro");
-		StringValidator.isMinChararacters(logradouro, 3);
+		isNotBlank(logradouro, "logradouro");
+		isMinChararacters(logradouro, 3);
+		isMaxChararacters(logradouro, 50);
 		this.logradouro = logradouro;
 	}
 
@@ -66,8 +80,10 @@ public class Endereco extends AbstractAuditable<Endereco> {
 	}
 
 	public void setComplemento(String complemento) {
-		if(complemento != null) {
-			StringValidator.isMinChararacters(complemento, 3);
+		if (complemento != null) {
+			isNotBlank(complemento, "complemento");
+			isMinChararacters(complemento, 3);
+			isMaxChararacters(complemento, 20);
 		}
 		this.complemento = complemento;
 	}
@@ -76,8 +92,9 @@ public class Endereco extends AbstractAuditable<Endereco> {
 		return numero;
 	}
 
-	public void setNumero(int numero) {
-		Validator.isGreaterThanZero(numero);
+	public void setNumero(Integer numero) {
+		isNotNull(numero, "número da residência");
+		isGreaterThanZero(numero);
 		this.numero = numero;
 	}
 
@@ -86,9 +103,12 @@ public class Endereco extends AbstractAuditable<Endereco> {
 	}
 
 	public void setCep(String cep) {
+		isNotNull(cep, "cep");
+		isNotBlank(cep, "cep");
+		isThisExactChararacters(cep, 8);
 		this.cep = cep;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

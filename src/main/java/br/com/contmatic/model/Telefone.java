@@ -1,12 +1,15 @@
 package br.com.contmatic.model;
 
-import br.com.contmatic.validator.StringValidator;
-import br.com.contmatic.validator.Validator;
+import static br.com.contmatic.validator.StringValidator.isNumberTelPattern;
+import static br.com.contmatic.validator.StringValidator.isOnlyNumber;
+import static br.com.contmatic.validator.Validator.isNotNull;
+import static br.com.contmatic.validator.Validator.isTipoTelefoneNotNull;
+
 import br.contmatic.type.DddType;
 import br.contmatic.type.DominioTelefoneType;
 import br.contmatic.type.TelefoneType;
 
-public class Telefone extends AbstractAuditable<Telefone>{
+public class Telefone extends AbstractAuditable{
 
 	private TelefoneType tipoTelefone;
 
@@ -15,13 +18,17 @@ public class Telefone extends AbstractAuditable<Telefone>{
 	private DominioTelefoneType dominio;
 
 	private String numero;
+	
+	public Telefone(String numero) {
+		setNumero(numero);
+	}
 
 	public TelefoneType getTipoTelefone() {
 		return tipoTelefone;
 	}
 
 	public void setTipoTelefone(TelefoneType tipoTelefone) {
-		Validator.isNotNull(tipoTelefone, "tipo do telefone");
+		isNotNull(tipoTelefone, "tipo do telefone");
 		this.tipoTelefone = tipoTelefone;
 	}
 
@@ -30,7 +37,7 @@ public class Telefone extends AbstractAuditable<Telefone>{
 	}
 
 	public void setDdd(DddType ddd) {
-		Validator.isNotNull(ddd, "DDD");
+		isNotNull(ddd, "DDD");
 		this.ddd = ddd;
 	}
 
@@ -39,7 +46,7 @@ public class Telefone extends AbstractAuditable<Telefone>{
 	}
 
 	public void setDominio(DominioTelefoneType dominio) {
-		Validator.isNotNull(dominio, "domínio");
+		isNotNull(dominio, "domínio");
 		this.dominio = dominio;
 	}
 
@@ -48,10 +55,10 @@ public class Telefone extends AbstractAuditable<Telefone>{
 	}
 
 	public void setNumero(String numero) {
-		Validator.isNotNull(numero, "número");
-		Validator.isTipoTelefoneNotNull(tipoTelefone);
-		StringValidator.isOnlyNumber(numero, "número");
-		StringValidator.isNumberTelPattern(numero, tipoTelefone);
+		isNotNull(numero, "número");
+		isTipoTelefoneNotNull(tipoTelefone);
+		isOnlyNumber(numero, "número");
+		isNumberTelPattern(numero, tipoTelefone);
 		this.numero = numero;
 	}
 
