@@ -17,16 +17,16 @@ public class Endereco extends AbstractAuditable {
 
 	private String logradouro;
 
-	public Endereco(String cep, Integer numero) {
-		setCep(cep);
-		setNumero(numero);
-	}
-
 	private String cep;
 
 	private String complemento;
 
 	private Integer numero;
+	
+	public Endereco(String cep, Integer numero) {
+		setCep(cep);
+		setNumero(numero);
+	}
 
 	public String getBairro() {
 		return bairro;

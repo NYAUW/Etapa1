@@ -7,7 +7,6 @@ import static br.com.contmatic.validator.StringValidator.isMaxChararacters;
 import static br.com.contmatic.validator.StringValidator.isMinChararacters;
 import static br.com.contmatic.validator.StringValidator.isNotBlank;
 import static br.com.contmatic.validator.Validator.isNotNull;
-import static br.com.contmatic.validator.Validator.isNumberBetween;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -69,7 +68,6 @@ public class Funcionario extends AbstractAuditable {
 
 	public void setCodigo(Integer codigo) {
 		isNotNull(codigo, "código");
-		isNumberBetween(codigo, 1000, 9999, "cargo");
 		this.codigo = codigo;
 	}
 
@@ -162,6 +160,4 @@ public class Funcionario extends AbstractAuditable {
 		return true;
 	}
 
-	
-	
 }

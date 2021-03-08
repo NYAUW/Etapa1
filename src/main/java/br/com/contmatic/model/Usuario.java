@@ -11,101 +11,101 @@ import static br.com.contmatic.validator.StringValidator.isRGPattern;
 import static br.com.contmatic.validator.Validator.isNotNull;
 import static br.com.contmatic.validator.Validator.isNumberBetween;
 
-public class Usuario extends AbstractAuditable{
+public class Usuario extends AbstractAuditable {
 
-    private String nome;
+	private String nome;
 
-    private String email;
+	private String email;
 
-    private String senha;
+	private String senha;
 
-    private String cpf;
+	private String cpf;
 
-    private String rg;
+	private String rg;
 
-    private Endereco endereco;
+	private Endereco endereco;
 
-    private Telefone telefone;
+	private Telefone telefone;
 
-    public Usuario(String cpf) {
+	public Usuario(String cpf) {
 		setCpf(cpf);
 	}
 
+	public void setNome(String nome) {
+		isNotNull(nome, "nome");
+		isNotBlank(nome, "nome");
+		isMinChararacters(nome, 2);
+		isMaxChararacters(nome, 60);
+		isNomePattern(nome);
+		this.nome = nome;
+	}
+
 	public String getNome() {
-        return nome;
-    }
+		return nome;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setEmail(String email) {
+		isNotNull(email, "email");
+		isNotBlank(email, "email");
+		isEmailPattern(email);
+		this.email = email;
+	}
 
-    public String getSenha() {
-        return senha;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getCpf() {
-        return cpf;
-    }
+	public void setSenha(String senha) {
+		isNotNull(senha, "senha");
+		isNotBlank(senha, "senha");
+		isNumberBetween(senha.length(), 4, 16, "senha");
+		this.senha = senha;
+	}
 
-    public String getRg() {
-        return rg;
-    }
+	public String getSenha() {
+		return senha;
+	}
 
-    public Endereco getEndereco() {
-        return endereco;
-    }
+	public void setCpf(String cpf) {
+		isNotNull(cpf, "cpf");
+		isNotBlank(cpf, "cpf");
+		isCpfPattern(cpf);
+		isCpfValid(cpf);
+		this.cpf = cpf;
+	}
 
-    public Telefone getTelefone() {
-        return telefone;
-    }
+	public String getCpf() {
+		return cpf;
+	}
 
-    public void setNome(String nome) {
-    	isNotNull(nome, "nome");
-    	isNotBlank(nome, "nome");
-    	isMinChararacters(nome, 2);
-    	isMaxChararacters(nome, 60);
-    	isNomePattern(nome);
-        this.nome = nome;
-    }
+	public String getRg() {
+		return rg;
+	}
 
-    public void setEmail(String email) {
-    	isNotNull(email, "email");
-    	isNotBlank(email, "email");
-    	isEmailPattern(email);
-        this.email = email;
-    }
+	public void setRg(String rg) {
+		isNotNull(rg, "rg");
+		isNotBlank(rg, "rg");
+		isRGPattern(rg);
+		this.rg = rg;
+	}
 
-    public void setSenha(String senha) {
-    	isNotNull(senha, "senha");
-    	isNotBlank(senha, "senha");
-    	isNumberBetween(senha.length(), 4, 16, "senha");
-        this.senha = senha;
-    }
+	public void setEndereco(Endereco endereco) {
+		isNotNull(endereco, "endereço");
+		this.endereco = endereco;
+	}
 
-    public void setCpf(String cpf) {
-    	isNotNull(cpf, "cpf");
-    	isNotBlank(cpf, "cpf");
-    	isCpfPattern(cpf);
-    	isCpfValid(cpf);
-        this.cpf = cpf;
-    }
+	public Endereco getEndereco() {
+		return endereco;
+	}
 
-    public void setRg(String rg) {
-    	isNotNull(rg, "rg");
-    	isNotBlank(rg, "rg");
-    	isRGPattern(rg);
-        this.rg = rg;
-    }
+	public Telefone getTelefone() {
+		return telefone;
+	}
 
-    public void setEndereco(Endereco endereco) {
-    	isNotNull(endereco, "endereço");
-        this.endereco = endereco;
-    }
-
-    public void setTelefone(Telefone telefone) {
-    	isNotNull(telefone, "telefone");
-        this.telefone = telefone;
-    }
+	public void setTelefone(Telefone telefone) {
+		isNotNull(telefone, "telefone");
+		this.telefone = telefone;
+	}
 
 	@Override
 	public int hashCode() {
