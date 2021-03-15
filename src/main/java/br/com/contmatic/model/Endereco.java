@@ -3,6 +3,7 @@ package br.com.contmatic.model;
 import static br.com.contmatic.validator.StringValidator.isMaxChararacters;
 import static br.com.contmatic.validator.StringValidator.isMinChararacters;
 import static br.com.contmatic.validator.StringValidator.isNotBlank;
+import static br.com.contmatic.validator.StringValidator.isOnlyNumber;
 import static br.com.contmatic.validator.StringValidator.isThisExactChararacters;
 import static br.com.contmatic.validator.Validator.isGreaterThanZero;
 import static br.com.contmatic.validator.Validator.isNotNull;
@@ -91,6 +92,7 @@ public class Endereco extends AbstractAuditable {
 	public void setCep(String cep) {
 		isNotNull(cep, "cep");
 		isNotBlank(cep, "cep");
+		isOnlyNumber(cep, "cep");
 		isThisExactChararacters(cep, 8);
 		this.cep = cep;
 	}

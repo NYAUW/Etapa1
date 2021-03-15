@@ -5,14 +5,18 @@ public class CnpjValidator {
 	private static final String CNPJ_INVALIDO = "Cnpj Inválido";
 
 	public static void isCnpjValid(String cnpj) {
-		if (cnpj.length() != 14) {
-			throw new IllegalArgumentException(CNPJ_INVALIDO);
-		}
+		validaTamanhoCnpj(cnpj);
 		String cnpjValido = cnpj.substring(0, 12);
 		char[] chrCnpj = cnpj.toCharArray();
 		cnpjValido = getFirstStep(cnpjValido, chrCnpj);
 		cnpjValido = getSecondStepValid(cnpjValido, chrCnpj);
 		if (!cnpj.equals(cnpjValido)) {
+			throw new IllegalArgumentException(CNPJ_INVALIDO);
+		}
+	}
+
+	private static void validaTamanhoCnpj(String cnpj) {
+		if (cnpj.length() != 14) {
 			throw new IllegalArgumentException(CNPJ_INVALIDO);
 		}
 	}

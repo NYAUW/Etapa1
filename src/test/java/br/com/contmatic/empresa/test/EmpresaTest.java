@@ -73,7 +73,7 @@ public class EmpresaTest {
 	}
 	
 	@Test
-	public void deve_verificar_cnpj() {
+	public void deve_aceitar_um_cnpj_valido() {
 		assertTrue(empresa.getCnpj().equals("38739416000107"));
 	}
 	
@@ -138,7 +138,7 @@ public class EmpresaTest {
 
 	@Test
 	public void deve_verificar_nome_empresa() {
-		assertTrue(empresa.getNomeFantasia() == "Sim Tv Assistencia");
+		assertTrue(empresa.getNomeFantasia().equals("Sim Tv Assistencia"));
 	}
 	
 	@Test
