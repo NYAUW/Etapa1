@@ -3,14 +3,17 @@ package br.com.contmatic.validator;
 public class CnpjValidator {
 
 	private static final String CNPJ_INVALIDO = "Cnpj Inválido";
+	private static final int[] pesoCNPJ = { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
 
 	public static void isCnpjValid(String cnpj) {
 		validaTamanhoCnpj(cnpj);
-		String cnpjValido = cnpj.substring(0, 12);
-		char[] chrCnpj = cnpj.toCharArray();
-		cnpjValido = getFirstStep(cnpjValido, chrCnpj);
-		cnpjValido = getSecondStepValid(cnpjValido, chrCnpj);
-		if (!cnpj.equals(cnpjValido)) {
+		if ((cnpj == null) || (cnpj.length() != 14)) {
+			throw new IllegalArgumentException(CNPJ_INVALIDO);
+		}
+
+		Integer digito1 = calcularDigito(cnpj.substring(0, 12), pesoCNPJ);
+		Integer digito2 = calcularDigito(cnpj.substring(0, 12) + digito1, pesoCNPJ);
+		if (!cnpj.equals(cnpj.substring(0, 12) + digito1.toString() + digito2.toString())) {
 			throw new IllegalArgumentException(CNPJ_INVALIDO);
 		}
 	}
@@ -21,37 +24,13 @@ public class CnpjValidator {
 		}
 	}
 
-	private static String getSecondStepValid(String cnpjValido, char[] chrCnpj) {
+	private static int calcularDigito(String str, int[] peso) {
 		int soma = 0;
-		for (int i = 0; i < 5; i++) {
-			if (chrCnpj[i] - 48 >= 0 && chrCnpj[i] - 48 <= 9) {
-				soma += (chrCnpj[i] - 48) * (7 - (i + 1));
-			}
+		for (int indice = str.length() - 1, digito; indice >= 0; indice--) {
+			digito = Integer.parseInt(str.substring(indice, indice + 1));
+			soma += digito * peso[peso.length - str.length() + indice];
 		}
-		for (int i = 0; i < 8; i++) {
-			if (chrCnpj[i + 5] - 48 >= 0 && chrCnpj[i + 5] - 48 <= 9) {
-				soma += (chrCnpj[i + 5] - 48) * (10 - (i + 1));
-			}
-		}
-		int digit = 11 - (soma % 11);
-		cnpjValido += (digit == 10 || digit == 11) ? "0" : Integer.toString(digit);
-		return cnpjValido;
-	}
-
-	private static String getFirstStep(String cnpjValido, char[] chrCnpj) {
-		int soma = 0;
-		for (int i = 0; i < 4; i++) {
-			if (chrCnpj[i] - 48 >= 0 && chrCnpj[i] - 48 <= 9) {
-				soma += (chrCnpj[i] - 48) * (6 - (i + 1));
-			}
-		}
-		for (int i = 0; i < 8; i++) {
-			if (chrCnpj[i + 4] - 48 >= 0 && chrCnpj[i + 4] - 48 <= 9) {
-				soma += (chrCnpj[i + 4] - 48) * (10 - (i + 1));
-			}
-		}
-		int digit = 11 - (soma % 11);
-		cnpjValido += (digit == 10 || digit == 11) ? "0" : Integer.toString(digit);
-		return cnpjValido;
+		soma = 11 - soma % 11;
+		return soma > 9 ? 0 : soma;
 	}
 }
