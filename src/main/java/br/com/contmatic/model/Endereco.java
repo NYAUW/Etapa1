@@ -70,7 +70,7 @@ public class Endereco extends AbstractAuditable {
 		if (complemento != null) {
 			isNotBlank(complemento, "complemento");
 			isMinChararacters(complemento, 3);
-			isMaxChararacters(complemento, 20);
+			isMaxChararacters(complemento, 60);
 		}
 		this.complemento = complemento;
 	}

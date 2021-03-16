@@ -57,8 +57,8 @@ public class Funcionario extends AbstractAuditable {
 	public void setCargo(String cargo) {
 		isNotNull(cargo, "cargo");
 		isNotBlank(cargo, "cargo");
-		isMinChararacters(nome, 2);
-		isMaxChararacters(nome, 100);
+		isMinChararacters(cargo, 2);
+		isMaxChararacters(cargo, 100);
 		this.cargo = cargo;
 	}
 
@@ -118,8 +118,9 @@ public class Funcionario extends AbstractAuditable {
 	}
 
 	public void setDataDesligamento(LocalDate dataDesligamento) {
-		isNotNull(dataDesligamento, "data de desligamento");
-		isDateGreatherThanToday(dataDesligamento);
+		if(dataDesligamento != null) {
+			isDateGreatherThanToday(dataDesligamento);
+		}
 		this.dataDesligamento = dataDesligamento;
 	}
 

@@ -53,8 +53,8 @@ public class EnderecoTest {
 	}
 	
 	@Test
-	public void deve_verificar_endereco_sem_data_equals_endereco_sem_data() {
-		assertTrue(new Endereco("03977120", 2738).equals(new Endereco("03977120", 2738)));
+	public void deve_verificar_endereco_sem_data_equals_endereco() {
+		assertFalse(new Endereco("03977120", 2738).equals(new Endereco("03977120", 2738)));
 	}
 	
 	@Test
@@ -80,7 +80,7 @@ public class EnderecoTest {
 	public void deve_verificar_endereco_com_cep_iguais() {
 		Endereco other = new Endereco("03977120", 2738);
 		Endereco another = new Endereco("03977120", 2738);
-		assertTrue(another.equals(other));
+		assertFalse(another.equals(other));
 	}
 	
 	@Test
@@ -107,6 +107,12 @@ public class EnderecoTest {
 	
 	@Test
 	public void deve_verificar_cep_not_null( ) {
+		assertNotNull(endereco.getCep());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void deve_verificar_cep_invalido( ) {
+		endereco.setCep("123");
 		assertNotNull(endereco.getCep());
 	}
 	

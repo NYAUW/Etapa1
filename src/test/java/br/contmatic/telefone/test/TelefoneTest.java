@@ -20,10 +20,9 @@ public class TelefoneTest {
 	
 	@BeforeClass
 	public static void deve_instanciar_telefone() {
-		telefone = new Telefone("983062164");
+		telefone = new Telefone("983062164", CELULAR);
 		telefone.setDdd(SAO_PAULO);
 		telefone.setDominio(PESSOAL);
-		telefone.setTipoTelefone(CELULAR);
 	}
 	
 	@Test
@@ -33,7 +32,7 @@ public class TelefoneTest {
 	
 	@Test
 	public void deve_verificar_telefone_hashcode_cep() {
-		assertNotNull(new Telefone("983062164").hashCode());
+		assertNotNull(new Telefone("983062164", CELULAR).hashCode());
 	}
 	
 	@Test
@@ -43,25 +42,23 @@ public class TelefoneTest {
 	
 	@Test
 	public void deve_verificar_telefone_equals_telefone_sem_data() {
-		assertFalse(telefone.equals(new Telefone("983062164")));
+		assertFalse(telefone.equals(new Telefone("20117414", FIXO)));
 	}
 	
 	@Test
 	public void deve_verificar_telefone_sem_data_equals_telefone_sem_data() {
-		assertTrue(new Telefone("983062164").equals(new Telefone("983062164")));
+		assertTrue(new Telefone("983062164", CELULAR).equals(new Telefone("983062164", CELULAR)));
 	}
 	
 	@Test
 	public void deve_verificar_telefone_com_cep_equals_telefone_sem_data() {
-		Telefone other = new Telefone("983062164");
-		other.setTipoTelefone(FIXO);
-		other.setNumero("20117414");
-		assertFalse(new Telefone("983062164").equals(other));
+		Telefone other = new Telefone("20117414", FIXO);
+		assertFalse(new Telefone("983062164", CELULAR).equals(other));
 	}
 	
 	@Test
 	public void deve_verificar_telefone_com_numero_igual() {
-		Telefone other = new Telefone("983062164");
+		Telefone other = new Telefone("983062164", CELULAR);
 		other.setTipoTelefone(CELULAR);
 		other.setNumero(telefone.getNumero());
 		assertTrue(other.equals(telefone));
@@ -69,10 +66,10 @@ public class TelefoneTest {
 
 	@Test
 	public void deve_verificar_telefone_com_cep_iguais() {
-		Telefone other = new Telefone("983062164");
+		Telefone other = new Telefone("983062164", CELULAR);
 		other.setTipoTelefone(FIXO);
 		other.setNumero("44012901");
-		Telefone another = new Telefone("983062164");
+		Telefone another = new Telefone("983062164", CELULAR);
 		another.setTipoTelefone(FIXO);
 		another.setNumero("44012901");
 		assertTrue(another.equals(other));
@@ -80,10 +77,10 @@ public class TelefoneTest {
 	
 	@Test
 	public void deve_verificar_telefone_com_cep_diferente() {
-		Telefone other = new Telefone("983062164");
+		Telefone other = new Telefone("983062164", CELULAR);
 		other.setTipoTelefone(FIXO);
 		other.setNumero("03977120");
-		Telefone another = new Telefone("983062164");
+		Telefone another = new Telefone("983062164", CELULAR);
 		another.setTipoTelefone(FIXO);
 		another.setNumero("08977120");
 		assertFalse(another.equals(other));

@@ -19,7 +19,8 @@ public class Telefone extends AbstractAuditable{
 
 	private String numero;
 	
-	public Telefone(String numero) {
+	public Telefone(String numero, TelefoneType telefoneType) {
+		setTipoTelefone(telefoneType);
 		setNumero(numero);
 	}
 

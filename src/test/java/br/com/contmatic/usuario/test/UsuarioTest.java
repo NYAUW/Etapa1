@@ -52,7 +52,7 @@ public class UsuarioTest {
 	
 	@Test
 	public void deve_verificar_usuario_equals_usuario_sem_data() {
-		assertFalse(usuario.equals(new Usuario("53064982052")));
+		assertFalse(usuario.equals(new Usuario("50740457896")));
 	}
 	
 	@Test

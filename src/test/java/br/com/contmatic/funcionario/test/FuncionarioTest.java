@@ -59,7 +59,7 @@ public class FuncionarioTest {
 	
 	@Test
 	public void deve_verificar_funcionario_equals_funcionario_sem_data() {
-		assertFalse(funcionario.equals(new Funcionario("83765370088")));
+		assertFalse(funcionario.equals(new Funcionario("50740457896")));
 	}
 	
 	@Test
@@ -76,7 +76,7 @@ public class FuncionarioTest {
 	
 	@Test
 	public void deve_verificar_funcionario_com_codigo_igual() {
-		Funcionario other = new Funcionario("83765370088");
+		Funcionario other = new Funcionario("50740457896");
 		other.setCodigo(funcionario.getCodigo());
 		assertFalse(other.equals(funcionario));
 	}
@@ -156,7 +156,7 @@ public class FuncionarioTest {
 
 	@Test
 	public void deve_verificar_data_desligamento() {
-		funcionario.setDataDesligamento(LocalDate.of(2070, 4, 2));
+		funcionario.setDataDesligamento(LocalDate.of(2019, 4, 2));
 		assertNotNull(funcionario.getDataDesligamento());
 	}
 

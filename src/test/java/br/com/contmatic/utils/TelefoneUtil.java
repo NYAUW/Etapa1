@@ -21,21 +21,19 @@ public class TelefoneUtil {
 	}
 
 	public static Telefone telefoneStatic() {
-		Telefone telefone = new Telefone("965821475");
+		Telefone telefone = new Telefone("965821475", CELULAR);
 		telefone.setDdd(SAO_PAULO);
 		telefone.setDominio(COMERCIAL);
-		telefone.setTipoTelefone(CELULAR);
 		return telefone;
 	}
 
 	public static Telefone telefoneRandom() {
 		Faker faker = new Faker();
-		Telefone telefone = new Telefone("000000000");
+		TelefoneType tipo =  (TelefoneType) EnumUtil.getRandomValue(TelefoneType.values());
+		Telefone telefone = new Telefone(tipo != CELULAR ? faker.regexify("[0-9]{8}")
+				: faker.regexify("9[0-9]{8}"), tipo);
 		telefone.setDdd((DddType) EnumUtil.getRandomValue(DddType.values()));
 		telefone.setDominio((DominioTelefoneType) EnumUtil.getRandomValue(DominioTelefoneType.values()));
-		telefone.setTipoTelefone((TelefoneType) EnumUtil.getRandomValue(TelefoneType.values()));
-		telefone.setNumero(telefone.getTipoTelefone() != CELULAR ? faker.regexify("[0-9]{8}")
-				: faker.regexify("9[0-9]{8}"));
 		return telefone;
 	}
 	

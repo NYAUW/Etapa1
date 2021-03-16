@@ -28,7 +28,7 @@ public class Regex {
 	
 	public static final String DDD = "(^[\\d]{2}$*)";
 	
-	public static final String NUMERO_FIXO = "(\\d{8})";
+	public static final String NUMERO_FIXO = "([0-9]{8})";
 	
 	public static final String EMAIL = "^[_a-z0-9-\\+]+(\\.[_a-z0-9-]+)*@[a-z]{2,}+(\\.[a-z]{1,5}+)*(\\.[a-z]{2,})$";
 

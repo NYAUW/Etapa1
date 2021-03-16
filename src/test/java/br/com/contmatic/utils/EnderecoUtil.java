@@ -25,7 +25,7 @@ public class EnderecoUtil {
 
 	public static Endereco enderecoRandom() {
 		Faker faker = new Faker();
-		Endereco endereco = new Endereco(faker.regexify("(//d){8}"), faker.number().numberBetween(200, 9999));
+		Endereco endereco = new Endereco(faker.regexify("[0-9]{8}"), faker.number().numberBetween(200, 9999));
 		endereco.setBairro(faker.address().cityName());
 		endereco.setComplemento(faker.address().streetAddress());
 		endereco.setEstado((EstadosType) EnumUtil.getRandomValue(EstadosType.values()));

@@ -77,6 +77,12 @@ public class EmpresaTest {
 		assertTrue(empresa.getCnpj().equals("38739416000107"));
 	}
 	
+	@Test(expected = IllegalArgumentException.class)
+	public void deve_aceitar_um_cnpj_invalido() {
+		empresa.setCnpj("38739416004107");
+		assertNotNull(empresa.getCnpj());
+	}
+	
 	@Test
 	public void deve_verificar_padrao_cnpj() {
 		assertTrue(empresa.getCnpj().matches(CNPJ));
@@ -89,7 +95,7 @@ public class EmpresaTest {
 	
 	@Test
 	public void deve_verificar_empresa_equals_outra_empresa() {
-		assertFalse(empresa.equals(new Empresa("38739416000107")));
+		assertFalse(empresa.equals(new Empresa("43293952000153")));
 	}
 	
 	@Test
@@ -108,7 +114,7 @@ public class EmpresaTest {
 	
 	@Test
 	public void deve_verificar_empresa_hashcode() {
-		assertFalse(empresa.hashCode() == new Empresa("38739416000107").hashCode());
+		assertEquals(empresa.hashCode(), new Empresa("38739416000107").hashCode());
 	}
 	
 	@Test
