@@ -17,8 +17,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.com.contmatic.model.Usuario;
-import br.com.contmatic.utils.EnderecoUtil;
-import br.com.contmatic.utils.TelefoneUtil;
 import br.com.contmatic.validator.CpfValidator;
 
 public class UsuarioTest {
@@ -200,13 +198,13 @@ public class UsuarioTest {
         assertNotEquals(usuario.getRg(), "3957895687");
     }
 
-    @Test
-    public void nao_deve_verificar_endereco() throws Exception {
-        assertNotEquals(usuario.getEndereco(), EnderecoUtil.enderecoRandom());
-    }
-
-    @Test
-    public void nao_deve_verificar_telefone() {
-        assertNotEquals(usuario.getTelefone(), TelefoneUtil.telefoneRandom());
-    }
+//    @Test
+//    public void nao_deve_verificar_endereco() throws Exception {
+//        assertNotEquals(usuario.getEndereco(), EnderecoUtil.enderecoRandom());
+//    }
+//
+//    @Test
+//    public void nao_deve_verificar_telefone() {
+//        assertNotEquals(usuario.getTelefone(), TelefoneUtil.telefoneRandom());
+//    }
 }

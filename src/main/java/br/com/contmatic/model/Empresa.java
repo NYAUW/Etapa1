@@ -1,131 +1,53 @@
 package br.com.contmatic.model;
 
-import static br.com.contmatic.validator.CnpjValidator.isCnpjValid;
-import static br.com.contmatic.validator.StringValidator.isMaxChararacters;
-import static br.com.contmatic.validator.StringValidator.isMinChararacters;
-import static br.com.contmatic.validator.StringValidator.isNotBlank;
-import static br.com.contmatic.validator.StringValidator.isOnlyNumber;
-import static br.com.contmatic.validator.Validator.isNotNull;
+import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.br.CNPJ;
 
 import br.contmatic.type.RamoAtividadeType;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public class Empresa extends AbstractAuditable{
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false, of = "cnpj")
+public class Empresa extends AbstractAuditable {
 
+	@NotBlank(message = "O CNPJ não pode ser vazio")
+	@CNPJ(message = "CNPJ inválido")
+	@Id
 	private String cnpj;
 
+	@NotBlank(message = "O nome fantasia não pode estar vazio!")
+	@Min(value = 2, message = "O nome fantasia não contém a quantidade minima de 2 caracteres")
+	@Max(value = 60, message = "O nome fantasia não pode conter mais que 60 caracteres")
 	private String nomeFantasia;
 
+	@NotNull(message = "O telefone não foi definido")
 	private Telefone telefone;
 
+	@NotNull(message = "O endereço não foi defnido")
 	private Endereco endereco;
 
+	@NotBlank(message = "A razão social não pode ficar vazia")
+	@Min(value = 2, message = "A razão social não contém a quantidade minima de 2 caracteres")
+	@Max(value = 80, message = "A razão social não pode conter mais que 80 caracteres")
 	private String razaoSocial;
 
+	@NotNull(message = "O ramo de atividade não foi deifinido")
 	private RamoAtividadeType ramoAtividade;
 
+	@NotBlank
+	@Pattern(regexp = "[a-zA-Z]", message = "O nome do proprietário está inválido")
+	@Min(value = 2, message = "O proprietario não contém a quantidade minima de 2 caracteres")
+	@Max(value = 120, message = "A proprietario não pode conter mais que 120 caracteres")
 	private String proprietario;
-	
-	public Empresa(String cnpj) {
-		this.setCnpj(cnpj);
-	}
-	
-	public String getCnpj() {
-		return cnpj;
-	}
-
-	public void setCnpj(String cnpj) {
-		isNotNull(cnpj, "cnpj");
-		isNotBlank(cnpj, "cnpj");
-		isOnlyNumber(cnpj, "cnpj");
-		isCnpjValid(cnpj);
-		this.cnpj = cnpj;
-	}
-
-	public String getNomeFantasia() {
-		return nomeFantasia;
-	}
-
-	public void setNomeFantasia(String nomeFantasia) {
-		isNotNull(nomeFantasia, "nome fantasia");
-		isNotBlank(nomeFantasia, "nome fantasia");
-		isMinChararacters(nomeFantasia, 2);
-		isMaxChararacters(nomeFantasia, 60);
-		this.nomeFantasia = nomeFantasia;
-	}
-
-	public Telefone getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(Telefone telefone) {
-		isNotNull(telefone, "telefone");
-		this.telefone = telefone;
-	}
-
-	public Endereco getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(Endereco endereco) {
-		isNotNull(endereco, "endereço");
-		this.endereco = endereco;
-	}
-
-	public String getRazaoSocial() {
-		return razaoSocial;
-	}
-
-	public void setRazaoSocial(String razaoSocial) {
-		isNotNull(razaoSocial, "razão social");
-		isNotBlank(razaoSocial, "razão social");
-		isMinChararacters(razaoSocial, 2);
-		isMaxChararacters(razaoSocial, 60);
-		this.razaoSocial = razaoSocial;
-	}
-
-	public RamoAtividadeType getRamoAtividade() {
-		return ramoAtividade;
-	}
-
-	public void setRamoAtividade(RamoAtividadeType ramoAtividade) {
-		isNotNull(ramoAtividade, "ramo de Atividade");
-		this.ramoAtividade = ramoAtividade;
-	}
-
-	public String getProprietario() {
-		return proprietario;
-	}
-
-	public void setProprietario(String proprietario) {
-		isNotNull(proprietario, "proprietário");
-		isNotBlank(proprietario, "proprietário");
-		isMinChararacters(proprietario, 2);
-		isMaxChararacters(proprietario, 60);
-		this.proprietario = proprietario;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((cnpj == null) ? 0 : cnpj.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Empresa other = (Empresa) obj;
-		if (cnpj == null) {
-			if (other.cnpj != null)
-				return false;
-		} else if (!cnpj.equals(other.cnpj))
-			return false;
-		return true;
-	}
 }

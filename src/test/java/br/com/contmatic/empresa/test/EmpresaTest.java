@@ -1,12 +1,9 @@
 package br.com.contmatic.empresa.test;
 
 import static br.com.contmatic.constants.Regex.ALFA;
-import static br.com.contmatic.constants.Regex.CNPJ;
 import static br.com.contmatic.constants.Regex.NUMEROS;
-import static br.com.contmatic.utils.EnderecoUtil.enderecoRandom;
 import static br.com.contmatic.utils.EnderecoUtil.enderecoStatic;
 import static br.com.contmatic.utils.TelefoneUtil.getTelefoneRegex;
-import static br.com.contmatic.utils.TelefoneUtil.telefoneRandom;
 import static br.com.contmatic.utils.TelefoneUtil.telefoneStatic;
 import static br.contmatic.type.RamoAtividadeType.SERVICOS_ASSISTENCIA_TECNICA_INSTALACOES;
 import static org.junit.Assert.assertEquals;
@@ -34,7 +31,8 @@ public class EmpresaTest {
 	
 	@BeforeClass
 	public static void deve_instanciar_empresa() {
-		empresa = new Empresa("38739416000107");
+		empresa = new Empresa();
+		empresa.setCnpj("38739416000107");
 		empresa.setEndereco(enderecoStatic);
 		empresa.setNomeFantasia("Sim Tv Assistencia");
 		empresa.setProprietario("Proprietario EmpresaTest");
@@ -77,15 +75,10 @@ public class EmpresaTest {
 		assertTrue(empresa.getCnpj().equals("38739416000107"));
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
-	public void deve_aceitar_um_cnpj_invalido() {
-		empresa.setCnpj("38739416004107");
-		assertNotNull(empresa.getCnpj());
-	}
-	
 	@Test
-	public void deve_verificar_padrao_cnpj() {
-		assertTrue(empresa.getCnpj().matches(CNPJ));
+	public void deve_aceitar_um_cnpj_invalido() {
+		empresa.setCnpj("3841600410");
+		assertNotNull(empresa.getCnpj());
 	}
 	
 	@Test
@@ -95,26 +88,26 @@ public class EmpresaTest {
 	
 	@Test
 	public void deve_verificar_empresa_equals_outra_empresa() {
-		assertFalse(empresa.equals(new Empresa("43293952000153")));
+		assertFalse(empresa.equals(new Empresa()));
 	}
 	
 	@Test
 	public void deve_verificar_empresa_sem_data_equals_empresa() {
-		assertFalse(new Empresa("43293952000153").equals(empresa));
+		assertFalse(new Empresa().equals(empresa));
 	}
 	
 	@Test
 	public void deve_verificar_empresa_com_cnpj_iguais() {
-		Empresa other = new Empresa("38739416000107");
+		Empresa other = new Empresa();
 		other.setCnpj("38739416000107");
-		Empresa another = new Empresa("38739416000107");
+		Empresa another = new Empresa();
 		another.setCnpj("38739416000107");
 		assertTrue(another.equals(other));
 	}
 	
 	@Test
 	public void deve_verificar_empresa_hashcode() {
-		assertEquals(empresa.hashCode(), new Empresa("38739416000107").hashCode());
+		assertNotEquals(empresa.hashCode(), new Empresa().hashCode());
 	}
 	
 	@Test
@@ -124,7 +117,7 @@ public class EmpresaTest {
 	
 	@Test
 	public void deve_verificar_duas_empresas_sem_data() {
-		assertFalse(new Empresa("43293952000153").equals(empresa));
+		assertFalse(new Empresa().equals(empresa));
 	}
 	
 	@Test
@@ -234,11 +227,11 @@ public class EmpresaTest {
 		assertFalse(empresa.getNomeFantasia() == null);
 	}
 
-	@Test
-	public void nao_deve_verificar_igualdade_tel() throws Exception {
-		assertNotEquals(empresa.getTelefone(), telefoneRandom());
-	}
-	
+//	@Test
+//	public void nao_deve_verificar_igualdade_tel() throws Exception {
+//		assertNotEquals(empresa.getTelefone(), telefoneRandom());
+//	}
+//	
 	@Test
 	public void nao_deve_verificar_numero_tel_null() throws Exception {
 		assertFalse(empresa.getTelefone().getNumero() == null);
@@ -260,9 +253,9 @@ public class EmpresaTest {
 	}
 	
 	@Test
-	public void nao_deve_verificar_endereco() throws Exception {
-		assertNotEquals(empresa.getEndereco(), enderecoRandom());
-	}
+//	public void nao_deve_verificar_endereco() throws Exception {
+//		assertNotEquals(empresa.getEndereco(), enderecoRandom());
+//	}
 
 	@After
 	public void nao_deve_verificar_razao_social() throws Exception {

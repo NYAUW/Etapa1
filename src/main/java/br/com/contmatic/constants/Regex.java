@@ -22,7 +22,7 @@ public class Regex {
 	
 	public static final String CPF = "(\\d){11}";
 	
-	public static final String CNPJ =  "(\\d){14}";
+	public static final String CNPJ =  "[0-9]{14}";
 	
 	public static final String NUMERO_CELULAR = "(\\d{9})";
 	
