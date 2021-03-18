@@ -1,164 +1,64 @@
 package br.com.contmatic.model;
 
-import static br.com.contmatic.validator.CpfValidator.isCpfValid;
-import static br.com.contmatic.validator.DateValidator.isDateGreatherThanToday;
-import static br.com.contmatic.validator.StringValidator.isCpfPattern;
-import static br.com.contmatic.validator.StringValidator.isMaxChararacters;
-import static br.com.contmatic.validator.StringValidator.isMinChararacters;
-import static br.com.contmatic.validator.StringValidator.isNotBlank;
-import static br.com.contmatic.validator.Validator.isNotNull;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import br.com.contmatic.utils.DateUtils;
+import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.br.CPF;
+
+import br.com.contmatic.custom.annotations.GreaterThanToday;
 import br.contmatic.type.SexoType;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false, of = {"cpf", "codigo"})
 public class Funcionario extends AbstractAuditable {
-
+	
+	@NotBlank
+	@Min(value = 2, message = "O nome deve conter ao menos 2 caracteres")
+	@Max(value = 120, message = "O nome excedeu o tamanho máximo de 120 caracteres")
 	private String nome;
-
+	
+	@NotBlank
+	@Min(value = 2, message = "O cargo deve conter ao menos 2 caracteres")
+	@Max(value = 120, message = "O cargo excedeu o tamanho máximo de 120 caracteres")
 	private String cargo;
-
+	
+	@Id
+	@NotBlank
+	@Min(value = 1, message = "O código deve ser maior que 0")
 	private Integer codigo;
-
+	
+	@NotNull
 	private BigDecimal salario;
 
+	@NotNull
 	private SexoType sexo;
-
+	
+	@NotNull
+	@GreaterThanToday
 	private LocalDate dataNascimento;
 
+	@NotNull
+	@GreaterThanToday
 	private LocalDate dataAdmissao;
-
+	
+	@NotNull
+	@GreaterThanToday
 	private LocalDate dataDesligamento;
-
+	
+	@Id
+	@NotBlank
+	@CPF
 	private String cpf;
-
-	public Funcionario(String cpf) {
-		setCpf(cpf);
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		isNotNull(nome, "nome");
-		isNotBlank(nome, "nome");
-		isMinChararacters(nome, 2);
-		isMaxChararacters(nome, 100);
-		this.nome = nome;
-	}
-
-	public String getCargo() {
-		return cargo;
-	}
-
-	public void setCargo(String cargo) {
-		isNotNull(cargo, "cargo");
-		isNotBlank(cargo, "cargo");
-		isMinChararacters(cargo, 2);
-		isMaxChararacters(cargo, 100);
-		this.cargo = cargo;
-	}
-
-	public Integer getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(Integer codigo) {
-		isNotNull(codigo, "código");
-		this.codigo = codigo;
-	}
-
-	public BigDecimal getSalario() {
-		return salario;
-	}
-
-	public void setSalario(BigDecimal salario) {
-		isNotNull(salario, "salário");
-		this.salario = salario;
-	}
-
-	public SexoType getSexo() {
-		return sexo;
-	}
-
-	public void setSexo(SexoType sexo) {
-		isNotNull(sexo, "sexo");
-		this.sexo = sexo;
-	}
-
-	public Integer getIdade() {
-		return DateUtils.getIdade(dataNascimento);
-	}
-
-	public LocalDate getDataNascimento() {
-		return dataNascimento;
-	}
-
-	public void setDataNascimento(LocalDate dataNascimento) {
-		isNotNull(dataNascimento, "data de nascimento");
-		isDateGreatherThanToday(dataNascimento);
-		this.dataNascimento = dataNascimento;
-	}
-
-	public LocalDate getDataAdmissao() {
-		return dataAdmissao;
-	}
-
-	public void setDataAdmissao(LocalDate dataAdmissao) {
-		isNotNull(dataAdmissao, "data de admisão");
-		isDateGreatherThanToday(dataAdmissao);
-		this.dataAdmissao = dataAdmissao;
-	}
-
-	public LocalDate getDataDesligamento() {
-		return dataDesligamento;
-	}
-
-	public void setDataDesligamento(LocalDate dataDesligamento) {
-		if(dataDesligamento != null) {
-			isDateGreatherThanToday(dataDesligamento);
-		}
-		this.dataDesligamento = dataDesligamento;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		isNotNull(cpf, "cpf");
-		isNotBlank(cpf, "cpf");
-		isCpfPattern(cpf);
-		isCpfValid(cpf);
-		this.cpf = cpf;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Funcionario other = (Funcionario) obj;
-		if (cpf == null) {
-			if (other.cpf != null)
-				return false;
-		} else if (!cpf.equals(other.cpf))
-			return false;
-		return true;
-	}
-
 }

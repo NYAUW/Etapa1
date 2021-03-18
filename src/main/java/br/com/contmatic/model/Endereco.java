@@ -1,128 +1,49 @@
 package br.com.contmatic.model;
 
-import static br.com.contmatic.validator.StringValidator.isMaxChararacters;
-import static br.com.contmatic.validator.StringValidator.isMinChararacters;
-import static br.com.contmatic.validator.StringValidator.isNotBlank;
-import static br.com.contmatic.validator.StringValidator.isOnlyNumber;
-import static br.com.contmatic.validator.StringValidator.isThisExactChararacters;
-import static br.com.contmatic.validator.Validator.isGreaterThanZero;
-import static br.com.contmatic.validator.Validator.isNotNull;
+import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import br.contmatic.type.EstadosType;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false, of = {"cep", "numero"})
 public class Endereco extends AbstractAuditable {
-
+	
+	@NotBlank
+	@Min(value = 2, message = "O nome do Bairro deve conter ao menos 2 caracteres")
+	@Max(value = 80, message = "O nome do Bairro deve ter no máximo 80 caracteres")
 	private String bairro;
-
+	
+	@NotNull(message = "O estado não pode ser vazio!")
 	private EstadosType estado;
-
+	
+	@NotBlank(message = "O Logradouro não pode ser vazio!")
+	@Min(value = 2, message = "O Logradouro deve conter ao menos 2 caracteres")
+	@Max(value = 80, message = "O Logradouro deve ter no máximo 80 caracteres")
 	private String logradouro;
-
+	
+	@Id
+	@NotBlank
+	@Min(value = 8, message = "O CEP não contem a quantidade mínima de 8 caracteres")
+	@Max(value = 8, message = "O CEP excedeu a quantidade máxima de 8 caracteres")
 	private String cep;
-
+	
+	@Min(value = 2, message = "O complemento deve conter ao menos 2 caracteres")
+	@Max(value = 60, message = "O complemento excedeu a quantidade de 60 caracteres")
 	private String complemento;
-
+	
+	@Id
+	@NotNull
+	@Min(value = 1, message = "O número não pode ser menor que 1")
 	private Integer numero;
 	
-	public Endereco(String cep, Integer numero) {
-		setCep(cep);
-		setNumero(numero);
-	}
-
-	public String getBairro() {
-		return bairro;
-	}
-
-	public void setBairro(String bairro) {
-		isNotNull(bairro, "bairro");
-		isNotBlank(bairro, "bairro");
-		isMinChararacters(bairro, 2);
-		isMaxChararacters(bairro, 60);
-		this.bairro = bairro;
-	}
-
-	public EstadosType getEstado() {
-		return estado;
-	}
-
-	public void setEstado(EstadosType estado) {
-		isNotNull(estado, "estado");
-		this.estado = estado;
-	}
-
-	public String getLogradouro() {
-		return logradouro;
-	}
-
-	public void setLogradouro(String logradouro) {
-		isNotNull(logradouro, "logradouro");
-		isNotBlank(logradouro, "logradouro");
-		isMinChararacters(logradouro, 3);
-		isMaxChararacters(logradouro, 50);
-		this.logradouro = logradouro;
-	}
-
-	public String getComplemento() {
-		return complemento;
-	}
-
-	public void setComplemento(String complemento) {
-		if (complemento != null) {
-			isNotBlank(complemento, "complemento");
-			isMinChararacters(complemento, 3);
-			isMaxChararacters(complemento, 60);
-		}
-		this.complemento = complemento;
-	}
-
-	public int getNumero() {
-		return numero;
-	}
-
-	public void setNumero(Integer numero) {
-		isNotNull(numero, "número da residência");
-		isGreaterThanZero(numero);
-		this.numero = numero;
-	}
-
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		isNotNull(cep, "cep");
-		isNotBlank(cep, "cep");
-		isOnlyNumber(cep, "cep");
-		isThisExactChararacters(cep, 8);
-		this.cep = cep;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((cep == null) ? 0 : cep.hashCode());
-		result = prime * result + numero;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Endereco other = (Endereco) obj;
-		if (cep == null) {
-			if (other.cep != null)
-				return false;
-		} else if (!cep.equals(other.cep))
-			return false;
-		if (numero != other.numero)
-			return false;
-		return true;
-	}
-
 }
