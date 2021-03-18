@@ -1,134 +1,64 @@
 package br.com.contmatic.model;
 
-import static br.com.contmatic.validator.CpfValidator.isCpfValid;
-import static br.com.contmatic.validator.StringValidator.isCpfPattern;
-import static br.com.contmatic.validator.StringValidator.isEmailPattern;
-import static br.com.contmatic.validator.StringValidator.isMaxChararacters;
-import static br.com.contmatic.validator.StringValidator.isMinChararacters;
-import static br.com.contmatic.validator.StringValidator.isNomePattern;
-import static br.com.contmatic.validator.StringValidator.isNotBlank;
-import static br.com.contmatic.validator.StringValidator.isRGPattern;
-import static br.com.contmatic.validator.Validator.isNotNull;
-import static br.com.contmatic.validator.Validator.isNumberBetween;
+import static br.com.contmatic.constants.Regex.EMAIL;
+import static br.com.contmatic.constants.Regex.NOME;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.br.CPF;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Entity
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false, of = "cpf")
 public class Usuario extends AbstractAuditable {
 
+	@NotBlank(message = "O nome do usuário não pode ser vazio")
+	@Pattern(regexp = NOME, message = "O nome contém caracteres inválidos")
+	@Max(value = 120, message = "O nome do usuario não pode exceder 120 caracteres")
+	@Min(value = 2, message = "O nome do usuário não pode ser menor que 2 caracteres")
 	private String nome;
-
+	
+	@NotBlank(message = "O email não pode ser vazio")
+	@Email(regexp = EMAIL,  message = "O email está inválido")
+	@Min(value = 2, message = "O email não pode ser menor que 2 caracteres")
+	@Max(value = 80, message = "O email não pode ser maior que 80 caracteres")
 	private String email;
 
+	@NotBlank(message = "A senha não pode ser vazia")
+	@Min(value = 4, message = "A senha precisa ser maior que 4 caracteres")
+	@Max(value = 16, message = "A senha precisa ser menor que 16 caracteres")
 	private String senha;
-
+	
+	@Id
+	@CPF(message = "CPF inválido")
+	@NotBlank(message = "O CPF não pode ser vazio")
 	private String cpf;
-
+	
+	@NotBlank(message = "O rg não pode ser vazio")
+	@Min(value = 8, message = "O RG deve conter 8 caracteres")
+	@Max(value = 8, message = "O RG deve conter 8 caracteres")
+	@Digits(fraction = 0, integer = 8, message = "RG inválido")
 	private String rg;
 
+	@NotNull(message = "O endereço não pode ser vazio")
 	private Endereco endereco;
-
+	
+	@NotNull(message = "O telefone não pode ser vazio")
 	private Telefone telefone;
 
-	public Usuario(String cpf) {
-		setCpf(cpf);
-	}
-
-	public void setNome(String nome) {
-		isNotNull(nome, "nome");
-		isNotBlank(nome, "nome");
-		isMinChararacters(nome, 2);
-		isMaxChararacters(nome, 60);
-		isNomePattern(nome);
-		this.nome = nome;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setEmail(String email) {
-		isNotNull(email, "email");
-		isNotBlank(email, "email");
-		isEmailPattern(email);
-		this.email = email;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setSenha(String senha) {
-		isNotNull(senha, "senha");
-		isNotBlank(senha, "senha");
-		isNumberBetween(senha.length(), 4, 16, "senha");
-		this.senha = senha;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setCpf(String cpf) {
-		isNotNull(cpf, "cpf");
-		isNotBlank(cpf, "cpf");
-		isCpfPattern(cpf);
-		isCpfValid(cpf);
-		this.cpf = cpf;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public String getRg() {
-		return rg;
-	}
-
-	public void setRg(String rg) {
-		isNotNull(rg, "rg");
-		isNotBlank(rg, "rg");
-		isRGPattern(rg);
-		this.rg = rg;
-	}
-
-	public void setEndereco(Endereco endereco) {
-		isNotNull(endereco, "endereço");
-		this.endereco = endereco;
-	}
-
-	public Endereco getEndereco() {
-		return endereco;
-	}
-
-	public Telefone getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(Telefone telefone) {
-		isNotNull(telefone, "telefone");
-		this.telefone = telefone;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Usuario other = (Usuario) obj;
-		if (cpf == null) {
-			if (other.cpf != null)
-				return false;
-		} else if (!cpf.equals(other.cpf))
-			return false;
-		return true;
-	}
 }

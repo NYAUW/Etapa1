@@ -1,5 +1,6 @@
 package br.com.contmatic.model;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -17,6 +18,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Entity
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false, of = "cnpj")
 public class Empresa extends AbstractAuditable {

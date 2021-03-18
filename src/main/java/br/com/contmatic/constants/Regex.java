@@ -8,7 +8,7 @@ public class Regex {
 	
 	public static final String ALFA = "[a-zA-Z a-zA-Z.áàâãéèêíïóôõöúçñ]*";
 	
-	public static final String NOME = "[[A-Za-zÀ-ú\\'\\.]?((\\s([A-Za-zÀ-ú\\'\\.])))*]{2,60}";
+	public static final String NOME = "[[A-Za-zÀ-ú\\'\\.]?((\\s([A-Za-zÀ-ú\\'\\.])))*]";
 	
 	public static final String ESPECIAIS = "[?=.*[}{,.^?~=+\\-_\\/*\\-+.\\|])(?=.]";
 	
@@ -30,6 +30,6 @@ public class Regex {
 	
 	public static final String NUMERO_FIXO = "([0-9]{8})";
 	
-	public static final String EMAIL = "^[_a-z0-9-\\+]+(\\.[_a-z0-9-]+)*@[a-z]{2,}+(\\.[a-z]{1,5}+)*(\\.[a-z]{2,})$";
+	public static final String EMAIL = "^[_a-z0-9-\\+]+(\\.[_a-z0-9-]+)*@[a-z]{2,}+(\\.[a-z]{1,5}+)*(\\.[a-z])$";
 
 }

@@ -39,26 +39,25 @@ public class Funcionario extends AbstractAuditable {
 	@Min(value = 1, message = "O código deve ser maior que 0")
 	private Integer codigo;
 	
-	@NotNull
+	@NotNull(message = "O salario precisa ser informado")
 	private BigDecimal salario;
 
-	@NotNull
+	@NotNull(message = "O sexo precisa ser informado")
 	private SexoType sexo;
 	
-	@NotNull
-	@GreaterThanToday
+	@NotNull(message = "A data de nascimento não pode ser vazia")
+	@GreaterThanToday(message = "A data de nascimento não pode ser superior que a atual")
 	private LocalDate dataNascimento;
 
-	@NotNull
-	@GreaterThanToday
+	@NotNull(message = "A data de admissão não pode ser vazia")
+	@GreaterThanToday(message = "A data de admissão não pode ser superior que a atual")
 	private LocalDate dataAdmissao;
 	
-	@NotNull
-	@GreaterThanToday
+	@GreaterThanToday(message = "A data de desligamento não pode ser superior que a atual")
 	private LocalDate dataDesligamento;
 	
 	@Id
-	@NotBlank
-	@CPF
+	@NotBlank(message = "O CPF não pode ser vazio!")
+	@CPF(message = "CPF inválido")
 	private String cpf;
 }

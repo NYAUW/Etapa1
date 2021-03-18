@@ -1,91 +1,42 @@
 package br.com.contmatic.model;
 
-import static br.com.contmatic.validator.StringValidator.isNumberTelPattern;
-import static br.com.contmatic.validator.StringValidator.isOnlyNumber;
-import static br.com.contmatic.validator.Validator.isNotNull;
-import static br.com.contmatic.validator.Validator.isTipoTelefoneNotNull;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import br.contmatic.type.DddType;
 import br.contmatic.type.DominioTelefoneType;
 import br.contmatic.type.TelefoneType;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@Entity
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false, of = "numero")
 public class Telefone extends AbstractAuditable{
-
-	private TelefoneType tipoTelefone;
-
-	private DddType ddd;
-
-	private DominioTelefoneType dominio;
-
-	private String numero;
 	
-	public Telefone(String numero, TelefoneType telefoneType) {
-		setTipoTelefone(telefoneType);
-		setNumero(numero);
-	}
-
-	public TelefoneType getTipoTelefone() {
-		return tipoTelefone;
-	}
-
-	public void setTipoTelefone(TelefoneType tipoTelefone) {
-		isNotNull(tipoTelefone, "tipo do telefone");
-		this.tipoTelefone = tipoTelefone;
-	}
-
-	public DddType getDdd() {
-		return ddd;
-	}
-
-	public void setDdd(DddType ddd) {
-		isNotNull(ddd, "DDD");
-		this.ddd = ddd;
-	}
-
-	public DominioTelefoneType getDominio() {
-		return dominio;
-	}
-
-	public void setDominio(DominioTelefoneType dominio) {
-		isNotNull(dominio, "domínio");
-		this.dominio = dominio;
-	}
-
-	public String getNumero() {
-		return numero;
-	}
-
-	public void setNumero(String numero) {
-		isNotNull(numero, "número");
-		isTipoTelefoneNotNull(tipoTelefone);
-		isOnlyNumber(numero, "número");
-		isNumberTelPattern(numero, tipoTelefone);
-		this.numero = numero;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((numero == null) ? 0 : numero.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Telefone other = (Telefone) obj;
-		if (numero == null) {
-			if (other.numero != null)
-				return false;
-		} else if (!numero.equals(other.numero))
-			return false;
-		return true;
-	}
+	@NotNull(message = "O tipo do telefone precisa ser informado")
+	private TelefoneType tipoTelefone;
+	
+	@NotNull(message = "O ddd precisa ser informado")
+	private DddType ddd;
+	
+	@NotNull(message = "O domínio precisa ser informado")
+	private DominioTelefoneType dominio;
+	
+	@Id
+	@Digits(fraction = 0, integer = 9)
+	@NotBlank(message = "O numero não pode ser vazio")
+	@Min(value = 8, message = "O número informado é inválido")
+	@Max(value = 9, message = "O número informado é inválido")
+	private String numero;
 
 }
