@@ -29,7 +29,7 @@ public class Empresa extends AbstractAuditable {
 	@Id
 	private String cnpj;
 
-	@NotBlank(message = "O nome fantasia não pode estar vazio!")
+	@NotBlank(message = "O nome fantasia não pode estar vazio")
 	@Size(min = 2, max = 60, message = "O nome fantasia deve ter entre 2 e 60 caracteres")
 	private String nomeFantasia;
 
@@ -46,7 +46,7 @@ public class Empresa extends AbstractAuditable {
 	@NotNull(message = "O ramo de atividade não foi deifinido")
 	private RamoAtividadeType ramoAtividade;
 
-	@NotBlank
+	@NotBlank(message = "O nome do proprietario não pode ser vazio")
 	@Pattern(regexp = ALFA, message = "O nome do proprietário está inválido")
 	@Size(min = 2, max = 120, message = "O nome do proprietario deve estar entre 2 e 120 caracteres")
 	private String proprietario;

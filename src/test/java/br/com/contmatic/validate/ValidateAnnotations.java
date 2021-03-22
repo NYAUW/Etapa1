@@ -1,7 +1,5 @@
 package br.com.contmatic.validate;
 
-import static org.apache.commons.lang3.StringUtils.EMPTY;
-
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -35,19 +33,20 @@ public class ValidateAnnotations<T> {
 		return true;
 	}
 	
-	public String isFieldInvalid(T t) {
+	public boolean isFieldInvalid(T t, String expected) {
 		try {
 			ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
 			Validator validator = validatorFactory.getValidator();
-			Set<ConstraintViolation<Object>> violations;
-			violations = validator.validate(t);
-			StringBuilder sb = new StringBuilder();
-			violations.forEach(violation -> sb.append(violation.getMessage()));
-			return sb.toString();
+			Set<ConstraintViolation<Object>> violations = validator.validate(t);
+			for (ConstraintViolation<Object> constraintViolation : violations) {
+				if(constraintViolation.getMessage().equals(expected)) {
+					return true;
+				}
+			}
 		} catch (Exception e) {
 			Logger LOGGER = LoggerFactory.getLogger(ValidateAnnotations.class);
 			LOGGER.error(e.getMessage(), e);
 		}
-		return EMPTY;
+		return false;
 	}
 }
