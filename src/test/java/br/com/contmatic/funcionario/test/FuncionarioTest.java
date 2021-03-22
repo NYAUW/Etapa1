@@ -1,7 +1,6 @@
 package br.com.contmatic.funcionario.test;
 
 import static br.com.contmatic.constants.Regex.ALFA;
-import static br.com.contmatic.utils.DateUtils.getIdade;
 import static br.contmatic.type.SexoType.FEMININO;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -24,10 +23,11 @@ public class FuncionarioTest {
 
 	@BeforeClass
 	public static void deve_instanciar_funvionario() {
-		funcionario = new Funcionario("83765370088");
+		funcionario = new Funcionario();
+		funcionario.setCpf("83765370088");
 		funcionario.setCargo("Atendente");
 		funcionario.setCodigo(626);
-		funcionario.setNome("Juliette Ferreira");
+		funcionario.setNome("Julie Ferreira");
 		funcionario.setSalario(new BigDecimal("2300.00"));
 		funcionario.setDataAdmissao(LocalDate.of(2018, 1, 6));
 		funcionario.setDataDesligamento(null);
@@ -49,7 +49,9 @@ public class FuncionarioTest {
 	
 	@Test
 	public void deve_verificar_funcionario_hashcode_cpf() {
-		assertNotNull(new Funcionario("83765370088").hashCode());
+		funcionario = new Funcionario();
+		funcionario.setCpf("83765370088");
+		assertNotNull(funcionario.hashCode());
 	}
 	
 	@Test
@@ -59,42 +61,42 @@ public class FuncionarioTest {
 	
 	@Test
 	public void deve_verificar_funcionario_equals_funcionario_sem_data() {
-		assertFalse(funcionario.equals(new Funcionario("50740457896")));
+		assertFalse(funcionario.equals(new Funcionario()));
 	}
 	
 	@Test
 	public void deve_verificar_funcionario_sem_data_equals_funcionario_sem_data() {
-		assertTrue(new Funcionario("83765370088").equals(new Funcionario("83765370088")));
+		assertTrue(new Funcionario().equals(new Funcionario()));
 	}
 	
 	@Test
 	public void deve_verificar_funcionario_com_cpf_equals_funcionario_sem_data() {
-		Funcionario other = new Funcionario("83765370088");
+		Funcionario other = new Funcionario();
 		other.setCpf("50740457896");
-		assertFalse(new Funcionario("83765370088").equals(other));
+		assertFalse(new Funcionario().equals(other));
 	}
 	
 	@Test
 	public void deve_verificar_funcionario_com_codigo_igual() {
-		Funcionario other = new Funcionario("50740457896");
+		Funcionario other = new Funcionario();
 		other.setCodigo(funcionario.getCodigo());
 		assertFalse(other.equals(funcionario));
 	}
 	
 	@Test
 	public void deve_verificar_funcionario_com_cpf_iguais() {
-		Funcionario other = new Funcionario("83765370088");
+		Funcionario other = new Funcionario();
 		other.setCpf("50740457896");
-		Funcionario another = new Funcionario("83765370088");
+		Funcionario another = new Funcionario();
 		another.setCpf("50740457896");
 		assertTrue(another.equals(other));
 	}
 	
 	@Test
 	public void deve_verificar_funcionario_com_cpf_diferente() {
-		Funcionario other = new Funcionario("83765370088");
+		Funcionario other = new Funcionario();
 		other.setCpf("50740457896");
-		Funcionario another = new Funcionario("83765370088");
+		Funcionario another = new Funcionario();
 		another.setCpf("83765370088");
 		assertFalse(another.equals(other));
 	}
@@ -174,16 +176,6 @@ public class FuncionarioTest {
 	@Test
 	public void deve_verificar_sexo() {
 		assertNotNull(funcionario.getSexo());
-	}
-
-	@Test
-	public void deve_verificar_idade_correta() {
-		assertEquals(getIdade(funcionario.getDataNascimento()), funcionario.getIdade());
-	}
-
-	@Test
-	public void deve_verificar_idade() {
-		assertNotNull(funcionario.getIdade());
 	}
 
 }

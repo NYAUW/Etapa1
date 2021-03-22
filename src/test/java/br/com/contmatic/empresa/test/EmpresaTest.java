@@ -16,12 +16,14 @@ import java.util.Date;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.com.contmatic.model.Empresa;
 import br.com.contmatic.model.Endereco;
 import br.com.contmatic.model.Usuario;
+import br.com.contmatic.validate.ValidateAnnotations;
 
 public class EmpresaTest {
 
@@ -29,9 +31,24 @@ public class EmpresaTest {
 
 	private static Empresa empresa;
 	
+	private ValidateAnnotations<Object> valid = new ValidateAnnotations<>();
+	
+//	@BeforeClass
+//    public static void setUp() {
+//        FixtureFactoryLoader.loadTemplates("br.com.contmatic.FixtureFactory");
+//    }
+//
+    @Before
+    public void deve_atribuir_valores_do_fixture_para_a_classe_vazia() {
+    	valid.setClasse(Empresa.class);
+    	empresa.setCnpj("38739416000107");
+    }
+	
 	@BeforeClass
 	public static void deve_instanciar_empresa() {
 		empresa = new Empresa();
+		Usuario usuario = new Usuario();
+		usuario.setCpf("89111745053");
 		empresa.setCnpj("38739416000107");
 		empresa.setEndereco(enderecoStatic);
 		empresa.setNomeFantasia("Sim Tv Assistencia");
@@ -39,9 +56,9 @@ public class EmpresaTest {
 		empresa.setRamoAtividade(SERVICOS_ASSISTENCIA_TECNICA_INSTALACOES);
 		empresa.setRazaoSocial("Trabalhar pelo bem comum");
 		empresa.setTelefone(telefoneStatic());
-		empresa.setCreatedBy(new Usuario("89111745053"));
+		empresa.setCreatedBy(usuario);
 		empresa.setCreatedDate(new Date());
-		empresa.setLastModifiedBy(new Usuario("89111745053"));
+		empresa.setLastModifiedBy(usuario);
 		empresa.setLastModifiedDate(new Date());
 	}
 	
@@ -163,6 +180,17 @@ public class EmpresaTest {
 	@Test
 	public void deve_verificar_telefone_dominio_not_null() {
 		assertNotNull(empresa.getTelefone().getDominio());
+	}
+	
+	@Test
+	public void deve_verificar_annotations_empresa_valido() {
+		assertFalse(valid.isInvalid(empresa));
+	}
+	
+	@Test
+	public void deve_verificar_cnpj_invalido() {
+		empresa.setCnpj("38759416000107");
+		assertEquals(valid.isFieldInvalid(empresa), "CNPJ inválido");
 	}
 	
 	@Test

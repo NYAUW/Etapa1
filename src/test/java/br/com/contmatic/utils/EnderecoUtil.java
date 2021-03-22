@@ -12,7 +12,9 @@ public class EnderecoUtil {
 	}
 
 	public static Endereco enderecoStatic() {
-		Endereco endereco = new Endereco("03977120", 123);
+		Endereco endereco = new Endereco();
+		endereco.setCep("03977120");
+		endereco.setNumero(123);
 		endereco.setBairro("Bairro teste");
 		endereco.setComplemento("Complemento 2");
 		endereco.setLogradouro("Rua Teste");

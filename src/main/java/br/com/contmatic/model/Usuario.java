@@ -26,6 +26,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false, of = "cpf")
 public class Usuario extends AbstractAuditable {
+	
+	@Id
+	@CPF(message = "CPF inválido")
+	@NotBlank(message = "O CPF não pode ser vazio")
+	private String cpf;
 
 	@NotBlank(message = "O nome do usuário não pode ser vazio")
 	@Pattern(regexp = NOME, message = "O nome contém caracteres inválidos")
@@ -43,11 +48,6 @@ public class Usuario extends AbstractAuditable {
 	@Min(value = 4, message = "A senha precisa ser maior que 4 caracteres")
 	@Max(value = 16, message = "A senha precisa ser menor que 16 caracteres")
 	private String senha;
-	
-	@Id
-	@CPF(message = "CPF inválido")
-	@NotBlank(message = "O CPF não pode ser vazio")
-	private String cpf;
 	
 	@NotBlank(message = "O rg não pode ser vazio")
 	@Min(value = 8, message = "O RG deve conter 8 caracteres")

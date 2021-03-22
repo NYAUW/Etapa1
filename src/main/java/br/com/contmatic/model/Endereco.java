@@ -20,6 +20,17 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper = false, of = {"cep", "numero"})
 public class Endereco extends AbstractAuditable {
 	
+	@Id
+	@NotBlank
+	@Min(value = 8, message = "O CEP não contem a quantidade mínima de 8 caracteres")
+	@Max(value = 8, message = "O CEP excedeu a quantidade máxima de 8 caracteres")
+	private String cep;
+	
+	@Id
+	@NotNull
+	@Min(value = 1, message = "O número não pode ser menor que 1")
+	private Integer numero;
+	
 	@NotBlank
 	@Min(value = 2, message = "O nome do Bairro deve conter ao menos 2 caracteres")
 	@Max(value = 80, message = "O nome do Bairro deve ter no máximo 80 caracteres")
@@ -33,19 +44,8 @@ public class Endereco extends AbstractAuditable {
 	@Max(value = 80, message = "O Logradouro deve ter no máximo 80 caracteres")
 	private String logradouro;
 	
-	@Id
-	@NotBlank
-	@Min(value = 8, message = "O CEP não contem a quantidade mínima de 8 caracteres")
-	@Max(value = 8, message = "O CEP excedeu a quantidade máxima de 8 caracteres")
-	private String cep;
-	
 	@Min(value = 2, message = "O complemento deve conter ao menos 2 caracteres")
 	@Max(value = 60, message = "O complemento excedeu a quantidade de 60 caracteres")
 	private String complemento;
-	
-	@Id
-	@NotNull
-	@Min(value = 1, message = "O número não pode ser menor que 1")
-	private Integer numero;
 	
 }

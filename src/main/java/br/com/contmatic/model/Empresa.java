@@ -1,12 +1,13 @@
 package br.com.contmatic.model;
 
+import static br.com.contmatic.constants.Regex.ALFA;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CNPJ;
 
@@ -29,8 +30,7 @@ public class Empresa extends AbstractAuditable {
 	private String cnpj;
 
 	@NotBlank(message = "O nome fantasia não pode estar vazio!")
-	@Min(value = 2, message = "O nome fantasia não contém a quantidade minima de 2 caracteres")
-	@Max(value = 60, message = "O nome fantasia não pode conter mais que 60 caracteres")
+	@Size(min = 2, max = 60, message = "O nome fantasia deve ter entre 2 e 60 caracteres")
 	private String nomeFantasia;
 
 	@NotNull(message = "O telefone não foi definido")
@@ -40,16 +40,14 @@ public class Empresa extends AbstractAuditable {
 	private Endereco endereco;
 
 	@NotBlank(message = "A razão social não pode ficar vazia")
-	@Min(value = 2, message = "A razão social não contém a quantidade minima de 2 caracteres")
-	@Max(value = 80, message = "A razão social não pode conter mais que 80 caracteres")
+	@Size(min = 2, max = 80, message = "A razão social deve ter entre 2 e 80 caracteres")
 	private String razaoSocial;
 
 	@NotNull(message = "O ramo de atividade não foi deifinido")
 	private RamoAtividadeType ramoAtividade;
 
 	@NotBlank
-	@Pattern(regexp = "[a-zA-Z]", message = "O nome do proprietário está inválido")
-	@Min(value = 2, message = "O proprietario não contém a quantidade minima de 2 caracteres")
-	@Max(value = 120, message = "A proprietario não pode conter mais que 120 caracteres")
+	@Pattern(regexp = ALFA, message = "O nome do proprietário está inválido")
+	@Size(min = 2, max = 120, message = "O nome do proprietario deve estar entre 2 e 120 caracteres")
 	private String proprietario;
 }

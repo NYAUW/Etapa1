@@ -23,6 +23,13 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper = false, of = "numero")
 public class Telefone extends AbstractAuditable{
 	
+	@Id
+	@Digits(fraction = 0, integer = 9)
+	@NotBlank(message = "O numero não pode ser vazio")
+	@Min(value = 8, message = "O número informado é inválido")
+	@Max(value = 9, message = "O número informado é inválido")
+	private String numero;
+	
 	@NotNull(message = "O tipo do telefone precisa ser informado")
 	private TelefoneType tipoTelefone;
 	
@@ -31,12 +38,5 @@ public class Telefone extends AbstractAuditable{
 	
 	@NotNull(message = "O domínio precisa ser informado")
 	private DominioTelefoneType dominio;
-	
-	@Id
-	@Digits(fraction = 0, integer = 9)
-	@NotBlank(message = "O numero não pode ser vazio")
-	@Min(value = 8, message = "O número informado é inválido")
-	@Max(value = 9, message = "O número informado é inválido")
-	private String numero;
 
 }

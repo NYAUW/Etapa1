@@ -16,7 +16,9 @@ public class TelefoneUtil {
 	}
 
 	public static Telefone telefoneStatic() {
-		Telefone telefone = new Telefone("965821475", CELULAR);
+		Telefone telefone = new Telefone();
+		telefone.setNumero("965821475");
+		telefone.setTipoTelefone(CELULAR);
 		telefone.setDdd(SAO_PAULO);
 		telefone.setDominio(COMERCIAL);
 		return telefone;
