@@ -24,9 +24,9 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper = false, of = "cnpj")
 public class Empresa extends AbstractAuditable {
 
+	@Id
 	@NotBlank(message = "O CNPJ não pode ser vazio")
 	@CNPJ(message = "CNPJ inválido")
-	@Id
 	private String cnpj;
 
 	@NotBlank(message = "O nome fantasia não pode estar vazio")
