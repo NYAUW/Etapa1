@@ -22,8 +22,11 @@ import org.junit.Test;
 
 import br.com.contmatic.model.Empresa;
 import br.com.contmatic.model.Endereco;
+import br.com.contmatic.model.Telefone;
 import br.com.contmatic.model.Usuario;
 import br.com.contmatic.validate.ValidateAnnotations;
+import br.com.six2six.fixturefactory.Fixture;
+import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 
 public class EmpresaTest {
 
@@ -33,11 +36,11 @@ public class EmpresaTest {
 
 	private ValidateAnnotations<Object> valid = new ValidateAnnotations<>();
 
-//	@BeforeClass
-//    public static void setUp() {
-//        FixtureFactoryLoader.loadTemplates("br.com.contmatic.FixtureFactory");
-//    }
-//
+	@BeforeClass
+    public static void setUp() {
+		FixtureFactoryLoader.loadTemplates("br.com.contmatic.fixture.factory");
+    }
+	
 	@Before
 	public void deve_atribuir_valores_do_fixture_para_a_classe_vazia() {
 		valid.setClasse(Empresa.class);
@@ -72,30 +75,45 @@ public class EmpresaTest {
 
 	@Test
 	public void deve_verificar_cnpj_invalido() {
+		Empresa empresa = Fixture.from(Empresa.class).gimme("empresa");
+		empresa.setTelefone(Fixture.from(Telefone.class).gimme("telefone"));
+		empresa.setEndereco(Fixture.from(Endereco.class).gimme("endereco"));
 		empresa.setCnpj("11111111111111");
 		assertTrue(valid.isFieldInvalid(empresa, "CNPJ inválido"));
 	}
 
 	@Test
 	public void deve_verificar_cnpj_vazio() {
+		Empresa empresa = Fixture.from(Empresa.class).gimme("empresa");
+		empresa.setTelefone(Fixture.from(Telefone.class).gimme("telefone"));
+		empresa.setEndereco(Fixture.from(Endereco.class).gimme("endereco"));
 		empresa.setCnpj("");
 		assertTrue(valid.isFieldInvalid(empresa, "O CNPJ não pode ser vazio"));
 	}
 
 	@Test
 	public void deve_verificar_nome_fantasia_vazio() {
+		Empresa empresa = Fixture.from(Empresa.class).gimme("empresa");
+		empresa.setTelefone(Fixture.from(Telefone.class).gimme("telefone"));
+		empresa.setEndereco(Fixture.from(Endereco.class).gimme("endereco"));
 		empresa.setNomeFantasia("");
 		assertTrue(valid.isFieldInvalid(empresa, "O nome fantasia não pode estar vazio"));
 	}
 
 	@Test
 	public void deve_verificar_nome_fantasia_invalido_2_caracteres() {
+		Empresa empresa = Fixture.from(Empresa.class).gimme("empresa");
+		empresa.setTelefone(Fixture.from(Telefone.class).gimme("telefone"));
+		empresa.setEndereco(Fixture.from(Endereco.class).gimme("endereco"));
 		empresa.setNomeFantasia("a");
 		assertTrue(valid.isFieldInvalid(empresa, "O nome fantasia deve ter entre 2 e 60 caracteres"));
 	}
 
 	@Test
 	public void deve_verificar_nome_fantasia_invalido_60_caracteres() {
+		Empresa empresa = Fixture.from(Empresa.class).gimme("empresa");
+		empresa.setTelefone(Fixture.from(Telefone.class).gimme("telefone"));
+		empresa.setEndereco(Fixture.from(Endereco.class).gimme("endereco"));
 		empresa.setNomeFantasia(
 				"Aqui sera necessario conter mais de 60 caracteres para que o teste possa passar com êxito");
 		assertTrue(valid.isFieldInvalid(empresa, "O nome fantasia deve ter entre 2 e 60 caracteres"));
@@ -103,30 +121,41 @@ public class EmpresaTest {
 
 	@Test
 	public void deve_verificar_telefone_null_invalido() {
-		empresa.setTelefone(null);
+		Empresa empresa = Fixture.from(Empresa.class).gimme("empresa");
+		empresa.setEndereco(Fixture.from(Endereco.class).gimme("endereco"));
 		assertTrue(valid.isFieldInvalid(empresa, "O telefone não foi definido"));
 	}
 
 	@Test
 	public void deve_verificar_endereco_null_invalido() {
-		empresa.setEndereco(null);
+		Empresa empresa = Fixture.from(Empresa.class).gimme("empresa");
+		empresa.setTelefone(Fixture.from(Telefone.class).gimme("telefone"));
 		assertTrue(valid.isFieldInvalid(empresa, "O endereço não foi defnido"));
 	}
 
 	@Test
 	public void deve_verificar_razao_social_vaizo() {
+		Empresa empresa = Fixture.from(Empresa.class).gimme("empresa");
+		empresa.setTelefone(Fixture.from(Telefone.class).gimme("telefone"));
+		empresa.setEndereco(Fixture.from(Endereco.class).gimme("endereco"));
 		empresa.setRazaoSocial("");
 		assertTrue(valid.isFieldInvalid(empresa, "A razão social não pode ficar vazia"));
 	}
 
 	@Test
 	public void deve_verificar_razao_social_invalido_2_caracteres() {
+		Empresa empresa = Fixture.from(Empresa.class).gimme("empresa");
+		empresa.setTelefone(Fixture.from(Telefone.class).gimme("telefone"));
+		empresa.setEndereco(Fixture.from(Endereco.class).gimme("endereco"));
 		empresa.setRazaoSocial("a");
 		assertTrue(valid.isFieldInvalid(empresa, "A razão social deve ter entre 2 e 80 caracteres"));
 	}
 
 	@Test
 	public void deve_verificar_razao_social_invalido_80_caracteres() {
+		Empresa empresa = Fixture.from(Empresa.class).gimme("empresa");
+		empresa.setTelefone(Fixture.from(Telefone.class).gimme("telefone"));
+		empresa.setEndereco(Fixture.from(Endereco.class).gimme("endereco"));
 		empresa.setRazaoSocial(
 				"a razao social deve conter mair de 80 caracteres para esse teste em especifico conseguir ser concluido com êxito");
 		assertTrue(valid.isFieldInvalid(empresa, "A razão social deve ter entre 2 e 80 caracteres"));
@@ -134,42 +163,63 @@ public class EmpresaTest {
 
 	@Test
 	public void deve_verificar_ramo_atividade_null() {
+		Empresa empresa = Fixture.from(Empresa.class).gimme("empresa");
+		empresa.setTelefone(Fixture.from(Telefone.class).gimme("telefone"));
+		empresa.setEndereco(Fixture.from(Endereco.class).gimme("endereco"));
 		empresa.setRamoAtividade(null);
 		assertTrue(valid.isFieldInvalid(empresa, "O ramo de atividade não foi deifinido"));
 	}
 
 	@Test
 	public void deve_verificar_nome_proprietario_vazio() {
+		Empresa empresa = Fixture.from(Empresa.class).gimme("empresa");
+		empresa.setTelefone(Fixture.from(Telefone.class).gimme("telefone"));
+		empresa.setEndereco(Fixture.from(Endereco.class).gimme("endereco"));
 		empresa.setProprietario("");
 		assertTrue(valid.isFieldInvalid(empresa, "O nome do proprietario não pode ser vazio"));
 	}
 
 	@Test
 	public void deve_verificar_nome_proprietario_null() {
+		Empresa empresa = Fixture.from(Empresa.class).gimme("empresa");
+		empresa.setTelefone(Fixture.from(Telefone.class).gimme("telefone"));
+		empresa.setEndereco(Fixture.from(Endereco.class).gimme("endereco"));
 		empresa.setProprietario(null);
 		assertTrue(valid.isFieldInvalid(empresa, "O nome do proprietario não pode ser vazio"));
 	}
 
 	@Test
 	public void deve_verificar_nome_proprietario_numerico() {
+		Empresa empresa = Fixture.from(Empresa.class).gimme("empresa");
+		empresa.setTelefone(Fixture.from(Telefone.class).gimme("telefone"));
+		empresa.setEndereco(Fixture.from(Endereco.class).gimme("endereco"));
 		empresa.setProprietario("1233 445");
 		assertTrue(valid.isFieldInvalid(empresa, "O nome do proprietário está inválido"));
 	}
 
 	@Test
 	public void deve_verificar_nome_proprietario_especial() {
+		Empresa empresa = Fixture.from(Empresa.class).gimme("empresa");
+		empresa.setTelefone(Fixture.from(Telefone.class).gimme("telefone"));
+		empresa.setEndereco(Fixture.from(Endereco.class).gimme("endereco"));
 		empresa.setProprietario("Mar$elo");
 		assertTrue(valid.isFieldInvalid(empresa, "O nome do proprietário está inválido"));
 	}
 
 	@Test
 	public void deve_verificar_nome_proprietario_invalido_2_caracteres() {
+		Empresa empresa = Fixture.from(Empresa.class).gimme("empresa");
+		empresa.setTelefone(Fixture.from(Telefone.class).gimme("telefone"));
+		empresa.setEndereco(Fixture.from(Endereco.class).gimme("endereco"));
 		empresa.setProprietario("M");
 		assertTrue(valid.isFieldInvalid(empresa, "O nome do proprietario deve estar entre 2 e 120 caracteres"));
 	}
 
 	@Test
 	public void deve_verificar_nome_proprietario_invalido_120_caracteres() {
+		Empresa empresa = Fixture.from(Empresa.class).gimme("empresa");
+		empresa.setTelefone(Fixture.from(Telefone.class).gimme("telefone"));
+		empresa.setEndereco(Fixture.from(Endereco.class).gimme("endereco"));
 		empresa.setProprietario(
 				"Nome do proprietario com mais de cento e vinte caracteres para ter certeza de que a validação @Size esta funcionando como deveria, a meta é que essa mensagem seja exibida no front como um erro");
 		assertTrue(valid.isFieldInvalid(empresa, "O nome do proprietario deve estar entre 2 e 120 caracteres"));

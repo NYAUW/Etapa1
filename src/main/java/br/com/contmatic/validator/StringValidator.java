@@ -1,7 +1,7 @@
 package br.com.contmatic.validator;
 
 import static br.com.contmatic.constants.Messages.ENTRADA_INVALIDA;
-import static br.com.contmatic.constants.Regex.NOME;
+import static br.com.contmatic.constants.Regex.ALFA;
 import static br.com.contmatic.utils.FormatMessagesUtils.getInvalidExceptionMessage;
 import static br.com.contmatic.utils.FormatMessagesUtils.getMaxCharacterExceptionMessage;
 import static br.com.contmatic.utils.FormatMessagesUtils.getMinCharacterExceptionMessage;
@@ -117,7 +117,7 @@ public class StringValidator {
 
 
 	public static void isNomePattern(String value) {
-		if (!value.matches(NOME)) {
+		if (!value.matches(ALFA)) {
 			throw new IllegalArgumentException(ENTRADA_INVALIDA + " Insira um nome completo válido");
 		}
 	}

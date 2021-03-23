@@ -3,10 +3,9 @@ package br.com.contmatic.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import br.contmatic.type.DddType;
 import br.contmatic.type.DominioTelefoneType;
@@ -24,10 +23,9 @@ import lombok.Setter;
 public class Telefone extends AbstractAuditable{
 	
 	@Id
-	@Digits(fraction = 0, integer = 9)
+	@Digits(fraction = 0, integer = 9, message = "Número inválido")
 	@NotBlank(message = "O numero não pode ser vazio")
-	@Min(value = 8, message = "O número informado é inválido")
-	@Max(value = 9, message = "O número informado é inválido")
+	@Size(min = 8, max = 9, message = "Número inválido")
 	private String numero;
 	
 	@NotNull(message = "O tipo do telefone precisa ser informado")

@@ -2,7 +2,6 @@ package br.com.contmatic.usuario.test;
 
 import static br.com.contmatic.constants.Regex.ALFA;
 import static br.com.contmatic.constants.Regex.EMAIL;
-import static br.com.contmatic.constants.Regex.NOME;
 import static br.com.contmatic.constants.Regex.RG_PATTERN;
 import static br.com.contmatic.utils.EnderecoUtil.enderecoStatic;
 import static br.com.contmatic.utils.TelefoneUtil.getTelefoneRegex;
@@ -106,7 +105,7 @@ public class UsuarioTest {
     
     @Test
     public void deve_verificar_nome_pattern() {
-        assertTrue(usuario.getNome().matches(NOME));
+        assertTrue(usuario.getNome().matches(ALFA));
     }
     
     @Test

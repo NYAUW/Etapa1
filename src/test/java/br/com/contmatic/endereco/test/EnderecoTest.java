@@ -12,10 +12,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.com.contmatic.model.Endereco;
+import br.com.contmatic.validate.ValidateAnnotations;
 
 public class EnderecoTest {
 	
 	private static Endereco endereco;
+	
+	private ValidateAnnotations<Object> valid = new ValidateAnnotations<>();
 	
 	@BeforeClass
 	public static void deve_instanciar_endereco() {
@@ -29,9 +32,20 @@ public class EnderecoTest {
 	}
 	
 	@Before
-	public void deve_setar_complemento_null() {
+	public void deve_resetar_objeto_endereco() {
+		endereco.setCep("03977120");
+		endereco.setNumero(2738);
+		endereco.setBairro("Mascarenhas de Morais");
 		endereco.setComplemento(null);
+		endereco.setEstado(SP);
+		endereco.setLogradouro("Rua soldado Luis manoel Ferreira");
 		assertNull(endereco.getComplemento());
+	}
+	
+	@Test
+	public void deve_verificar_digitos_cep() {
+		endereco.setCep("abc");
+		assertTrue(valid.isFieldInvalid(endereco, "O CEP está inválido"));
 	}
 	
 	@Test
@@ -62,12 +76,12 @@ public class EnderecoTest {
 		Endereco another = new Endereco();
 		another.setCep("03977120");
 		another.setNumero(2738);
-		assertFalse(other.equals(another));
+		assertTrue(other.equals(another));
 	}
 	
 	@Test
 	public void deve_verificar_endereco_com_cep_equals_endereco_sem_data() {
-		assertFalse(new Endereco().equals(new Endereco()));
+		assertTrue(new Endereco().equals(new Endereco()));
 	}
 	
 	@Test
@@ -75,7 +89,7 @@ public class EnderecoTest {
 		Endereco other = new Endereco();
 		other.setCep("03977120");
 		other.setNumero(2738);
-		assertFalse(other.equals(endereco));
+		assertTrue(other.equals(endereco));
 	}
 	
 	@Test
@@ -114,12 +128,6 @@ public class EnderecoTest {
 	
 	@Test
 	public void deve_verificar_cep_not_null( ) {
-		assertNotNull(endereco.getCep());
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void deve_verificar_cep_invalido( ) {
-		endereco.setCep("123");
 		assertNotNull(endereco.getCep());
 	}
 	

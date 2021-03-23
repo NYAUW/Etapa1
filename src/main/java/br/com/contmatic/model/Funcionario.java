@@ -1,15 +1,18 @@
 package br.com.contmatic.model;
 
+import static br.com.contmatic.constants.Regex.ALFA;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -37,13 +40,12 @@ public class Funcionario extends AbstractAuditable {
 	private String cpf;
 	
 	@NotBlank
-	@Min(value = 2, message = "O nome deve conter ao menos 2 caracteres")
-	@Max(value = 120, message = "O nome excedeu o tamanho máximo de 120 caracteres")
+	@Pattern(regexp = ALFA)
+	@Size(min = 2, max = 120, message = "O nome deve conter de 2 a 120 caracteres")
 	private String nome;
 	
 	@NotBlank
-	@Min(value = 2, message = "O cargo deve conter ao menos 2 caracteres")
-	@Max(value = 120, message = "O cargo excedeu o tamanho máximo de 120 caracteres")
+	@Size(min = 2, max = 120, message = "O cargo deve conter de 2 a 120 caracteres")
 	private String cargo;
 	
 	@NotNull(message = "O salario precisa ser informado")
