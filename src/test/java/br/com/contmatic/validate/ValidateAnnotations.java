@@ -16,6 +16,8 @@ public class ValidateAnnotations<T> {
 
 	@Setter
 	public Object classe;
+	
+	Logger LOGGER = LoggerFactory.getLogger(ValidateAnnotations.class);
 
 	public boolean isInvalid(T t) {
 		try {
@@ -27,7 +29,6 @@ public class ValidateAnnotations<T> {
 			violations.forEach(violation -> LOGGER.error(violation.getMessage()));
 			return !violations.isEmpty();
 		} catch (Exception e) {
-			Logger LOGGER = LoggerFactory.getLogger(ValidateAnnotations.class);
 			LOGGER.error(e.getMessage(), e);
 		}
 		return true;
@@ -44,7 +45,6 @@ public class ValidateAnnotations<T> {
 				}
 			}
 		} catch (Exception e) {
-			Logger LOGGER = LoggerFactory.getLogger(ValidateAnnotations.class);
 			LOGGER.error(e.getMessage(), e);
 		}
 		return false;
